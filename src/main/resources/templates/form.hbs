@@ -176,18 +176,20 @@
                     <div class="col-lg-12">
 
                         <!-- Basic Card Example -->
-                        <form action="/questions" method="POST">
+                        <form>
                             <div class="card h-500 shadow mb-4" style="min-height: 25rem;">
                                 <div class="card-header py-3">
 
                                     <div class="row align-items-center">
                                         <div class="input-group mb-0 col-6">
-                                            <input height="20rem" type="text" value="title" class="form-control"
+                                            <input id="title" name="title" height="20rem" type="text"
+                                                   class="form-control"
                                                    placeholder="Input Title" aria-label="Input Title"
                                                    aria-describedby="basic-addon2">
                                         </div>
                                         <div class="input-group mb-0 col-4">
-                                            <input height="20rem" type="text" value="author" class="form-control"
+                                            <input id="author" name="author" height="20rem" type="text"
+                                                   class="form-control"
                                                    placeholder="Input Title" aria-label="Input author"
                                                    aria-describedby="basic-addon2">
                                         </div>
@@ -199,15 +201,18 @@
                                     <div class="row">
                                         <div class="col">
                                             <div class="form-group shadow-textarea">
-                                            <textarea class="form-control z-depth-1" id="exampleFormControlTextarea6"
-                                                      rows="3" placeholder="Write something here..."></textarea>
+                                            <textarea class="form-control z-depth-1" id="content"
+                                                      rows="3" name="content"
+                                                      placeholder="Write something here..."></textarea>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="row justify-content-end">
-                                        <input height="20rem" type="submit" value="write"
-                                               class="btn btn-primary btn-icon-split col-1">
+                                        <button id="questionSave" height="20rem" type="button"
+                                                class="btn btn-primary btn-icon-split col-1">
+                                            write
+                                        </button>
                                     </div>
 
                                 </div>
@@ -265,14 +270,14 @@
 </div>
 
 <!-- Bootstrap core JavaScript-->
-<script src="vendor/jquery/jquery.min.js"></script>
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-<!-- Core plugin JavaScript-->
-<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
 <!-- Custom scripts for all pages-->
-<script src="../static/js/sb-admin-2.min.js"></script>
+<script src="/js/sb-admin-2.min.js"></script>
+
+<!-- question save -->
+<script src="/js/app/api.js"></script>
+
 
 </body>
 
