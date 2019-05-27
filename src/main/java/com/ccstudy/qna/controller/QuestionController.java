@@ -5,9 +5,12 @@ import com.ccstudy.qna.dto.QuestionResDto;
 import com.ccstudy.qna.service.QuestionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
 
@@ -20,16 +23,18 @@ public class QuestionController {
 
     @PostMapping("/questions")
     public String createQuestion(@RequestBody QuestionReqDto questionReqDto) {
-        log.info("질문 저장.");
         questionService.createQuestion(questionReqDto);
-        return "/";
+        log.info("질문 저장.");
+        log.info(questionService.getQuestionBoard().toString());
+
+        return "redirect:/";
     }
 
-    @GetMapping("/")
+    @RequestMapping("/")
     public ModelAndView getQuestionBoard() {
         ModelAndView mav = new ModelAndView();
-        List<QuestionResDto> questionResDtos = questionService.getQuestionBoard();
-        mav.addObject("questions", questionResDtos);
+        List<QuestionResDto> questionResDto = questionService.getQuestionBoard();
+        mav.addObject("questions", questionResDto);
         mav.setViewName("index");
         return mav;
     }
