@@ -22,11 +22,8 @@ public class QuestionController {
     private final QuestionService questionService;
 
     @PostMapping("/questions")
-    public String createQuestion(@RequestBody QuestionReqDto questionReqDto) {
+    public String createQuestion(@ModelAttribute QuestionReqDto questionReqDto) {
         questionService.createQuestion(questionReqDto);
-        log.info("질문 저장.");
-        log.info(questionService.getQuestionBoard().toString());
-
         return "redirect:/";
     }
 

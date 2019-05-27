@@ -1,9 +1,11 @@
 package com.ccstudy.qna.dto;
 
 import com.ccstudy.qna.domain.Question;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
+@AllArgsConstructor
 public class QuestionReqDto {
     private String title;
     private String content;
