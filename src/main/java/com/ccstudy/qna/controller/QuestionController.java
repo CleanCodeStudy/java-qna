@@ -17,11 +17,6 @@ public class QuestionController {
 
     private final QuestionService questionService;
 
-    @GetMapping("/question/form")
-    public String getFrom(){
-        return "form";
-    }
-
     @PostMapping("/questions")
     public String createQuestion(QuestionReqDto questionReqDto) {
         questionService.createQuestion(questionReqDto);
