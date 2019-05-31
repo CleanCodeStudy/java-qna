@@ -25,7 +25,6 @@ public class QuestionController {
 
     @PostMapping("/questions")
     public String saveQuestion(QuestionSaveRequestDto dto) {
-        log.info("here");
         questionService.save(dto);
         return "redirect:/";
     }
