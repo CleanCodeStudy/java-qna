@@ -9,18 +9,15 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Clean Code - main list</title>
+    <title>Clean Code - Details1</title>
 
-    <!-- Custom fonts for this template -->
     <link href="/css/bootstrap.min.css" rel="stylesheet"/>
-    <!-- <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet"> -->
+    <!-- Custom fonts for this template-->
+    <!-- <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet"> -->
 
-    <!-- Custom styles for this template -->
+    <!-- Custom styles for this template-->
     <link href="/css/sb-admin-2.min.css" rel="stylesheet"/>
-
-    <!-- Custom styles for this page -->
-    <!-- <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet"> -->
 
 </head>
 
@@ -96,6 +93,7 @@
         <!-- Main Content -->
         <div id="content">
 
+
             <!-- Topbar -->
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
@@ -166,69 +164,72 @@
             </nav>
             <!-- End of Topbar -->
 
-
             <!-- Begin Page Content -->
             <div class="container-fluid">
+                {{#question}}
 
-                <!-- Page Heading -->
-                <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-                </div>
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Question {{id}}</h1>
+                    </div>
 
-                <!-- DataTales Example -->
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <div class="row">
-                            <a href="/question/form" class="btn btn-primary btn-icon-split">
-                  <span class="icon text-white-50">
-                    <i class="fas fa-arrow-right"></i>
-                  </span>
-                                <span class="text">createNew</span>
+                    <div class="row">
+
+                        <div class="col-lg-12">
+
+                            <!-- Basic Card Example -->
+                            <div class="card h-500 shadow mb-4" style="min-height: 25rem;">
+                                <div class="card-header py-3">
+                                    <div class="row">
+                                        <div class="col-6"><h6 class="m-0 font-weight-bold text-primary">{{title}}</h6>
+                                        </div>
+                                        <div class="col-2"><h6 class="m-0 font-weight-bold text-primary">
+                                            | {{author}}</h6></div>
+                                        <div class="col-2"><h6 class="m-0 font-weight-bold text-primary">
+                                            | {{registerDate}}</h6></div>
+                                        <div class="col-2"><h6 class="m-0 font-weight-bold text-primary">
+                                            | {{updateDate}}</h6></div>
+
+                                    </div>
+                                </div>
+
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <p>{{content}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-1">
+                            <a href="content-input.html" class="btn btn-primary btn-icon-split">
+                <span class="icon text-white-50">
+                  <i class="fas fa-arrow-right"></i>
+                </span>
+                                <span class="text">edit</span>
                             </a>
                         </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Title</th>
-                                    <th>author</th>
-                                    <th>Register date</th>
-                                    <th>update date</th>
-                                    <th></th>
-                                </tr>
-                                </thead>
-                                <tfoot>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Title</th>
-                                    <th>author</th>
-                                    <th>Register date</th>
-                                    <th>update date</th>
-                                    <th></th>
-                                </tr>
-                                </tfoot>
-                                <tbody>
-                                {{#questions}}
-                                    <tr>
-                                        <td>{{@index}}</td>
-                                        <td>{{title}}</td>
-                                        <td>{{author}}</td>
-                                        <td>{{registerDate}}</td>
-                                        <td>{{updateDate}}</td>
-                                        <td><a href="/questions/{{@index}}" class="btn btn-info btn-circle btn-sm">
-                                            <i class="fas fa-info-circle"></i>
-                                        </a></td>
-                                    </tr>
-                                {{/questions}}
-
-                                </tbody>
-                            </table>
+                        <div class="col-1">
+                            <a href="index.html" class="btn btn-danger btn-icon-split">
+                <span class="icon text-white-50">
+                  <i class="fas fa-arrow-right"></i>
+                </span>
+                                <span class="text">delete</span>
+                            </a>
                         </div>
+
+
                     </div>
-                </div>
+
+                {{/question}}
+
             </div>
             <!-- /.container-fluid -->
 
@@ -239,7 +240,7 @@
         <footer class="sticky-footer bg-white">
             <div class="container my-auto">
                 <div class="copyright text-center my-auto">
-                    <span>Copyright &copy; Your Website 2019</span>
+                    <span>Copyright &copy; clean code study - mj</span>
                 </div>
             </div>
         </footer>
@@ -277,23 +278,13 @@
 </div>
 
 <!-- Bootstrap core JavaScript-->
-<script src="vendor/jquery/jquery.min.js"></script>
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
 <!-- Core plugin JavaScript-->
 <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
 <!-- Custom scripts for all pages-->
-<script src="../static/js/sb-admin-2.min.js"></script>
-
-<!-- Page level plugins -->
-<script src="vendor/datatables/jquery.dataTables.min.js"></script>
-<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-<!-- Page level custom scripts -->
-<script src="../static/js/demo/datatables-demo.js"></script>
-
-
+<script src="js/sb-admin-2.min.js"></script>
 
 </body>
 

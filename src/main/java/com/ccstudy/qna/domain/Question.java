@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Getter
 @NoArgsConstructor
@@ -19,6 +20,7 @@ public class Question {
 
     @Builder
     public Question(String title, String content, String author) {
+        this.id = UUID.randomUUID().getMostSignificantBits();
         this.title = title;
         this.content = content;
         this.author = author;
