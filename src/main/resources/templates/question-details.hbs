@@ -26,67 +26,10 @@
   <!-- Page Wrapper -->
   <div id="wrapper">
 
-    <!-- Sidebar -->
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+      <!-- handlebar sidebar-->
 
-      <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.hbs">
-        <div class="sidebar-brand-icon rotate-n-15">
-          <i class="fas fa-laugh-wink"></i>
-        </div>
-        <div class="sidebar-brand-text mx-3">Clean Code</div>
-      </a>
-
-      <!-- Divider -->
-      <hr class="sidebar-divider my-0">
-
-      <!-- Nav Item - Dashboard -->
-      <li class="nav-item active">
-          <a class="nav-link" href="index.hbs">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Dashboard</span></a>
-      </li>
-
-      <!-- Divider -->
-      <hr class="sidebar-divider">
-
-      <!-- Heading -->
-      <div class="sidebar-heading">
-        User
-      </div>
-
-      <!-- Nav Item - Login -->
-      <li class="nav-item">
-          <a class="nav-link" href="../static/login.html">
-          <i class="fas fa-fw fa-user"></i>
-          <span>Login</span></a>
-      </li>
-
-      <!-- Nav Item - Register -->
-      <li class="nav-item">
-          <a class="nav-link" href="../static/register.html">
-          <i class="fas fa-fw fa-inbox"></i>
-          <span>Register</span></a>
-      </li>
-
-      <!-- Nav Item - Forget Password -->
-      <li class="nav-item">
-          <a class="nav-link" href="../static/forgot-password.html">
-          <i class="fas fa-fw fa-key"></i>
-          <span>Forget Password</span></a>
-      </li>
-
-      <!-- Divider -->
-      <hr class="sidebar-divider d-none d-md-block">
-
-      <!-- Sidebar Toggler (Sidebar) -->
-      <div class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle"></button>
-      </div>
-
-    </ul>
     <!-- End of Sidebar -->
-
+      {{#partial "content"}}
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
 
@@ -162,7 +105,7 @@
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-              <h1 class="h3 mb-0 text-gray-800">Question</h1>
+              <h1 class="h3 mb-0 text-gray-800">질문</h1>
           </div>
 
           <div class="row">
@@ -224,16 +167,10 @@
 
       </div>
       <!-- End of Main Content -->
+      {{/partial}}
+      {{>base}}
 
-      <!-- Footer -->
-      <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Copyright &copy; clean code study - mj</span>
-          </div>
-        </div>
-      </footer>
-      <!-- End of Footer -->
+      <!-- handlebar footer-->
 
     </div>
     <!-- End of Content Wrapper -->
@@ -264,13 +201,6 @@
       </div>
     </div>
   </div>
-
-  <!-- Bootstrap core JavaScript-->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Core plugin JavaScript-->
-  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
   <!-- Custom scripts for all pages-->
   <script src="/js/sb-admin-2.min.js"></script>

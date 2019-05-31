@@ -25,6 +25,7 @@ public class QuestionController {
 
     @PostMapping("/questions")
     public String saveQuestion(QuestionSaveRequestDto dto) {
+        log.info("here");
         questionService.save(dto);
         return "redirect:/";
     }
@@ -32,7 +33,7 @@ public class QuestionController {
     @GetMapping("/questions/{index}")
     public String showQuestionDetail(@PathVariable("index") int index, Model model) {
         model.addAttribute("question", questionService.showQuestionDetail(index));
-        return "cards1";
+        return "question-details";
     }
 
 }

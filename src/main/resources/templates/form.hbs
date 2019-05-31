@@ -20,68 +20,10 @@
 <!-- Page Wrapper -->
 <div id="wrapper">
 
-    <!-- Sidebar -->
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-        <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.hbs">
-            <div class="sidebar-brand-icon rotate-n-15">
-                <i class="fas fa-laugh-wink"></i>
-            </div>
-            <div class="sidebar-brand-text mx-3">Clean Code</div>
-        </a>
-
-        <!-- Divider -->
-        <hr class="sidebar-divider my-0">
-
-        <!-- Nav Item - Dashboard -->
-        <li class="nav-item active">
-            <a class="nav-link" href="index.hbs">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Dashboard</span></a>
-        </li>
-
-        <!-- Divider -->
-        <hr class="sidebar-divider">
-
-        <!-- Heading -->
-        <div class="sidebar-heading">
-            User
-        </div>
-
-        <!-- Nav Item - Login -->
-        <li class="nav-item">
-            <a class="nav-link" href="../static/login.html">
-                <i class="fas fa-fw fa-user"></i>
-                <span>Login</span></a>
-        </li>
-
-        <!-- Nav Item - Register -->
-        <li class="nav-item">
-            <a class="nav-link" href="../static/register.html">
-                <i class="fas fa-fw fa-inbox"></i>
-                <span>Register</span></a>
-        </li>
-
-        <!-- Nav Item - Forget Password -->
-        <li class="nav-item">
-            <a class="nav-link" href="../static/forgot-password.html">
-                <i class="fas fa-fw fa-key"></i>
-                <span>Forget Password</span></a>
-        </li>
-
-        <!-- Divider -->
-        <hr class="sidebar-divider d-none d-md-block">
-
-        <!-- Sidebar Toggler (Sidebar) -->
-        <div class="text-center d-none d-md-inline">
-            <button class="rounded-circle border-0" id="sidebarToggle"></button>
-        </div>
-
-    </ul>
-    <!-- End of Sidebar -->
+    <!-- handlebar "sidebar" -->
 
     <!-- Content Wrapper -->
+    {{#partial "content"}}
     <div id="content-wrapper" class="d-flex flex-column">
 
         <!-- Main Content -->
@@ -97,7 +39,7 @@
                 </button>
 
                 <!-- Topbar Search -->
-                <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                <div class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                     <div class="input-group">
                         <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
                                aria-label="Search" aria-describedby="basic-addon2">
@@ -107,7 +49,7 @@
                             </button>
                         </div>
                     </div>
-                </form>
+                </div>
 
                 <!-- Topbar Navbar -->
                 <ul class="navbar-nav ml-auto">
@@ -120,7 +62,7 @@
                         <!-- Dropdown - Messages -->
                         <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
                              aria-labelledby="searchDropdown">
-                            <form class="form-inline mr-auto w-100 navbar-search">
+                            <div class="form-inline mr-auto w-100 navbar-search">
                                 <div class="input-group">
                                     <input type="text" class="form-control bg-light border-0 small"
                                            placeholder="Search for..." aria-label="Search"
@@ -131,7 +73,7 @@
                                         </button>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </li>
 
@@ -163,7 +105,7 @@
 
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">Question create</h1>
+                    <h1 class="h3 mb-0 text-gray-800">질문등록</h1>
                 </div>
 
                 <div class="row">
@@ -201,9 +143,7 @@
                                     </div>
 
                                     <div class="row justify-content-end">
-                                        <a href="cards1.hbs" class="btn btn-primary btn-icon-split col-1">
                                             <input class="btn btn-primary" type="submit" value="글쓰기"/>
-                                        </a>
                                     </div>
 
                                 </div>
@@ -217,17 +157,11 @@
             <!-- /.container-fluid -->
 
         </div>
+    {{/partial}}
+    {{> base}}
         <!-- End of Main Content -->
 
-        <!-- Footer -->
-        <footer class="sticky-footer bg-white">
-            <div class="container my-auto">
-                <div class="copyright text-center my-auto">
-                    <span>Copyright &copy; clean code study - mj</span>
-                </div>
-            </div>
-        </footer>
-        <!-- End of Footer -->
+    <!-- handlebar "footer" -->
 
     </div>
     <!-- End of Content Wrapper -->
