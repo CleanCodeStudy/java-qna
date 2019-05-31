@@ -30,7 +30,7 @@ public class QuestionController {
         ModelAndView mav = new ModelAndView();
         List<QuestionResDto> questionResDto = questionService.getQuestionBoard();
         mav.addObject("questions", questionResDto);
-        mav.setViewName("index");
+        mav.setViewName("/pages/index");
         return mav;
     }
 
@@ -39,7 +39,7 @@ public class QuestionController {
         ModelAndView mav = new ModelAndView();
         QuestionDetailResDto resDto = questionService.getQuestionDetail(index);
         mav.addObject("question",resDto);
-        mav.setViewName("/qna/show");
+        mav.setViewName("/pages/show");
         return mav;
     }
 

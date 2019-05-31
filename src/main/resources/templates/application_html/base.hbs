@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {{#block "headItem"}}
+        {{> application_html/settings/headItem}}
+    {{/block}}
+</head>
+
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    {{#block "sidebar"}}
+        {{> application_html/contents/sidebar}}
+    {{/block}}
+
+    <div id="content-wrapper" class="d-flex flex-column">
+        {{#block "topbar"}}
+            {{> application_html/contents/topbar}}
+        {{/block}}
+
+        {{#block "content"}}
+        {{/block}}
+
+        {{#block "footer"}}
+            {{> application_html/contents/footer}}
+        {{/block}}
+
+    </div>
+
+    {{#block "script"}}
+        {{> application_html/settings/script}}
+    {{/block}}
+
+
+</div>
+<!-- End of Page Wrapper -->
+
+</body>
+
+</html>

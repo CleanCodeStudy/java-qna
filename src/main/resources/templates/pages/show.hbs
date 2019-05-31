@@ -1,0 +1,73 @@
+{{#partial "content" }}
+
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+        {{#question}}
+
+            <!-- Page Heading -->
+            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                <h1 class="h3 mb-0 text-gray-800">Question {{id}}</h1>
+            </div>
+
+            <div class="row">
+
+                <div class="col-lg-12">
+
+                    <!-- Basic Card Example -->
+                    <div class="card h-500 shadow mb-4" style="min-height: 25rem;">
+                        <div class="card-header py-3">
+                            <div class="row">
+                                <div class="col-6"><h6 class="m-0 font-weight-bold text-primary">{{title}}</h6>
+                                </div>
+                                <div class="col-2"><h6 class="m-0 font-weight-bold text-primary">
+                                    {{author}}</h6></div>
+                                <div class="col-2"><h6 class="m-0 font-weight-bold text-primary">
+                                    {{registerDate}}</h6></div>
+                                <div class="col-2"><h6 class="m-0 font-weight-bold text-primary">
+                                    {{updateDate}}</h6></div>
+
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <p>{{content}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-1">
+                    <a href="#edit" class="btn btn-primary btn-icon-split">
+                <span class="icon text-white-50">
+                  <i class="fas fa-arrow-right"></i>
+                </span>
+                        <span class="text">edit</span>
+                    </a>
+                </div>
+                <div class="col-1">
+                    <a href="#delete" class="btn btn-danger btn-icon-split">
+                <span class="icon text-white-50">
+                  <i class="fas fa-arrow-right"></i>
+                </span>
+                        <span class="text">delete</span>
+                    </a>
+                </div>
+
+
+            </div>
+
+        {{/question}}
+
+    </div>
+    <!-- /.container-fluid -->
+{{/partial}}
+
+{{> application_html/base}}
