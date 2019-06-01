@@ -7,6 +7,7 @@ import com.ccstudy.qna.service.QuestionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -26,16 +27,14 @@ public class QuestionController {
     }
 
     @GetMapping("/")
-    public ModelAndView getQuestionBoard() {
-        ModelAndView mav = new ModelAndView();
+    public String getQuestionBoard(Model model) {
         List<QuestionResDto> questionResDto = questionService.getQuestionBoard();
-        mav.addObject("questions", questionResDto);
-        mav.setViewName("/pages/index");
-        return mav;
+        model.addAttribute("questions", questionResDto);
+        return "/pages/index";
     }
 
     @GetMapping("/questions/{index}")
-    public ModelAndView getQuestionDetails(@PathVariable("index") Long index){
+    public ModelAndView getQuestionDetails(@PathVariable("index") Long index, Model model){
         ModelAndView mav = new ModelAndView();
         QuestionDetailResDto resDto = questionService.getQuestionDetail(index);
         mav.addObject("question",resDto);

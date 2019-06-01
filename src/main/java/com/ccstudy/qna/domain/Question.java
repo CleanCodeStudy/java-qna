@@ -11,7 +11,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class Question {
 
-    private Long id;
+    private Long id; //없는게 나을 수도
     private String title;
     private String content;
     private String author;
