@@ -1,4 +1,4 @@
-package com.ccstudy.qna.dto;
+package com.ccstudy.qna.dto.Question;
 
 import com.ccstudy.qna.domain.Question;
 import lombok.Getter;

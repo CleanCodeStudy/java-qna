@@ -1,0 +1,60 @@
+{{#partial "content" }}
+    <!-- Main Content -->
+    <div id="content">
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+
+            <!-- DataTales Example -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <div class="row">
+                      <h4>Show All Accounts</h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                            <tr>
+                                <th>userId</th>
+                                <th>email</th>
+                                <th>name</th>
+                                <th>editUser</th>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            <tr>
+                                <th>userId</th>
+                                <th>email</th>
+                                <th>name</th>
+                                <th>editUser</th>
+                            </tr>
+                            </tfoot>
+                            <tbody>
+                            {{#accounts}}
+                                <tr>
+                                    <td>{{userId}}</td>
+                                    <td>{{email}}</td>
+                                    <td>{{name}}</td>
+                                    <td><a href="/users/{{id}}" class="btn btn-info btn-circle btn-sm">
+                                        <i class="fas fa-info-circle"></i>
+                                    </a></td>
+                                </tr>
+                            {{/accounts}}
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+
+    </div>
+    <!-- End of Main Content -->
+
+{{/partial}}
+
+{{> application_html/base}}

@@ -1,14 +1,15 @@
 package com.ccstudy.qna.service;
 
 import com.ccstudy.qna.domain.Question;
-import com.ccstudy.qna.dto.QuestionDetailResDto;
-import com.ccstudy.qna.dto.QuestionReqDto;
-import com.ccstudy.qna.dto.QuestionResDto;
+import com.ccstudy.qna.dto.Question.QuestionDetailResDto;
+import com.ccstudy.qna.dto.Question.QuestionReqDto;
+import com.ccstudy.qna.dto.Question.QuestionResDto;
 import com.ccstudy.qna.repository.QuestionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,18 +25,18 @@ public class QuestionService {
 
     public void createQuestion(QuestionReqDto questionReqDto) {
         Question question = questionReqDto.toEntity();
-        questionRepository.saveQuestion(question);
+        questionRepository.save(question);
     }
 
     public List<QuestionResDto> getQuestionBoard() {
-        return questionRepository.findAllQuestion()
+        return questionRepository.findAll()
                 .stream()
                 .map(QuestionResDto::new)
                 .collect(Collectors.toList());
     }
 
     public QuestionDetailResDto getQuestionDetail(Long index) {
-        Question question = questionRepository.findQuestionById(index);
+        Question question = questionRepository.findById(index).orElseThrow(NoSuchElementException::new);
         return new QuestionDetailResDto(question);
     }
 }

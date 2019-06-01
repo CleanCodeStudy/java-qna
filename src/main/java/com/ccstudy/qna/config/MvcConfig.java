@@ -12,5 +12,6 @@ public class MvcConfig implements WebMvcConfigurer {
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.setOrder(Ordered.HIGHEST_PRECEDENCE); //controller 랑 여기서 매핑하는데, MVC Config가 제일 높은 순위로!
         registry.addViewController("/question/form").setViewName("/pages/form");
+        registry.addViewController("/register").setViewName("/pages/register");
     }
 }

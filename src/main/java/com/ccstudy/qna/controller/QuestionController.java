@@ -1,8 +1,8 @@
 package com.ccstudy.qna.controller;
 
-import com.ccstudy.qna.dto.QuestionDetailResDto;
-import com.ccstudy.qna.dto.QuestionReqDto;
-import com.ccstudy.qna.dto.QuestionResDto;
+import com.ccstudy.qna.dto.Question.QuestionDetailResDto;
+import com.ccstudy.qna.dto.Question.QuestionReqDto;
+import com.ccstudy.qna.dto.Question.QuestionResDto;
 import com.ccstudy.qna.service.QuestionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
