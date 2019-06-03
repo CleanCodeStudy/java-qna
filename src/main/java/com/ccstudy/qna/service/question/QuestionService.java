@@ -1,25 +1,27 @@
-package com.ccstudy.qna.service;
+package com.ccstudy.qna.service.question;
 
-import com.ccstudy.qna.domain.Question;
-import com.ccstudy.qna.domain.QuestionRepository;
-import com.ccstudy.qna.dto.QuestionDetailResponseDto;
-import com.ccstudy.qna.dto.QuestionListResponseDto;
-import com.ccstudy.qna.dto.QuestionSaveRequestDto;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.ccstudy.qna.domain.question.Question;
+import com.ccstudy.qna.domain.question.QuestionRepositoryImpl;
+import com.ccstudy.qna.dto.question.QuestionDetailResponseDto;
+import com.ccstudy.qna.dto.question.QuestionListResponseDto;
+import com.ccstudy.qna.dto.question.QuestionSaveRequestDto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class QuestionService {
 
-    private QuestionRepository questionRepository;
+    private final QuestionRepositoryImpl questionRepository;
 
-    @Autowired
-    public QuestionService(QuestionRepository questionRepository) {
-        this.questionRepository = questionRepository;
-    }
+    //private final -- > RequiredArgument~~~~ bean 주입 대상
+
+    //@Autowired
+    //spring을 안띄우면 테스트를 못함
+
 
     //등록하기
     public int save(QuestionSaveRequestDto dto) {

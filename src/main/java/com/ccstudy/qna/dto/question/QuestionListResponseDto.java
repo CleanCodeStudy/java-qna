@@ -1,6 +1,6 @@
-package com.ccstudy.qna.dto;
+package com.ccstudy.qna.dto.question;
 
-import com.ccstudy.qna.domain.Question;
+import com.ccstudy.qna.domain.question.Question;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -25,6 +25,7 @@ public class QuestionListResponseDto {
     }
 
     private String toStringDate(LocalDateTime dateTime) {
+        //TODO: Util class로 빼기
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
         return Optional.ofNullable(dateTime)
                 .map(dateTimeFormatter::format)

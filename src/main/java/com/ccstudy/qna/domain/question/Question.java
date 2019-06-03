@@ -1,5 +1,6 @@
-package com.ccstudy.qna.domain;
+package com.ccstudy.qna.domain.question;
 
+import com.ccstudy.qna.domain.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 

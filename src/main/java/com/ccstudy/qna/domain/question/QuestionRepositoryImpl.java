@@ -1,4 +1,4 @@
-package com.ccstudy.qna.domain;
+package com.ccstudy.qna.domain.question;
 
 import org.springframework.stereotype.Repository;
 
@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class QuestionRepository {
+public class QuestionRepositoryImpl implements QuestionRepository{ // interface로 빼두고 구현체로
 
     private List<Question> questionList = new ArrayList<>();
 

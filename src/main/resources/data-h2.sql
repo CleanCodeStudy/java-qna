@@ -1,0 +1,2 @@
+insert into account(email,first_name,last_name, password) values('aaa@google.com','fn','ln','1234');
+insert into account(email,first_name,last_name, password) values('bbb@google.com','fnss','lnss','1234');

@@ -1,8 +1,8 @@
-package com.ccstudy.qna.controller;
+package com.ccstudy.qna.controller.question;
 
 
-import com.ccstudy.qna.dto.QuestionSaveRequestDto;
-import com.ccstudy.qna.service.QuestionService;
+import com.ccstudy.qna.dto.question.QuestionSaveRequestDto;
+import com.ccstudy.qna.service.question.QuestionService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

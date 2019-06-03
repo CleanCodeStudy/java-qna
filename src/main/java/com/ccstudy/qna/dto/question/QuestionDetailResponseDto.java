@@ -1,6 +1,6 @@
-package com.ccstudy.qna.dto;
+package com.ccstudy.qna.dto.question;
 
-import com.ccstudy.qna.domain.Question;
+import com.ccstudy.qna.domain.question.Question;
 import lombok.Getter;
 
 import java.time.LocalDateTime;

@@ -23,6 +23,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'pl.allegro.tech.boot:handlebars-spring-boot-starter:+'
+// https://mvnrepository.com/artifact/org.hibernate/hibernate-entitymanager
+    compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: '5.4.3.Final'
 
     compileOnly 'org.projectlombok:lombok'
     compile 'org.springframework.boot:spring-boot-devtools'
