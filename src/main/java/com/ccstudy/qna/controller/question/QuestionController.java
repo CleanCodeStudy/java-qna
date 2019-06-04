@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @AllArgsConstructor
 @Slf4j
 public class QuestionController {
+
     private QuestionService questionService;
 
     @GetMapping("/")

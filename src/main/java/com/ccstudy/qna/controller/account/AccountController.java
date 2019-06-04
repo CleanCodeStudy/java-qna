@@ -2,18 +2,15 @@ package com.ccstudy.qna.controller.account;
 
 import com.ccstudy.qna.dto.account.AccountSaveRequestDto;
 import com.ccstudy.qna.service.account.AccountService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
+@AllArgsConstructor
 public class AccountController {
-    private AccountService accountService;
 
-    @Autowired
-    public AccountController(AccountService accountService){
-        this.accountService=accountService;
-    }
+    private AccountService accountService;
 
     @PostMapping("/account")
     public String register(AccountSaveRequestDto accountSaveRequestDto){

@@ -6,6 +6,7 @@ import com.ccstudy.qna.dto.account.AccountListResponseDto;
 import com.ccstudy.qna.dto.account.AccountModifyRequestDto;
 import com.ccstudy.qna.dto.account.AccountSaveRequestDto;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,10 +14,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class AccountService {
 
-    private AccountRepository accountRepository;
+    private final AccountRepository accountRepository;
 
     @Transactional
     public Long saveAccount(AccountSaveRequestDto accountSaveRequestDto){

@@ -1,6 +1,7 @@
 package com.ccstudy.qna.service.question;
 
 import com.ccstudy.qna.domain.question.Question;
+import com.ccstudy.qna.domain.question.QuestionRepository;
 import com.ccstudy.qna.domain.question.QuestionRepositoryImpl;
 import com.ccstudy.qna.dto.question.QuestionDetailResponseDto;
 import com.ccstudy.qna.dto.question.QuestionListResponseDto;
@@ -15,13 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class QuestionService {
 
-    private final QuestionRepositoryImpl questionRepository;
-
-    //private final -- > RequiredArgument~~~~ bean 주입 대상
-
-    //@Autowired
-    //spring을 안띄우면 테스트를 못함
-
+    private final QuestionRepository questionRepository;
 
     //등록하기
     public int save(QuestionSaveRequestDto dto) {
