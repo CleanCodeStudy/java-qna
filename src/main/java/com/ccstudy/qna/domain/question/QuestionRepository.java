@@ -1,9 +1,8 @@
 package com.ccstudy.qna.domain.question;
 
-import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface QuestionRepository {
-    int save(Question question);
-    List<Question> getQuestionList();
-    Question getQuestionDetail(int index);
-}
+@Repository
+public interface QuestionRepository extends JpaRepository<Question, Long> {
+ }

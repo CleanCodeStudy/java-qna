@@ -3,10 +3,10 @@ package com.ccstudy.qna.service.account;
 import com.ccstudy.qna.domain.account.Account;
 import com.ccstudy.qna.domain.account.AccountRepository;
 import com.ccstudy.qna.dto.account.AccountListResponseDto;
-import com.ccstudy.qna.dto.account.AccountModifyRequestDto;
+import com.ccstudy.qna.dto.account.AccountUpdateRequestDto;
 import com.ccstudy.qna.dto.account.AccountSaveRequestDto;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,12 +38,19 @@ public class AccountService {
     }
 
     @Transactional
-    public Long updateAccount(AccountModifyRequestDto dto){
+    public Long updateAccount(AccountUpdateRequestDto dto){
         Account findAccount = findById(dto.getId());
+        checkCurrentPasswordAndInputPassword(dto.getCurrentPassword(), findAccount.getPassword());
         findAccount.setFirstName(dto.getFirstName());
         findAccount.setLastName(dto.getLastName());
         findAccount.setPassword(dto.getAfterPassword());
         return findAccount.getId();
+    }
+
+    private void checkCurrentPasswordAndInputPassword(String currentPassword, String inputPassword){
+        if(!StringUtils.equals(currentPassword, inputPassword)){
+            throw new IllegalArgumentException("현재 비밀번호가 잘못되었습니다.");
+        }
     }
 
 

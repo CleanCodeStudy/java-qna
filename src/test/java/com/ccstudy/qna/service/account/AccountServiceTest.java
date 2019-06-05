@@ -2,7 +2,7 @@ package com.ccstudy.qna.service.account;
 
 import com.ccstudy.qna.domain.account.Account;
 import com.ccstudy.qna.domain.account.AccountRepository;
-import com.ccstudy.qna.dto.account.AccountModifyRequestDto;
+import com.ccstudy.qna.dto.account.AccountUpdateRequestDto;
 import com.ccstudy.qna.dto.account.AccountSaveRequestDto;
 import org.junit.After;
 import org.junit.Test;
@@ -58,7 +58,7 @@ public class AccountServiceTest {
 
         //given
         Account account = accountRepository.findById(new Long(1)).get();
-        AccountModifyRequestDto dto = AccountModifyRequestDto.builder()
+        AccountUpdateRequestDto dto = AccountUpdateRequestDto.builder()
                 .id(account.getId())
                 .firstName(account.getFirstName())
                 .lastName(account.getLastName())

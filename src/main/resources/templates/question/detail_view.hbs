@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{{> partial/header}}
+
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+    {{> partial/sidebar}}
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Main Content -->
+        <div id="content">
+            {{> partial/topbar}}
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <h1 class="h3 mb-0 text-gray-800">질문</h1>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-lg-12">
+
+                        <!-- Basic Card Example -->
+                        <div class="card h-500 shadow mb-4" style="min-height: 25rem;">
+                            <div class="card-header py-3">
+                                <div class="row">
+                                    <div class="col-6"><h6
+                                            class="m-0 font-weight-bold text-primary">{{question.title}}</h6></div>
+                                    <div class="col-2"><h6 class="m-0 font-weight-bold text-primary">
+                                        | {{question.author}}</h6></div>
+                                    <div class="col-2"><h6 class="m-0 font-weight-bold text-primary">
+                                        | {{question.registerDate}}</h6>
+                                    </div>
+                                    <div class="col-2"><h6 class="m-0 font-weight-bold text-primary">
+                                        | {{question.updateDate}}</h6>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <p>{{question.contents}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="row">
+
+                    <div class="col-1">
+                        <a href="/question/updateForm/{{question.id}}" class="btn btn-primary">수정</a>
+                    </div>
+                    <div class="col-1">
+                        <form method="post" action="/questions/{{question.id}}">
+                            <input type="submit" value="삭제" class="btn btn-primary btn-icon-split">
+                            <input type="hidden" name="_method" value="DELETE">
+                        </form>
+                    </div>
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+        <!-- End of Main Content -->
+        {{> partial/footer}}
+    </div>
+    <!-- End of Content Wrapper -->
+</div>
+<!-- End of Page Wrapper -->
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+{{> partial/logout_modal}}
+
+<!-- Custom scripts for all pages-->
+<script src="/js/sb-admin-2.min.js"></script>
+
+</body>
+
+</html>

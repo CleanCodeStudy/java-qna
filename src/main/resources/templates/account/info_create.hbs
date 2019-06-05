@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-{{> header}}
+{{> partial/header}}
 
 <body class="bg-gradient-primary">
 
@@ -17,7 +17,7 @@
               <div class="text-center">
                 <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
               </div>
-              <form class="user" method="post" action="/account">
+              <form class="user" method="post" action="/user">
                 <div class="form-group row">
                   <div class="col-sm-6 mb-3 mb-sm-0">
                     <input type="text" class="form-control form-control-user" id="firstName" name="firstName" placeholder="First Name">
@@ -31,7 +31,7 @@
                 </div>
                 <div class="form-group row">
                   <div class="col-sm-6 mb-3 mb-sm-0">
-                    <input type="password" class="form-control form-control-user" id="password"  name="password" dplaceholder="Password">
+                    <input type="password" class="form-control form-control-user" id="password"  name="password" dplaceholder="Password" placeholder="Input Password">
                   </div>
                   <div class="col-sm-6">
                     <input type="password" class="form-control form-control-user" id="confirmPassword"  name="confirmPassword" placeholder="Repeat Password">
@@ -39,10 +39,10 @@
                 </div>
                 <input type="submit" value="Register Account" class="btn btn-primary btn-user btn-block">
 
-                  <a class="btn btn-google btn-user btn-block" href="account-list.hbs">
+                  <a class="btn btn-google btn-user btn-block" href="list_view.hbs">
                   <i class="fab fa-google fa-fw"></i> Register with Google
                 </a>
-                  <a class="btn btn-facebook btn-user btn-block" href="account-list.hbs">
+                  <a class="btn btn-facebook btn-user btn-block" href="list_view.hbs">
                   <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
                 </a>
               </form>

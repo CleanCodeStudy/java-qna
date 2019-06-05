@@ -24,7 +24,6 @@ public class AccountSaveRequestDto {
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = validationCheckPassword(password,confirmPassword);
-        log.info("{}{}{}",this.email,this.firstName,this.lastName);
     }
 
     public Account toEntity(){

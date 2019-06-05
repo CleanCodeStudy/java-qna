@@ -1,6 +1,6 @@
 package com.ccstudy.qna.dto.account;
 
-import com.ccstudy.qna.Util.StringConverter;
+import com.ccstudy.qna.util.StringConverter;
 import com.ccstudy.qna.domain.account.Account;
 import lombok.Builder;
 import lombok.Getter;

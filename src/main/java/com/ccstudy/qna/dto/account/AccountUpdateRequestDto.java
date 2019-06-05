@@ -10,7 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 @Getter
 @Setter
 @NoArgsConstructor
-public class AccountModifyRequestDto {
+public class AccountUpdateRequestDto {
     private Long id;
     private String firstName;
     private String lastName;
@@ -19,8 +19,8 @@ public class AccountModifyRequestDto {
 
 
     @Builder
-    public AccountModifyRequestDto(Long id, String firstName, String lastName, String currentPassword, String afterPassword, String confirmAfterPassword) {
-        this.id = id;
+    public AccountUpdateRequestDto(Long id, String firstName, String lastName, String currentPassword, String afterPassword, String confirmAfterPassword) {
+        this.id=id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.currentPassword = currentPassword;

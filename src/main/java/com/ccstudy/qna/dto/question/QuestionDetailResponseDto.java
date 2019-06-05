@@ -1,6 +1,7 @@
 package com.ccstudy.qna.dto.question;
 
 import com.ccstudy.qna.domain.question.Question;
+import com.ccstudy.qna.util.StringConverter;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -9,7 +10,7 @@ import java.util.Optional;
 
 @Getter
 public class QuestionDetailResponseDto {
-
+    private Long id;
     private String title;
     private String author;
     private String contents;
@@ -17,19 +18,12 @@ public class QuestionDetailResponseDto {
     private String updateDate;
 
     public QuestionDetailResponseDto(Question entity) {
+        this.id = entity.getId();
         this.title = entity.getTitle();
         this.author = entity.getAuthor();
         this.contents = entity.getContents();
-        this.registerDate = toStringDate(entity.getRegisterDate());
-        this.updateDate = toStringDate(entity.getUpdateDate());
+        this.registerDate = StringConverter.toStringDate(entity.getRegisterDate());
+        this.updateDate = StringConverter.toStringDate(entity.getUpdateDate());
     }
-
-    private String toStringDate(LocalDateTime dateTime) {
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-        return Optional.ofNullable(dateTime)
-                .map(dateTimeFormatter::format)
-                .orElse("");
-    }
-
 
 }

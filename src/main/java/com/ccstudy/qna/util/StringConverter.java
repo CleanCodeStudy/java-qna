@@ -1,4 +1,4 @@
-package com.ccstudy.qna.Util;
+package com.ccstudy.qna.util;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
