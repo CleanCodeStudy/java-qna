@@ -46,11 +46,10 @@ public class AccountService {
     }
 
     @Transactional
-    public Long updateAccount(AccountUpdateReqDto updateReqDto) {
-        Account account = accountRepository.findById(updateReqDto.getId())
+    public void updateAccount(AccountUpdateReqDto updateReqDto, Long id) {
+        Account account = accountRepository.findById(id)
                 .orElseThrow(NoSuchElementException::new);
         update(account,updateReqDto);
-        return account.getId();
     }
 
     private void update(Account account,AccountUpdateReqDto reqDto){

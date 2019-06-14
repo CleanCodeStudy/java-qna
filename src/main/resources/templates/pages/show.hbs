@@ -45,20 +45,15 @@
             <div class="row">
 
                 <div class="col-1">
-                    <a href="#edit" class="btn btn-primary btn-icon-split">
-                <span class="icon text-white-50">
-                  <i class="fas fa-arrow-right"></i>
-                </span>
-                        <span class="text">edit</span>
-                    </a>
+                    <form action="/questions/edit/{{id}}" class="btn btn-primary btn-icon-split">
+                        <input type="submit" value="edit" class="btn btn-primary btn-icon-split">
+                    </form>
                 </div>
                 <div class="col-1">
-                    <a href="#delete" class="btn btn-danger btn-icon-split">
-                <span class="icon text-white-50">
-                  <i class="fas fa-arrow-right"></i>
-                </span>
-                        <span class="text">delete</span>
-                    </a>
+                    <form action="/questions/delete/{{id}}" class="btn btn-danger btn-icon-split">
+                        <input type="hidden" name="_method" value="DELETE" />
+                        <input type="submit" value="delete" class="btn btn-danger btn-icon-split">
+                    </form>
                 </div>
 
 

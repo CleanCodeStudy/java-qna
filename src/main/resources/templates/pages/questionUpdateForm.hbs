@@ -1,0 +1,67 @@
+{{#partial "content" }}
+
+
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+
+        <div class="row">
+
+            <div class="col-lg-12">
+
+                {{#question}}
+                <!-- Basic Card Example -->
+                <form action="/questions/edit/{{id}}" method="post">
+                    <div class="card h-500 shadow mb-4" style="min-height: 25rem;">
+                        <div class="card-header py-3">
+
+                            <div class="row align-items-center">
+                                <div class="input-group mb-0 col-6">
+                                    <input id="title" name="title" height="20rem" type="text"
+                                           class="form-control"
+                                           placeholder="Input Title" aria-label="Input Title"
+                                           aria-describedby="basic-addon2" value="{{title}}">
+                                </div>
+                                <div class="input-group mb-0 col-4">
+                                    <input id="author" name="author" height="20rem" type="text"
+                                           class="form-control"
+                                           placeholder="Input Title" aria-label="Input author"
+                                           aria-describedby="basic-addon2" value="{{author}}">
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group shadow-textarea">
+                                            <textarea class="form-control z-depth-1" id="content"
+                                                      rows="3" name="content"
+                                                      placeholder="Write something here...">{{content}}</textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row justify-content-end">
+                                <button id="questionSave" height="20rem" type="submit"
+                                        class="btn btn-primary btn-icon-split col-1">
+                                    edit
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+                {{/question}}
+            </div>
+
+        </div>
+
+    </div>
+    <!-- /.container-fluid -->
+
+
+
+{{/partial}}
+
+{{> application_html/base}}

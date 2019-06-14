@@ -29,7 +29,7 @@ public class AccountController {
     public String getEditFormOfAccount(@PathVariable("id") Long id, Model model) {
         Account editAccount = accountService.findAccountById(id);
         model.addAttribute("account", editAccount);
-        return "pages/updateForm";
+        return "pages/userUpdateForm";
     }
 
     @PostMapping
@@ -39,9 +39,9 @@ public class AccountController {
         return "redirect:/users";
     }
 
-    @PutMapping
-    public String updateAccount(@ModelAttribute AccountUpdateReqDto updateReqDto) {
-        Long id = accountService.updateAccount(updateReqDto);
+    @PostMapping("/{id}")
+    public String updateAccount(@PathVariable("id")Long id, @ModelAttribute AccountUpdateReqDto updateReqDto) {
+        accountService.updateAccount(updateReqDto, id);
         log.info("update user - id : " + id);
         return "redirect:/users";
     }
