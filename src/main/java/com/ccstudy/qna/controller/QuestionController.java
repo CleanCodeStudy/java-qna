@@ -47,19 +47,19 @@ public class QuestionController {
         return "/pages/questionUpdateForm";
     }
 
-    @PostMapping("/questions/edit/{id}")
+    @PutMapping("/questions/{id}")
     public String updateQuestion(@ModelAttribute QuestionUpdateReqDto questionUpdateReqDto, @PathVariable("id") Long id) {
         questionService.updateQuestion(questionUpdateReqDto, id);
         log.info("update question- id : " + id);
-        return "/question/edit/" + id;
+        return "redirect:/questions/" + id;
     }
 
     //log는 어디에서 찍는게 맞는 걸까??
-    @DeleteMapping("/question/delete/{id}")
+    @DeleteMapping("/questions/{id}")
     public String deleteQuestion(@PathVariable("id") Long id) {
         questionService.deleteQuestion(id);
         log.info("delete question- id : " + id);
-        return "/";
+        return "redirect:/";
     }
 
 

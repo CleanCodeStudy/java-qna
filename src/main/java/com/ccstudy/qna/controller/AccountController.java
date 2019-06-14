@@ -39,7 +39,7 @@ public class AccountController {
         return "redirect:/users";
     }
 
-    @PostMapping("/{id}")
+    @PutMapping("/{id}")
     public String updateAccount(@PathVariable("id")Long id, @ModelAttribute AccountUpdateReqDto updateReqDto) {
         accountService.updateAccount(updateReqDto, id);
         log.info("update user - id : " + id);
