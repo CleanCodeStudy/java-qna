@@ -5,26 +5,31 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
-import java.util.UUID;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Getter
+@Entity
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class Question {
+public class Question extends BaseTimeEntity {
 
-    private String id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String title;
     private String contents;
-    private String userId;
-    private LocalDate createDate;
-    private LocalDate modifyDate;
+
+//    @JoinColumn
+//    @ManyToOne
+//    private User user;
 
     @Builder(builderMethodName = "createBuilder")
-    public Question(String title, String contents, String userId) {
-        this.id = UUID.randomUUID().toString();
+    public Question(String title, String contents) {
         this.title = title;
         this.contents = contents;
-        this.userId = userId;
-        this.createDate = LocalDate.now();
     }
 }
+

@@ -1,8 +1,8 @@
 package com.ccstudy.qna.service;
 
 import com.ccstudy.qna.domain.repository.QuestionRepository;
-import com.ccstudy.qna.service.dto.QuestionRequestDto;
-import com.ccstudy.qna.service.dto.QuestionResponseDto;
+import com.ccstudy.qna.service.dto.question.QuestionRequestDto;
+import com.ccstudy.qna.service.dto.question.QuestionResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 public class QuestionService {
 
     private final QuestionRepository questionRepository;
-
 
     public void save(QuestionRequestDto requestDto){
         questionRepository.save(requestDto.toEntity());

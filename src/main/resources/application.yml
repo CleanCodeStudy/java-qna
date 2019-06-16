@@ -1,0 +1,36 @@
+spring.profiles: local
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+    hikari:
+      jdbc-url: jdbc:h2:file:~/java-qna;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+  h2:
+    console:
+      enabled: true
+      path: /console
+  jpa:
+    show-sql: true
+    hibernate:
+      dialect: org.hibernate.dialect
+      ddl-auto: create
+
+---
+spring.profiles: test
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+    hikari:
+      jdbc-url: jdbc:h2:file:~/java-qna;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+  h2:
+    console:
+      enabled: true
+      path: /console
+  jpa:
+    show-sql: true
+    hibernate:
+      dialect: org.hibernate.dialect
+      ddl-auto: create

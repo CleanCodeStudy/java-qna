@@ -1,27 +1,24 @@
-package com.ccstudy.qna.service.dto;
+package com.ccstudy.qna.service.dto.question;
 
 import com.ccstudy.qna.domain.entity.Question;
+import com.ccstudy.qna.util.LocalDateTimeConverter;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDate;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class QuestionResponseDto {
 
-    private String id;
+    private Long id;
     private String title;
-    private String userId;
-    private LocalDate createDate;
-    private LocalDate modifyDate;
+    private String createDate;
+    private String modifyDate;
 
     public QuestionResponseDto(Question question) {
         this.id = question.getId();
         this.title = question.getTitle();
-        this.userId = question.getUserId();
-        this.createDate = question.getCreateDate();
-        this.modifyDate = question.getModifyDate();
+        this.createDate = LocalDateTimeConverter.convertLocalDate(question.getCreatedDateTime());
+        this.modifyDate = LocalDateTimeConverter.convertLocalDate(question.getModifiedDateTime());
     }
 }
