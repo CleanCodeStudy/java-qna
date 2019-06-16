@@ -1,13 +1,13 @@
 package com.ccstudy.qna.domain.account;
 
 import com.ccstudy.qna.domain.BaseTimeEntity;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.ccstudy.qna.domain.question.Question;
+import lombok.*;
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
+import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)//private으로 해도됨(API경우)
 @Getter
@@ -20,14 +20,21 @@ public class Account extends BaseTimeEntity {
     @Column(unique = true)
     private String email;
 
+    @Setter
     @Column(name = "first_name",nullable = false)
     private String firstName;
 
+    @Setter
     @Column(name = "last_name",nullable = false)
     private String lastName;
 
+    @Setter
     @Column(length = 20,nullable = false)
     private String password;
+
+    @OneToMany
+    @JoinColumn(name = "fk_question_author")
+    private List<Question> questions;
 
     @Builder(builderMethodName = "createBuilder")
     private Account(String email, String firstName, String lastName, String password) {
@@ -39,17 +46,5 @@ public class Account extends BaseTimeEntity {
 
     public boolean isNotEqualPassword(String currentPassword) {
         return !StringUtils.equals(currentPassword, this.password);
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 }

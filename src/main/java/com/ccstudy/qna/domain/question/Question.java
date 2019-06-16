@@ -1,6 +1,7 @@
 package com.ccstudy.qna.domain.question;
 
 import com.ccstudy.qna.domain.BaseTimeEntity;
+import com.ccstudy.qna.domain.account.Account;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -8,7 +9,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 @Entity
 public class Question extends BaseTimeEntity {
@@ -19,6 +20,10 @@ public class Question extends BaseTimeEntity {
 
     @Column(nullable = false)
     private String title;
+
+    @ManyToOne
+    @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_author"))
+    private Account account;
 
     @Column(nullable = false)
     private String author;

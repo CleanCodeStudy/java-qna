@@ -2,9 +2,7 @@ package com.ccstudy.qna.service.account;
 
 import com.ccstudy.qna.domain.account.Account;
 import com.ccstudy.qna.domain.account.AccountRepository;
-import com.ccstudy.qna.dto.account.AccountListResponseDto;
-import com.ccstudy.qna.dto.account.AccountSaveRequestDto;
-import com.ccstudy.qna.dto.account.AccountUpdateRequestDto;
+import com.ccstudy.qna.dto.account.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +15,23 @@ import java.util.stream.Collectors;
 public class AccountService {
 
     private final AccountRepository accountRepository;
+
+    @Transactional
+    public AccountSessionDto loginAccount(AccountLoginRequestDto dto){
+        //TODO 예외처리 하는거 다시 생각해보기
+        Account findAccount = accountRepository.findAccountByEmail(dto.getEmail())
+                .orElseThrow(IllegalStateException::new);
+
+        if(findAccount.isNotEqualPassword(dto.getPassword())){
+            throw new IllegalStateException("현재 비밀번호가 틀렸습니다.");
+        }
+        AccountSessionDto accountSessionDto = AccountSessionDto.createBuilder()
+                .email(findAccount.getEmail())
+                .firstName(findAccount.getFirstName())
+                .lastName(findAccount.getLastName())
+                .build();
+        return accountSessionDto;
+    }
 
     @Transactional
     public Long saveAccount(AccountSaveRequestDto accountSaveRequestDto){

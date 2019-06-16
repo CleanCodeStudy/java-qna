@@ -23,6 +23,7 @@
                     <div class="col-lg-12">
                         <!-- Basic Card Example -->
                         <form action="/questions" method="post">
+                            <input type="hidden" name="author" value="{{account.email}}"/>
                             <div class="card h-500 shadow mb-4" style="min-height: 25rem;">
                                 <div class="card-header py-3">
                                     <div class="row align-items-center">
@@ -32,9 +33,7 @@
                                                    aria-describedby="basic-addon2">
                                         </div>
                                         <div class="input-group mb-0 col-3">
-                                            <input height="20rem" type="text" class="form-control" name="author"
-                                                   placeholder="Input Author" aria-label="Input Title"
-                                                   aria-describedby="basic-addon2">
+                                            <label>{{account.lastName}}</label>
                                         </div>
                                     </div>
                                 </div>

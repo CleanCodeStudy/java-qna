@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 @RequiredArgsConstructor
 @Slf4j
@@ -22,6 +24,13 @@ public class QuestionController {
         model.addAttribute("questions", questionService.showQuestions());
         return "index";
     }
+
+    @GetMapping("/questions/form")
+    public String writeForm(Model model, HttpSession httpSession) {
+        model.addAttribute("account", httpSession.getAttribute("LOGIN_ACCOUNT"));
+        return "question/form_create";
+    }
+
 
     @PostMapping("/questions")
     public String saveQuestion(QuestionSaveRequestDto dto) {
