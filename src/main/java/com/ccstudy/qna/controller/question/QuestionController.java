@@ -1,21 +1,21 @@
 package com.ccstudy.qna.controller.question;
 
 
-import com.ccstudy.qna.dto.question.QuestionUpdateRequestDto;
 import com.ccstudy.qna.dto.question.QuestionSaveRequestDto;
+import com.ccstudy.qna.dto.question.QuestionUpdateRequestDto;
 import com.ccstudy.qna.service.question.QuestionService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 public class QuestionController {
 
-    private QuestionService questionService;
+    private final QuestionService questionService;
 
     @GetMapping("/")
     public String index(Model model) {

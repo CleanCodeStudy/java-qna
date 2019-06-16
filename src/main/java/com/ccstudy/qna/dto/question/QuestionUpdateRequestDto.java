@@ -1,16 +1,19 @@
 package com.ccstudy.qna.dto.question;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
+import javax.validation.constraints.NotBlank;
 
 @Getter
 @Setter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class QuestionUpdateRequestDto {
     private Long id;
+
+    @NotBlank
     private String title;
+
+    @NotBlank
     private String contents;
 
     @Builder

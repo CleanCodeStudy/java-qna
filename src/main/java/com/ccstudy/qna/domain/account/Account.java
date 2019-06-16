@@ -5,10 +5,11 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.*;
 
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)//private으로 해도됨(API경우)
 @Getter
 @Entity
 public class Account extends BaseTimeEntity {
@@ -28,12 +29,16 @@ public class Account extends BaseTimeEntity {
     @Column(length = 20,nullable = false)
     private String password;
 
-    @Builder
-    public Account(String email, String firstName, String lastName, String password) {
+    @Builder(builderMethodName = "createBuilder")
+    private Account(String email, String firstName, String lastName, String password) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
+    }
+
+    public boolean isNotEqualPassword(String currentPassword) {
+        return !StringUtils.equals(currentPassword, this.password);
     }
 
     public void setFirstName(String firstName) {

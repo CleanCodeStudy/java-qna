@@ -3,10 +3,9 @@ package com.ccstudy.qna.service.account;
 import com.ccstudy.qna.domain.account.Account;
 import com.ccstudy.qna.domain.account.AccountRepository;
 import com.ccstudy.qna.dto.account.AccountListResponseDto;
-import com.ccstudy.qna.dto.account.AccountUpdateRequestDto;
 import com.ccstudy.qna.dto.account.AccountSaveRequestDto;
+import com.ccstudy.qna.dto.account.AccountUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,12 +24,6 @@ public class AccountService {
     }
 
     @Transactional
-    public Account findById(Long id){
-        return accountRepository.findById(id)
-                .orElseThrow(IllegalAccessError::new);
-    }
-
-    @Transactional
     public List<AccountListResponseDto> findAll(){
         return accountRepository.findAll().stream()
                 .map(AccountListResponseDto::new)
@@ -38,20 +31,30 @@ public class AccountService {
     }
 
     @Transactional
-    public Long updateAccount(AccountUpdateRequestDto dto){
-        Account findAccount = findById(dto.getId());
-        checkCurrentPasswordAndInputPassword(dto.getCurrentPassword(), findAccount.getPassword());
+    public Account findById(Long id) {
+        return accountRepository.findById(id)
+                .orElseThrow(IllegalAccessError::new);
+    }
+
+    @Transactional
+    public Long updateAccount(AccountUpdateRequestDto dto, Long id) {
+        Account findAccount = accountRepository.findById(id)
+                .orElseThrow(IllegalAccessError::new);
+
+        if (findAccount.isNotEqualPassword(dto.getCurrentPassword())) {
+            throw new IllegalArgumentException("현재 비밀번호가 잘못되었습니다");
+        }
         findAccount.setFirstName(dto.getFirstName());
         findAccount.setLastName(dto.getLastName());
         findAccount.setPassword(dto.getAfterPassword());
         return findAccount.getId();
     }
 
-    private void checkCurrentPasswordAndInputPassword(String currentPassword, String inputPassword){
-        if(!StringUtils.equals(currentPassword, inputPassword)){
-            throw new IllegalArgumentException("현재 비밀번호가 잘못되었습니다.");
-        }
-    }
-
 
 }
+
+
+/*
+transaction option => Propagation.REQUIRES_NEW
+새로운 트랜잭션탐
+ */

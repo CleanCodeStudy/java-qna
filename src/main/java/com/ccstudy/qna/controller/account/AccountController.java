@@ -1,9 +1,9 @@
 package com.ccstudy.qna.controller.account;
 
-import com.ccstudy.qna.dto.account.AccountUpdateRequestDto;
 import com.ccstudy.qna.dto.account.AccountSaveRequestDto;
+import com.ccstudy.qna.dto.account.AccountUpdateRequestDto;
 import com.ccstudy.qna.service.account.AccountService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 
 @Controller
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class AccountController {
 
-    private AccountService accountService;
+    private final AccountService accountService;
 
     @PostMapping("/user")
     public String register(AccountSaveRequestDto accountSaveRequestDto){
@@ -36,8 +36,8 @@ public class AccountController {
     }
 
     @PutMapping("/users/{id}")
-    public String accountModify(AccountUpdateRequestDto dto){
-        accountService.updateAccount(dto);
+    public String accountModify(@PathVariable("id") Long id, AccountUpdateRequestDto dto) {
+        accountService.updateAccount(dto, id);
         return "redirect:/users";
     }
 

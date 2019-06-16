@@ -2,11 +2,10 @@ package com.ccstudy.qna.service.question;
 
 import com.ccstudy.qna.domain.question.Question;
 import com.ccstudy.qna.domain.question.QuestionRepository;
-
 import com.ccstudy.qna.dto.question.QuestionDetailResponseDto;
 import com.ccstudy.qna.dto.question.QuestionListResponseDto;
-import com.ccstudy.qna.dto.question.QuestionUpdateRequestDto;
 import com.ccstudy.qna.dto.question.QuestionSaveRequestDto;
+import com.ccstudy.qna.dto.question.QuestionUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +25,7 @@ public class QuestionService {
     }
 
     //조회하기
-    @Transactional
+    @Transactional(readOnly = true)
     public List<QuestionListResponseDto> showQuestions() {
         return questionRepository.findAll().stream()
                 .map(QuestionListResponseDto::new)
@@ -35,7 +34,7 @@ public class QuestionService {
 
 
     //게시글 한 개 조회하기
-    @Transactional
+    @Transactional(readOnly = true)//조회만가능
     public QuestionDetailResponseDto showQuestionDetail(Long id) {
         Question question = questionRepository.findById(id)
                 .orElseThrow(IllegalAccessError::new);

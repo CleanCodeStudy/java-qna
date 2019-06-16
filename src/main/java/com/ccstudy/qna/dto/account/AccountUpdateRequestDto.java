@@ -1,35 +1,39 @@
 package com.ccstudy.qna.dto.account;
 
 import com.ccstudy.qna.domain.account.Account;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.apache.commons.lang3.StringUtils;
+
+import javax.validation.constraints.NotBlank;
 
 @Getter
 @Setter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AccountUpdateRequestDto {
-    private Long id;
+
+    @NotBlank
     private String firstName;
+
+    @NotBlank
     private String lastName;
+
+    @NotBlank
     private String currentPassword;
+
+    @NotBlank
     private String afterPassword;
 
 
-    @Builder
-    public AccountUpdateRequestDto(Long id, String firstName, String lastName, String currentPassword, String afterPassword, String confirmAfterPassword) {
-        this.id=id;
+    @Builder(builderMethodName = "updateBuilder")
+    public AccountUpdateRequestDto(String firstName, String lastName, String currentPassword, String afterPassword, String confirmAfterPassword) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.currentPassword = currentPassword;
         this.afterPassword = validationCheckPassword(afterPassword, confirmAfterPassword);
     }
 
-    //TODO: 더 생각해보기
     public Account toEntiy(){
-        return Account.builder()
+        return Account.createBuilder()
                 .firstName(firstName)
                 .lastName(lastName)
                 .password(afterPassword)

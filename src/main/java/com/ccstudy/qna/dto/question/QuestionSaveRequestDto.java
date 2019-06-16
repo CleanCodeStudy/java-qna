@@ -2,11 +2,18 @@ package com.ccstudy.qna.dto.question;
 
 import com.ccstudy.qna.domain.question.Question;
 
+import javax.validation.constraints.NotBlank;
+
 
 public class QuestionSaveRequestDto {
 
+    @NotBlank
     private String title;
+
+    @NotBlank
     private String author;
+
+    @NotBlank
     private String contents;
 
     public QuestionSaveRequestDto(String title, String author, String contents) {
@@ -16,7 +23,7 @@ public class QuestionSaveRequestDto {
     }
 
     public Question toEntity() {
-        return Question.builder()
+        return Question.createBuilder()
                 .title(title)
                 .contents(contents)
                 .author(author)

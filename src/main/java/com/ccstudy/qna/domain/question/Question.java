@@ -26,7 +26,7 @@ public class Question extends BaseTimeEntity {
     @Column(columnDefinition = "TEXT")
     private String contents;
 
-    @Builder
+    @Builder(builderMethodName = "createBuilder")
     public Question(String title, String author, String contents) {
         this.title = title;
         this.author = author;
