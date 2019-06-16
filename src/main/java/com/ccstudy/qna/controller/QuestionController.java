@@ -28,7 +28,7 @@ public class QuestionController {
     }
 
     @PostMapping("/questions")
-    public String createQuestion(@ModelAttribute QuestionReqDto questionReqDto) {
+    public String createQuestion(QuestionReqDto questionReqDto) {
         questionService.createQuestion(questionReqDto);
         return "redirect:/";
     }
@@ -48,13 +48,12 @@ public class QuestionController {
     }
 
     @PutMapping("/questions/{id}")
-    public String updateQuestion(@ModelAttribute QuestionUpdateReqDto questionUpdateReqDto, @PathVariable("id") Long id) {
+    public String updateQuestion(QuestionUpdateReqDto questionUpdateReqDto, @PathVariable("id") Long id) {
         questionService.updateQuestion(questionUpdateReqDto, id);
         log.info("update question- id : " + id);
         return "redirect:/questions/" + id;
     }
 
-    //log는 어디에서 찍는게 맞는 걸까??
     @DeleteMapping("/questions/{id}")
     public String deleteQuestion(@PathVariable("id") Long id) {
         questionService.deleteQuestion(id);

@@ -1,9 +1,8 @@
 package com.ccstudy.qna.dto.Question;
 
 import com.ccstudy.qna.domain.Question;
+import com.ccstudy.qna.util.DateTimeConverter;
 import lombok.Getter;
-
-import java.time.LocalDateTime;
 
 @Getter
 public class QuestionResDto {
@@ -11,14 +10,14 @@ public class QuestionResDto {
     private Long id;
     private String title;
     private String author;
-    private LocalDateTime registerDate;
-    private LocalDateTime updateDate;
+    private String registerDate;
+    private String updateDate;
 
     public QuestionResDto(Question question) {
         this.id = question.getId();
         this.title = question.getTitle();
         this.author = question.getAuthor();
-        this.registerDate = question.getRegisterDate();
-        this.updateDate = question.getUpdateDate();
+        this.registerDate = DateTimeConverter.getConvertedDate(question.getRegisterDate());
+        this.updateDate = DateTimeConverter.getConvertedDate(question.getUpdateDate());
     }
 }

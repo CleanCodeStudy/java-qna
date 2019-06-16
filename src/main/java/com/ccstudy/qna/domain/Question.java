@@ -5,16 +5,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.UUID;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
 @Getter
 @NoArgsConstructor
-public class Question {
+public class Question extends BaseTimeEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; //없는게 나을 수도
     @Setter
     private String title;
@@ -22,17 +24,13 @@ public class Question {
     private String content;
     @Setter
     private String author;
-    private LocalDateTime registerDate;
-    @Setter
-    private LocalDateTime updateDate;
+
 
     @Builder
     public Question(String title, String content, String author) {
         this.title = title;
         this.content = content;
         this.author = author;
-        this.registerDate = LocalDateTime.now();
-        this.updateDate = LocalDateTime.now();
     }
 
 }

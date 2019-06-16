@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -49,13 +48,14 @@ public class AccountService {
     public void updateAccount(AccountUpdateReqDto updateReqDto, Long id) {
         Account account = accountRepository.findById(id)
                 .orElseThrow(NoSuchElementException::new);
+        account.validatePassword(updateReqDto.getCurrentPassword(), updateReqDto.getChangePassword());
         update(account,updateReqDto);
     }
 
     private void update(Account account,AccountUpdateReqDto reqDto){
         account.setEmail(reqDto.getEmail());
         account.setName(reqDto.getName());
-        account.setPassword(reqDto.getPassword());
+        account.setPassword(reqDto.getChangePassword());
     }
 
 

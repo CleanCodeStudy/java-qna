@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class AccountController {
 
-
     private final AccountService accountService;
 
     @GetMapping("")
@@ -33,14 +32,14 @@ public class AccountController {
     }
 
     @PostMapping
-    public String saveAccount(@ModelAttribute AccountSaveReqDto saveReqDto) {
+    public String saveAccount(AccountSaveReqDto saveReqDto) {
         Long id = accountService.saveAccount(saveReqDto);
         log.info("save new user - id : " + id);
         return "redirect:/users";
     }
 
     @PutMapping("/{id}")
-    public String updateAccount(@PathVariable("id")Long id, @ModelAttribute AccountUpdateReqDto updateReqDto) {
+    public String updateAccount(@PathVariable("id") Long id, AccountUpdateReqDto updateReqDto) {
         accountService.updateAccount(updateReqDto, id);
         log.info("update user - id : " + id);
         return "redirect:/users";
