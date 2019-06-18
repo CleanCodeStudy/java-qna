@@ -1,8 +1,6 @@
 package com.ccstudy.qna.interceptor;
 
-import com.ccstudy.qna.domain.question.QuestionRepository;
 import com.ccstudy.qna.dto.account.AccountSessionDto;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
@@ -14,9 +12,7 @@ import javax.servlet.http.HttpSession;
 
 @Slf4j
 @Component
-@RequiredArgsConstructor
 public class QuestionInterceptor extends HandlerInterceptorAdapter {
-    private final QuestionRepository questionRepository;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
