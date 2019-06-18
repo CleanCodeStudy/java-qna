@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class QuestionService {
 
-    private final QuestionRepository qusestionRepository;
+    private final QuestionRepository questionRepository;
 
     public void createQuestion(QuestionReqDto questionReqDto) {
         Question question = questionReqDto.toEntity();
@@ -41,10 +41,10 @@ public class QuestionService {
     public void updateQuestion(QuestionUpdateReqDto questionUpdateReqDto, Long id) {
         Question question = questionRepository.findById(id)
                 .orElseThrow(NoSuchElementException::new);
-        updateQuestion(question, questionUpdateReqDto);
+        update(question, questionUpdateReqDto);
     }
 
-    private void updateQuestion(Question question, QuestionUpdateReqDto questionUpdateReqDto) {
+    private void update(Question question, QuestionUpdateReqDto questionUpdateReqDto) {
         question.setAuthor(questionUpdateReqDto.getAuthor());
         question.setContent(questionUpdateReqDto.getContent());
         question.setTitle(questionUpdateReqDto.getTitle());

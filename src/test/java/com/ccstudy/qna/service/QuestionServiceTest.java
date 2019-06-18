@@ -53,17 +53,11 @@ public class QuestionServiceTest {
     public void getQuestionBoard_Question_리스트_반환() {
         //given
 
-        Question question2 = Question.createBuilder()
-                .author("testAuthor2")
-                .title("testTitle2")
-                .content("testContent")
-                .build();
-
         //when
-        Mockito.when(questionRepository.findAll()).thenReturn(new ArrayList<>(Arrays.asList(question2, question1)));
+        Mockito.when(questionRepository.findAll()).thenReturn(new ArrayList<>(Arrays.asList(question1)));
 
         //then
-        assertThat(questionService.getQuestionBoard().size()).isEqualTo(2);
+        assertThat(questionService.getQuestionBoard().size()).isEqualTo(1);
     }
 
     @Test(expected = NoSuchElementException.class)
@@ -110,7 +104,7 @@ public class QuestionServiceTest {
         questionService.updateQuestion(questionUpdateReqDto,1L);
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test
     public void updateQuestion_성공() {
         //given
         Long questionId = 1L;
@@ -132,12 +126,4 @@ public class QuestionServiceTest {
         assertThat(questionUpdateReqDto.getContent()).isEqualTo(question1.getContent());
     }
 
-
-    @Test
-    public void updateQuestion1() {
-    }
-
-    @Test
-    public void deleteQuestion() {
-    }
 }

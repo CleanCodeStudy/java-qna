@@ -20,7 +20,7 @@ public class QuestionReqDto {
     private String author;
 
     public Question toEntity() {
-        return Question.builder()
+        return Question.createBuilder()
                 .title(this.title)
                 .content(this.content)
                 .author(this.author)

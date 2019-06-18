@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -34,7 +35,8 @@ public class Question extends BaseTimeEntity {
     }
 
     private Question(Long id, Question question){
-        this.id = getId();
+        super(LocalDateTime.now(),LocalDateTime.now());
+        this.id = id;
         this.title = question.getTitle();
         this.author = question.getAuthor();
         this.content = question.getContent();
