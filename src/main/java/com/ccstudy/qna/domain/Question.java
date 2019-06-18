@@ -26,11 +26,18 @@ public class Question extends BaseTimeEntity {
     private String author;
 
 
-    @Builder
+    @Builder(builderMethodName = "createBuilder")
     public Question(String title, String content, String author) {
         this.title = title;
         this.content = content;
         this.author = author;
+    }
+
+    private Question(Long id, Question question){
+        this.id = getId();
+        this.title = question.getTitle();
+        this.author = question.getAuthor();
+        this.content = question.getContent();
     }
 
 }
