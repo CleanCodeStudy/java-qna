@@ -1,6 +1,7 @@
 package com.ccstudy.qna.domain;
 
-import com.ccstudy.qna.exception.PasswordException;
+import com.ccstudy.qna.exception.ChangePasswordException;
+import com.ccstudy.qna.exception.CheckPasswordException;
 import lombok.*;
 
 import javax.persistence.*;
@@ -26,12 +27,20 @@ public class Account {
     @Setter
     private String name;
 
-    @Builder
-    public Account(String userId, String email, String password, String name) {
+    @Builder(builderMethodName = "createBuilder")
+    private Account(String userId, String email, String password, String name) {
         this.userId = userId;
         this.email = email;
         this.password = password;
         this.name = name;
+    }
+
+    private Account(Long id, Account account) {
+        this.id = id;
+        this.userId = account.getUserId();
+        this.email = account.getEmail();
+        this.password = account.getPassword();
+        this.name = account.getName();
     }
 
     public void validatePassword(String checkPassword, String changePassword) {
@@ -41,13 +50,13 @@ public class Account {
 
     private void validateIsCurrentPassword(String checkPassword) {
         if (!checkPassword.equals(password)) {
-            throw new PasswordException("입력한 패스워드 값이 현재 패스워드 값과 같지 않습니다.");
+            throw new CheckPasswordException("입력한 패스워드 값이 현재 패스워드 값과 같지 않습니다.");
         }
     }
 
     private void validateDifferentPassword(String changePassword) {
         if (changePassword.equals(password)) {
-            throw new PasswordException("현재 패스워드와 바꾸려는 패스워드 값이 같습니다");
+            throw new ChangePasswordException("현재 패스워드와 바꾸려는 패스워드 값이 같습니다");
         }
     }
 }

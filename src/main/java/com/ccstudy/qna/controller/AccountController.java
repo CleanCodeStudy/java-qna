@@ -1,6 +1,6 @@
 package com.ccstudy.qna.controller;
 
-import com.ccstudy.qna.domain.Account;
+import com.ccstudy.qna.dto.Account.AccountResDto;
 import com.ccstudy.qna.dto.Account.AccountSaveReqDto;
 import com.ccstudy.qna.dto.Account.AccountUpdateReqDto;
 import com.ccstudy.qna.service.AccountService;
@@ -26,7 +26,7 @@ public class AccountController {
 
     @GetMapping("/{id}")
     public String getEditFormOfAccount(@PathVariable("id") Long id, Model model) {
-        Account editAccount = accountService.findAccountById(id);
+        AccountResDto editAccount = accountService.findAccountById(id);
         model.addAttribute("account", editAccount);
         return "pages/userUpdateForm";
     }

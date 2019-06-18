@@ -39,9 +39,10 @@ public class AccountService {
         return account.getId();
     }
 
-    public Account findAccountById(Long id){
-        return accountRepository.findById(id)
+    public AccountResDto findAccountById(Long id) {
+        Account account = accountRepository.findById(id)
                 .orElseThrow(NoSuchElementException::new);
+        return new AccountResDto(account);
     }
 
     @Transactional

@@ -18,12 +18,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class QuestionService {
 
-    // Autowired = test code x, spring 을 실행해야 가능
     private final QuestionRepository questionRepository;
-
-    // reflection : 기본 생성자, getter
-    // object mapper : json -> object // object는 getter와 기본 생성자만 있는데 (allArg도아닌데) 어떻게 ? reflection 사용해서 주입하는 것
-
 
     public void createQuestion(QuestionReqDto questionReqDto) {
         Question question = questionReqDto.toEntity();
@@ -43,12 +38,12 @@ public class QuestionService {
     }
 
     @Transactional
-    public void updateQuestion(QuestionUpdateReqDto questionUpdateReqDto, Long id){
+    public void updateQuestion(QuestionUpdateReqDto questionUpdateReqDto, Long id) {
         Question question = questionRepository.findById(id).orElseThrow(NoSuchElementException::new);
         updateQuestion(question, questionUpdateReqDto);
     }
 
-    public void updateQuestion(Question question, QuestionUpdateReqDto questionUpdateReqDto){
+    public void updateQuestion(Question question, QuestionUpdateReqDto questionUpdateReqDto) {
         question.setAuthor(questionUpdateReqDto.getAuthor());
         question.setContent(questionUpdateReqDto.getContent());
         question.setTitle(questionUpdateReqDto.getTitle());
