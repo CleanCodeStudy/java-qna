@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class QuestionService {
 
-    private final QuestionRepository questionRepository;
+    private final QuestionRepository qusestionRepository;
 
     public void createQuestion(QuestionReqDto questionReqDto) {
         Question question = questionReqDto.toEntity();
