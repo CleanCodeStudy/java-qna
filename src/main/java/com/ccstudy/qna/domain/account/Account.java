@@ -1,18 +1,16 @@
 package com.ccstudy.qna.domain.account;
 
 import com.ccstudy.qna.domain.BaseTimeEntity;
-import com.ccstudy.qna.domain.question.Question;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
-import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
-import java.util.List;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)//private으로 해도됨(API경우)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 @Entity
 public class Account extends BaseTimeEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,10 +30,6 @@ public class Account extends BaseTimeEntity {
     @Column(length = 20,nullable = false)
     private String password;
 
-    @OneToMany
-    @JoinColumn(name = "fk_question_author")
-    private List<Question> questions;
-
     @Builder(builderMethodName = "createBuilder")
     private Account(String email, String firstName, String lastName, String password) {
         this.email = email;
@@ -47,4 +41,5 @@ public class Account extends BaseTimeEntity {
     public boolean isNotEqualPassword(String currentPassword) {
         return !StringUtils.equals(currentPassword, this.password);
     }
+
 }

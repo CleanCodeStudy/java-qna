@@ -16,7 +16,7 @@ public class QuestionDetailResponseDto {
     public QuestionDetailResponseDto(Question entity) {
         this.id = entity.getId();
         this.title = entity.getTitle();
-        this.author = entity.getAuthor();
+        this.author = entity.getAuthor().getLastName();
         this.contents = entity.getContents();
         this.registerDate = DateTimeConverter.toStringDate(entity.getRegisterDate());
         this.updateDate = DateTimeConverter.toStringDate(entity.getUpdateDate());

@@ -2,10 +2,8 @@ package com.ccstudy.qna.domain.question;
 
 import com.ccstudy.qna.domain.BaseTimeEntity;
 import com.ccstudy.qna.domain.account.Account;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.*;
 
@@ -18,31 +16,27 @@ public class Question extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Setter
     @Column(nullable = false)
     private String title;
 
     @ManyToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_author"))
-    private Account account;
+    private Account author;
 
-    @Column(nullable = false)
-    private String author;
-
+    @Setter
     @Column(columnDefinition = "TEXT")
     private String contents;
 
     @Builder(builderMethodName = "createBuilder")
-    public Question(String title, String author, String contents) {
-        this.title = title;
+    public Question(Account author, String title, String contents) {
         this.author = author;
-        this.contents = contents;
-    }
-
-    public void setTitle(String title) {
         this.title = title;
-    }
-
-    public void setContents(String contents) {
         this.contents = contents;
     }
+
+    public boolean isCorrectEmail(String sessionEmail) {
+        return StringUtils.equals(author.getEmail(), sessionEmail);
+    }
+
 }

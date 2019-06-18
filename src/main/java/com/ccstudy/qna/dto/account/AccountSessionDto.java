@@ -5,6 +5,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.servlet.http.HttpSession;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 public class AccountSessionDto {
@@ -18,5 +22,12 @@ public class AccountSessionDto {
         this.lastName = lastName;
         this.firstName = firstName;
     }
+
+    public static AccountSessionDto getInstance(HttpSession httpSession) {
+        Optional<AccountSessionDto> maybeLoginSession = Optional.ofNullable((AccountSessionDto) httpSession.getAttribute("LOGIN_ACCOUNT"));
+        AccountSessionDto accountSessionDto = maybeLoginSession.orElseThrow(NoSuchElementException::new);
+        return accountSessionDto;
+    }
+
 }
 

@@ -33,8 +33,8 @@ public class QuestionController {
 
 
     @PostMapping("/questions")
-    public String saveQuestion(QuestionSaveRequestDto dto) {
-        questionService.save(dto);
+    public String saveQuestion(QuestionSaveRequestDto dto, HttpSession httpSession) {
+        questionService.save(dto, httpSession);
         return "redirect:/";
     }
 
@@ -51,13 +51,13 @@ public class QuestionController {
     }
 
     @PutMapping("/questions/{id}")
-    public String update(QuestionUpdateRequestDto dto){
-        Long updateId = questionService.updateQuestion(dto);
+    public String update(QuestionUpdateRequestDto dto, HttpSession httpSession) {
+        Long updateId = questionService.updateQuestion(dto, httpSession);
         return "redirect:/questions/"+updateId;
     }
     @DeleteMapping("/questions/{id}")
-    public String delete(@PathVariable("id") Long id){
-        questionService.delete(id);
+    public String delete(@PathVariable("id") Long id, HttpSession httpSession) {
+        questionService.delete(id, httpSession);
         return "redirect:/";
     }
 

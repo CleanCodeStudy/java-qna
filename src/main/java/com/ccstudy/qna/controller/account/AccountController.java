@@ -1,6 +1,5 @@
 package com.ccstudy.qna.controller.account;
 
-import com.ccstudy.qna.domain.account.Account;
 import com.ccstudy.qna.dto.account.AccountLoginRequestDto;
 import com.ccstudy.qna.dto.account.AccountSaveRequestDto;
 import com.ccstudy.qna.dto.account.AccountSessionDto;
@@ -10,7 +9,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import javax.servlet.http.HttpSession;
 
@@ -54,5 +56,9 @@ public class AccountController {
         return "redirect:/";
     }
 
-
+    @GetMapping("/logout")
+    public String logout(HttpSession httpSession) {
+        httpSession.removeAttribute("LOGIN_ACCOUNT");
+        return "redirect:/";
+    }
 }

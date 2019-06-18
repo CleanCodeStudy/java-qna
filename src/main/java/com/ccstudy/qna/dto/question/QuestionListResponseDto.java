@@ -17,7 +17,7 @@ public class QuestionListResponseDto {
 
         this.id=entity.getId();
         this.title = entity.getTitle();
-        this.author = entity.getAuthor();
+        this.author = entity.getAuthor().getLastName();
         this.registerDate = DateTimeConverter.toStringDate(entity.getRegisterDate());
         this.updateDate = DateTimeConverter.toStringDate(entity.getUpdateDate());
     }
