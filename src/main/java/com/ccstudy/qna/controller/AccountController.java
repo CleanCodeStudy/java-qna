@@ -49,9 +49,8 @@ public class AccountController {
     }
 
     @PostMapping("/login")
-    public String loginAccount(AccountLoginReqDto reqDto, HttpServletRequest request) {
+    public String loginAccount(AccountLoginReqDto reqDto) {
         Long id = accountService.login(reqDto);
-        request.setAttribute("id", id);
         return "redirect:/";
     }
 
