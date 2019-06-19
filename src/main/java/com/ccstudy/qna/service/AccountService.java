@@ -1,6 +1,7 @@
 package com.ccstudy.qna.service;
 
 import com.ccstudy.qna.domain.Account;
+import com.ccstudy.qna.dto.Account.AccountLoginReqDto;
 import com.ccstudy.qna.dto.Account.AccountResDto;
 import com.ccstudy.qna.dto.Account.AccountSaveReqDto;
 import com.ccstudy.qna.dto.Account.AccountUpdateReqDto;
@@ -25,7 +26,7 @@ public class AccountService {
         throw new RuntimeException("Already Existed User Id" + x.getUserId());
     }
 
-    public List<AccountResDto> getAllAccounts(){
+    public List<AccountResDto> getAllAccounts() {
         return accountRepository.findAll().stream()
                 .map(AccountResDto::new)
                 .collect(Collectors.toList());
@@ -50,14 +51,20 @@ public class AccountService {
         Account account = accountRepository.findById(id)
                 .orElseThrow(NoSuchElementException::new);
         account.validatePassword(updateReqDto.getCurrentPassword(), updateReqDto.getChangePassword());
-        update(account,updateReqDto);
+        update(account, updateReqDto);
     }
 
-    private void update(Account account,AccountUpdateReqDto reqDto){
+    private void update(Account account, AccountUpdateReqDto reqDto) {
         account.setEmail(reqDto.getEmail());
         account.setName(reqDto.getName());
         account.setPassword(reqDto.getChangePassword());
     }
 
+    public Long login(AccountLoginReqDto reqDto) {
+        Account account = accountRepository.findByUserId(reqDto.getUserId())
+                .orElseThrow(NoSuchElementException::new);
+        account.validateCurrentPassword(reqDto.getPassword());
+        return account.getId();
+    }
 
 }

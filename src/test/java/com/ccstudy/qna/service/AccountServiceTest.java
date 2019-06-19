@@ -1,11 +1,13 @@
 package com.ccstudy.qna.service;
 
 import com.ccstudy.qna.domain.Account;
+import com.ccstudy.qna.dto.Account.AccountLoginReqDto;
 import com.ccstudy.qna.dto.Account.AccountResDto;
 import com.ccstudy.qna.dto.Account.AccountSaveReqDto;
 import com.ccstudy.qna.dto.Account.AccountUpdateReqDto;
+import com.ccstudy.qna.exception.CheckPasswordException;
 import com.ccstudy.qna.repository.AccountRepository;
-import org.junit.After;
+import com.ccstudy.qna.service.AccountService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -167,4 +169,35 @@ public class AccountServiceTest {
 
         assertThat(account1.getEmail()).isEqualTo("hello@naver.com");
     }
+
+    @Test(expected = NoSuchElementException.class)
+    public void login_로그인실패_아이디_없음() {
+        //given
+        AccountLoginReqDto accountLoginReqDto = AccountLoginReqDto.testBuilder()
+                .userId("testId")
+                .password("1234")
+                .build();
+
+        //when
+        Mockito.when(accountRepository.findByUserId(accountLoginReqDto.getUserId())).thenReturn(Optional.empty());
+
+        //then
+        accountService.login(accountLoginReqDto);
+    }
+
+    @Test(expected = CheckPasswordException.class)
+    public void login_로그인실패_비밀번호_틀림() {
+        //given
+        AccountLoginReqDto accountLoginReqDto = AccountLoginReqDto.testBuilder()
+                .userId(account1.getUserId())
+                .password("12345")
+                .build();
+
+        //when
+        Mockito.when(accountRepository.findByUserId(accountLoginReqDto.getUserId())).thenReturn(Optional.of(account1));
+
+        //then
+        accountService.login(accountLoginReqDto);
+    }
+
 }

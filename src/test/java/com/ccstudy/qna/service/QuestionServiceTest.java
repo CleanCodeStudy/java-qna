@@ -1,11 +1,8 @@
 package com.ccstudy.qna.service;
 
-import com.ccstudy.qna.domain.Account;
 import com.ccstudy.qna.domain.Question;
-import com.ccstudy.qna.dto.Account.AccountSaveReqDto;
 import com.ccstudy.qna.dto.Question.QuestionDetailResDto;
 import com.ccstudy.qna.dto.Question.QuestionUpdateReqDto;
-import com.ccstudy.qna.repository.AccountRepository;
 import com.ccstudy.qna.repository.QuestionRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +19,6 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class QuestionServiceTest {
@@ -101,7 +97,7 @@ public class QuestionServiceTest {
         Mockito.when(questionRepository.findById(questionId)).thenReturn(Optional.empty());
 
         //then
-        questionService.updateQuestion(questionUpdateReqDto,1L);
+        questionService.updateQuestion(questionUpdateReqDto, 1L);
     }
 
     @Test
@@ -119,7 +115,7 @@ public class QuestionServiceTest {
         Mockito.when(questionRepository.findById(questionId)).thenReturn(Optional.of(question1));
 
         //then
-        questionService.updateQuestion(questionUpdateReqDto,1L);
+        questionService.updateQuestion(questionUpdateReqDto, 1L);
 
         assertThat(questionUpdateReqDto.getAuthor()).isEqualTo(question1.getAuthor());
         assertThat(questionUpdateReqDto.getTitle()).isEqualTo(question1.getTitle());

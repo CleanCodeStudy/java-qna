@@ -1,5 +1,6 @@
 package com.ccstudy.qna.controller;
 
+import com.ccstudy.qna.dto.Account.AccountLoginReqDto;
 import com.ccstudy.qna.dto.Account.AccountResDto;
 import com.ccstudy.qna.dto.Account.AccountSaveReqDto;
 import com.ccstudy.qna.dto.Account.AccountUpdateReqDto;
@@ -9,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequiredArgsConstructor
@@ -45,5 +48,11 @@ public class AccountController {
         return "redirect:/users";
     }
 
+    @PostMapping("/login")
+    public String loginAccount(AccountLoginReqDto reqDto, HttpServletRequest request) {
+        Long id = accountService.login(reqDto);
+        request.setAttribute("id", id);
+        return "redirect:/";
+    }
 
 }
