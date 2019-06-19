@@ -17,7 +17,7 @@ public class AccountService {
     private final AccountRepository accountRepository;
 
     @Transactional
-    public AccountSessionDto loginAccount(AccountLoginRequestDto dto){
+    public LoginAccount loginAccount(AccountLoginRequestDto dto){
         //TODO 예외처리 하는거 다시 생각해보기
         Account findAccount = accountRepository.findAccountByEmail(dto.getEmail())
                 .orElseThrow(IllegalStateException::new);
@@ -25,7 +25,7 @@ public class AccountService {
         if(findAccount.isNotEqualPassword(dto.getPassword())){
             throw new IllegalStateException("현재 비밀번호가 틀렸습니다.");
         }
-        AccountSessionDto accountSessionDto = AccountSessionDto.createBuilder()
+        LoginAccount accountSessionDto = LoginAccount.createBuilder()
                 .email(findAccount.getEmail())
                 .firstName(findAccount.getFirstName())
                 .lastName(findAccount.getLastName())

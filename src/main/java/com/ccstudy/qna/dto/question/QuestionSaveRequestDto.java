@@ -1,5 +1,6 @@
 package com.ccstudy.qna.dto.question;
 
+import com.ccstudy.qna.domain.account.Account;
 import com.ccstudy.qna.domain.question.Question;
 import lombok.Getter;
 
@@ -19,10 +20,11 @@ public class QuestionSaveRequestDto {
         this.contents = contents;
     }
 
-    public Question toEntity() {
+    public Question toEntity(Account author) {
         return Question.createBuilder()
                 .title(title)
                 .contents(contents)
+                .author(author)
                 .build();
     }
 }

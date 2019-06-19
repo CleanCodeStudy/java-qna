@@ -2,7 +2,7 @@ package com.ccstudy.qna.controller.account;
 
 import com.ccstudy.qna.dto.account.AccountLoginRequestDto;
 import com.ccstudy.qna.dto.account.AccountSaveRequestDto;
-import com.ccstudy.qna.dto.account.AccountSessionDto;
+import com.ccstudy.qna.dto.account.LoginAccount;
 import com.ccstudy.qna.dto.account.AccountUpdateRequestDto;
 import com.ccstudy.qna.service.account.AccountService;
 import lombok.RequiredArgsConstructor;
@@ -22,8 +22,6 @@ import javax.servlet.http.HttpSession;
 public class AccountController {
 
     private final AccountService accountService;
-
-
 
     @PostMapping("/user")
     public String register(AccountSaveRequestDto accountSaveRequestDto) {
@@ -51,14 +49,16 @@ public class AccountController {
 
     @PostMapping("/login")
     public String login(AccountLoginRequestDto dto, HttpSession httpSession) {
-        AccountSessionDto loginAccount = accountService.loginAccount(dto);
+        LoginAccount loginAccount = accountService.loginAccount(dto);
         httpSession.setAttribute("LOGIN_ACCOUNT", loginAccount);
         return "redirect:/";
     }
 
-    @GetMapping("/logout")
+    @GetMapping("/logout")//post
     public String logout(HttpSession httpSession) {
         httpSession.removeAttribute("LOGIN_ACCOUNT");
         return "redirect:/";
     }
+
 }
+

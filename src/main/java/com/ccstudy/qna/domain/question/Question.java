@@ -20,7 +20,7 @@ public class Question extends BaseTimeEntity {
     @Column(nullable = false)
     private String title;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_author"))
     private Account author;
 

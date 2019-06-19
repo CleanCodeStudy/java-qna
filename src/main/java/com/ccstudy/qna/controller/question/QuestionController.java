@@ -1,6 +1,8 @@
 package com.ccstudy.qna.controller.question;
 
 
+import com.ccstudy.qna.dto.account.Auth;
+import com.ccstudy.qna.dto.account.LoginAccount;
 import com.ccstudy.qna.dto.question.QuestionSaveRequestDto;
 import com.ccstudy.qna.dto.question.QuestionUpdateRequestDto;
 import com.ccstudy.qna.service.question.QuestionService;
@@ -20,7 +22,8 @@ public class QuestionController {
     private final QuestionService questionService;
 
     @GetMapping("/")
-    public String index(Model model) {
+    public String index(@Auth LoginAccount loginAccount, Model model) {
+        log.info(loginAccount.toString());
         model.addAttribute("questions", questionService.showQuestions());
         return "index";
     }
@@ -33,7 +36,7 @@ public class QuestionController {
 
 
     @PostMapping("/questions")
-    public String saveQuestion(QuestionSaveRequestDto dto, HttpSession httpSession) {
+    public String saveQuestion(@Auth LoginAccount loginAccount, QuestionSaveRequestDto dto, HttpSession httpSession) {
         questionService.save(dto, httpSession);
         return "redirect:/";
     }

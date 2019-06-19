@@ -3,6 +3,7 @@ package com.ccstudy.qna.domain.account;
 import com.ccstudy.qna.domain.BaseTimeEntity;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.util.Assert;
 
 import javax.persistence.*;
 
@@ -32,6 +33,7 @@ public class Account extends BaseTimeEntity {
 
     @Builder(builderMethodName = "createBuilder")
     private Account(String email, String firstName, String lastName, String password) {
+        Assert.notNull(email,"");
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;

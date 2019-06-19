@@ -1,9 +1,10 @@
 package com.ccstudy.qna.service.question;
 
+import com.ccstudy.qna.domain.account.Account;
 import com.ccstudy.qna.domain.account.AccountRepository;
 import com.ccstudy.qna.domain.question.Question;
 import com.ccstudy.qna.domain.question.QuestionRepository;
-import com.ccstudy.qna.dto.account.AccountSessionDto;
+import com.ccstudy.qna.dto.account.LoginAccount;
 import com.ccstudy.qna.dto.question.QuestionDetailResponseDto;
 import com.ccstudy.qna.dto.question.QuestionListResponseDto;
 import com.ccstudy.qna.dto.question.QuestionSaveRequestDto;
@@ -29,13 +30,10 @@ public class QuestionService {
     //등록하기
     @Transactional
     public Long save(QuestionSaveRequestDto dto, HttpSession httpSession) {
-        AccountSessionDto accountSessionDto = AccountSessionDto.getInstance(httpSession);
-        Question question = Question.createBuilder()
-                .author(accountRepository.findAccountByEmail(accountSessionDto.getEmail()).orElseThrow(NoSuchElementException::new))
-                .contents(dto.getContents())
-                .title(dto.getTitle())
-                .build();
-        return questionRepository.save(question).getId();
+        LoginAccount accountSessionDto = LoginAccount.getInstance(httpSession);
+        Account findAccount = accountRepository.findAccountByEmail(accountSessionDto.getEmail()).
+                orElseThrow(NoSuchElementException::new);
+        return questionRepository.save(dto.toEntity(findAccount)).getId();
     }
 
     //조회하기
@@ -58,7 +56,7 @@ public class QuestionService {
     //게시글 수정
     @Transactional
     public Long updateQuestion(QuestionUpdateRequestDto dto, HttpSession httpSession) {
-        AccountSessionDto accountSessionDto = AccountSessionDto.getInstance(httpSession);
+        LoginAccount accountSessionDto = LoginAccount.getInstance(httpSession);
         Question findQuestion = questionRepository.findById(dto.getId())
                 .orElseThrow(IllegalAccessError::new);
         if (findQuestion.isCorrectEmail(accountSessionDto.getEmail())) {
@@ -72,7 +70,7 @@ public class QuestionService {
     //게시글 삭제
     @Transactional
     public Long delete(Long id, HttpSession httpSession) {
-        AccountSessionDto accountSessionDto = AccountSessionDto.getInstance(httpSession);
+        LoginAccount accountSessionDto = LoginAccount.getInstance(httpSession);
         Question findQuestion = questionRepository.findById(id)
                 .orElseThrow(NoSuchElementException::new);
         if (findQuestion.isCorrectEmail(accountSessionDto.getEmail())) {
