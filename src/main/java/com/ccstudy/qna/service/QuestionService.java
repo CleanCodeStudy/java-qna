@@ -1,5 +1,6 @@
 package com.ccstudy.qna.service;
 
+import com.ccstudy.qna.domain.Account;
 import com.ccstudy.qna.domain.Question;
 import com.ccstudy.qna.dto.Question.QuestionDetailResDto;
 import com.ccstudy.qna.dto.Question.QuestionReqDto;
@@ -20,8 +21,8 @@ public class QuestionService {
 
     private final QuestionRepository questionRepository;
 
-    public void createQuestion(QuestionReqDto questionReqDto) {
-        Question question = questionReqDto.toEntity();
+    public void createQuestion(QuestionReqDto questionReqDto, Long accountId) {
+        Question question = questionReqDto.toEntity(accountId);
         questionRepository.save(question);
     }
 
@@ -45,7 +46,6 @@ public class QuestionService {
     }
 
     private void update(Question question, QuestionUpdateReqDto questionUpdateReqDto) {
-        question.setAuthor(questionUpdateReqDto.getAuthor());
         question.setContent(questionUpdateReqDto.getContent());
         question.setTitle(questionUpdateReqDto.getTitle());
     }

@@ -1,12 +1,18 @@
 package com.ccstudy.qna.config;
 
+import com.ccstudy.qna.config.resolver.AccountHandlerMethodArgumentResolver;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.util.List;
+
 @Configuration
 public class MvcConfig implements WebMvcConfigurer {
+
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
@@ -14,4 +20,16 @@ public class MvcConfig implements WebMvcConfigurer {
         registry.addViewController("/question/form").setViewName("/pages/form");
         registry.addViewController("/register").setViewName("/pages/register");
     }
+
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
+        resolvers.add(handlerInterceptor());
+    }
+
+    @Bean
+    public HandlerMethodArgumentResolver handlerInterceptor() {
+        return new AccountHandlerMethodArgumentResolver();
+    }
+
+    //내부클래스
 }

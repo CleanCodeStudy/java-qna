@@ -18,7 +18,7 @@ public class QuestionDetailResDto {
         this.id = question.getId();
         this.title = question.getTitle();
         this.content = question.getContent();
-        this.author = question.getAuthor();
+        this.author = question.getAuthor().getUserId();
         this.registerDate = DateTimeConverter.getConvertedDate(question.getRegisterDate());
         this.updateDate = DateTimeConverter.getConvertedDate(question.getUpdateDate());
     }

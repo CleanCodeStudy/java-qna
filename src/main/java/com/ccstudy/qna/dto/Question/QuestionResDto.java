@@ -16,7 +16,7 @@ public class QuestionResDto {
     public QuestionResDto(Question question) {
         this.id = question.getId();
         this.title = question.getTitle();
-        this.author = question.getAuthor();
+        this.author = question.getAuthor().getUserId();
         this.registerDate = DateTimeConverter.getConvertedDate(question.getRegisterDate());
         this.updateDate = DateTimeConverter.getConvertedDate(question.getUpdateDate());
     }

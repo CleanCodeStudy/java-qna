@@ -5,10 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -23,15 +20,17 @@ public class Question extends BaseTimeEntity {
     private String title;
     @Setter
     private String content;
-    @Setter
-    private String author;
+
+    @JoinColumn(foreignKey = @ForeignKey(name="fk_question_account"))
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Account author;
 
 
     @Builder(builderMethodName = "createBuilder")
-    public Question(String title, String content, String author) {
+    public Question(String title, String content, Account account) {
         this.title = title;
         this.content = content;
-        this.author = author;
+        this.author = account;
     }
 
     private Question(Long id, Question question){

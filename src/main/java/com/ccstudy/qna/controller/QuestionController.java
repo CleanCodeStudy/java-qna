@@ -28,8 +28,8 @@ public class QuestionController {
     }
 
     @PostMapping("/questions")
-    public String createQuestion(QuestionReqDto questionReqDto) {
-        questionService.createQuestion(questionReqDto);
+    public String createQuestion(QuestionReqDto questionReqDto, Long id) {
+        questionService.createQuestion(questionReqDto, id);
         return "redirect:/";
     }
 

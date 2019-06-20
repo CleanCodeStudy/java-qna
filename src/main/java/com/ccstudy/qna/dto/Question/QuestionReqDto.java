@@ -1,5 +1,6 @@
 package com.ccstudy.qna.dto.Question;
 
+import com.ccstudy.qna.domain.Account;
 import com.ccstudy.qna.domain.Question;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,14 +17,12 @@ public class QuestionReqDto {
     @NotNull
     @NotBlank
     private String content;
-    @NotNull
-    private String author;
 
-    public Question toEntity() {
+    public Question toEntity(Account account) {
         return Question.createBuilder()
                 .title(this.title)
                 .content(this.content)
-                .author(this.author)
+                .account(account)
                 .build();
     }
 }
