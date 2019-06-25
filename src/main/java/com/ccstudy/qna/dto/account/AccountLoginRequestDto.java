@@ -13,4 +13,10 @@ public class AccountLoginRequestDto {
     private String email;
     @NotBlank
     private String password;
+
+    @Builder(builderMethodName = "createBuilder")
+    public AccountLoginRequestDto(@Email String email, @NotBlank String password) {
+        this.email = email;
+        this.password = password;
+    }
 }

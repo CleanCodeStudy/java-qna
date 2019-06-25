@@ -25,12 +25,12 @@ public class AccountService {
         if(findAccount.isNotEqualPassword(dto.getPassword())){
             throw new IllegalStateException("현재 비밀번호가 틀렸습니다.");
         }
-        LoginAccount accountSessionDto = LoginAccount.createBuilder()
+        LoginAccount loginAccount = LoginAccount.createBuilder()
                 .email(findAccount.getEmail())
                 .firstName(findAccount.getFirstName())
                 .lastName(findAccount.getLastName())
                 .build();
-        return accountSessionDto;
+        return loginAccount;
     }
 
     @Transactional

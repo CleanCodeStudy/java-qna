@@ -12,8 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
-
 @Controller
 @RequiredArgsConstructor
 @Slf4j
@@ -36,7 +34,7 @@ public class QuestionController {
 
 
     @PostMapping("/questions")
-    public String saveQuestion(@Auth LoginAccount loginAccount, QuestionSaveRequestDto dto) {
+    public String saveQuestion(QuestionSaveRequestDto dto, @Auth LoginAccount loginAccount) {
         questionService.save(dto, loginAccount);
         return "redirect:/";
     }
@@ -54,7 +52,7 @@ public class QuestionController {
     }
 
     @PutMapping("/questions/{id}")
-    public String update(@Auth LoginAccount loginAccount, QuestionUpdateRequestDto dto) {
+    public String update(QuestionUpdateRequestDto dto, @Auth LoginAccount loginAccount) {
         Long updateId = questionService.updateQuestion(dto, loginAccount);
         return "redirect:/questions/"+updateId;
     }
