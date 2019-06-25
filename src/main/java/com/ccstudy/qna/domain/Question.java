@@ -27,10 +27,10 @@ public class Question extends BaseTimeEntity {
 
 
     @Builder(builderMethodName = "createBuilder")
-    public Question(String title, String content, Account account) {
+    public Question(String title, String content, Account author) {
         this.title = title;
         this.content = content;
-        this.author = account;
+        this.author = author;
     }
 
     private Question(Long id, Question question){

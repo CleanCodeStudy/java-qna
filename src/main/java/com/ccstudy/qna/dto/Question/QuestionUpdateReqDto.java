@@ -17,6 +17,4 @@ public class QuestionUpdateReqDto {
     @NotNull
     @NotBlank
     private String content;
-    @NotNull
-    private String author;
 }

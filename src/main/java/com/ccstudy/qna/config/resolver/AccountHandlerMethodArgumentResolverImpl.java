@@ -1,7 +1,7 @@
 package com.ccstudy.qna.config.resolver;
 
-import com.ccstudy.qna.domain.Account;
 import com.ccstudy.qna.dto.Account.AccountSessionDto;
+import com.ccstudy.qna.exception.NotLoginUserException;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
@@ -9,11 +9,13 @@ import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
-import java.lang.reflect.Constructor;
+import javax.servlet.http.HttpServletRequest;
 
-@Profile("dev")
+@Profile("prod")
 @Component
-public class AccountTestHandlerMethodArgumentResolver implements AccountHandlerMethodArgumentResolver {
+public class AccountHandlerMethodArgumentResolverImpl implements AccountHandlerMethodArgumentResolver {
+
+    private static final String ACCOUNT_ID = "accountId";
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
@@ -22,13 +24,11 @@ public class AccountTestHandlerMethodArgumentResolver implements AccountHandlerM
 
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
-        Account account = Account.createBuilder()
-                .build();
-        Constructor<Account> testConstructor = Account.class.getDeclaredConstructor(Long.class, Account.class);
-        testConstructor.setAccessible(true);
-        account = testConstructor.newInstance(1L, account);
-        return AccountSessionDto.createBuilder()
-                .account(account)
-                .build();
+        HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
+        AccountSessionDto accountSessionDto = (AccountSessionDto) request.getSession().getAttribute(ACCOUNT_ID);
+        if (accountSessionDto == null) {
+            throw new NotLoginUserException("로그인 안한 유저입니다");
+        }
+        return accountSessionDto;
     }
 }

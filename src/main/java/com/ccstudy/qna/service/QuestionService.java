@@ -6,6 +6,7 @@ import com.ccstudy.qna.dto.Question.QuestionDetailResDto;
 import com.ccstudy.qna.dto.Question.QuestionReqDto;
 import com.ccstudy.qna.dto.Question.QuestionResDto;
 import com.ccstudy.qna.dto.Question.QuestionUpdateReqDto;
+import com.ccstudy.qna.repository.AccountRepository;
 import com.ccstudy.qna.repository.QuestionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,9 +21,12 @@ import java.util.stream.Collectors;
 public class QuestionService {
 
     private final QuestionRepository questionRepository;
+    private final AccountRepository accountRepository;
 
     public void createQuestion(QuestionReqDto questionReqDto, Long accountId) {
-        Question question = questionReqDto.toEntity(accountId);
+        Account account = accountRepository.findById(accountId)
+                .orElseThrow(NoSuchElementException::new);
+        Question question = questionReqDto.toEntity(account);
         questionRepository.save(question);
     }
 

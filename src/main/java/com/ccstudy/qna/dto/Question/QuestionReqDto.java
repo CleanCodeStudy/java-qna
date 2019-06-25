@@ -11,9 +11,11 @@ import javax.validation.constraints.NotNull;
 @Getter
 @AllArgsConstructor
 public class QuestionReqDto {
+
     @NotNull
     @NotBlank
     private String title;
+
     @NotNull
     @NotBlank
     private String content;
@@ -22,7 +24,7 @@ public class QuestionReqDto {
         return Question.createBuilder()
                 .title(this.title)
                 .content(this.content)
-                .account(account)
+                .author(account)
                 .build();
     }
 }

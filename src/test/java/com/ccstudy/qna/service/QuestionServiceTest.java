@@ -1,5 +1,6 @@
 package com.ccstudy.qna.service;
 
+import com.ccstudy.qna.domain.Account;
 import com.ccstudy.qna.domain.Question;
 import com.ccstudy.qna.dto.Question.QuestionDetailResDto;
 import com.ccstudy.qna.dto.Question.QuestionUpdateReqDto;
@@ -31,11 +32,22 @@ public class QuestionServiceTest {
     private QuestionRepository questionRepository;
 
     private Question question1;
+    private Account account1;
 
     @Before
     public void setUp() throws Exception {
+        account1 = Account.createBuilder()
+                .userId("testId")
+                .email("test@naver.com")
+                .name("testName")
+                .password("1234")
+                .build();
+        Constructor<Account> accountConstructor = Account.class.getDeclaredConstructor(Long.class, Account.class);
+        accountConstructor.setAccessible(true);
+        account1 = accountConstructor.newInstance(1L, account1);
+
         question1 = Question.createBuilder()
-                .author("testAuthor")
+                .author(account1)
                 .content("testContent")
                 .title("testTitle")
                 .build();
@@ -88,7 +100,6 @@ public class QuestionServiceTest {
         Long questionId = 1L;
 
         QuestionUpdateReqDto questionUpdateReqDto = QuestionUpdateReqDto.builder()
-                .author("updateAuthor2")
                 .title("updateTitle2")
                 .content("updateContent")
                 .build();
@@ -106,7 +117,6 @@ public class QuestionServiceTest {
         Long questionId = 1L;
 
         QuestionUpdateReqDto questionUpdateReqDto = QuestionUpdateReqDto.builder()
-                .author("updateAuthor2")
                 .title("updateTitle2")
                 .content("updateContent")
                 .build();
@@ -117,7 +127,6 @@ public class QuestionServiceTest {
         //then
         questionService.updateQuestion(questionUpdateReqDto, 1L);
 
-        assertThat(questionUpdateReqDto.getAuthor()).isEqualTo(question1.getAuthor());
         assertThat(questionUpdateReqDto.getTitle()).isEqualTo(question1.getTitle());
         assertThat(questionUpdateReqDto.getContent()).isEqualTo(question1.getContent());
     }

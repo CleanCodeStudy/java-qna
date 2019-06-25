@@ -1,10 +1,7 @@
 package com.ccstudy.qna.service;
 
 import com.ccstudy.qna.domain.Account;
-import com.ccstudy.qna.dto.Account.AccountLoginReqDto;
-import com.ccstudy.qna.dto.Account.AccountResDto;
-import com.ccstudy.qna.dto.Account.AccountSaveReqDto;
-import com.ccstudy.qna.dto.Account.AccountUpdateReqDto;
+import com.ccstudy.qna.dto.Account.*;
 import com.ccstudy.qna.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -60,11 +57,14 @@ public class AccountService {
         account.setPassword(reqDto.getChangePassword());
     }
 
-    public Long login(AccountLoginReqDto reqDto) {
+    public AccountSessionDto login(AccountLoginReqDto reqDto) {
         Account account = accountRepository.findByUserId(reqDto.getUserId())
                 .orElseThrow(NoSuchElementException::new);
         account.validateCurrentPassword(reqDto.getPassword());
-        return account.getId();
+        AccountSessionDto accountSessionDto = AccountSessionDto.createBuilder()
+                .account(account)
+                .build();
+        return accountSessionDto;
     }
 
 }

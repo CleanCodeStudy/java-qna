@@ -1,5 +1,6 @@
 package com.ccstudy.qna.controller;
 
+import com.ccstudy.qna.dto.Account.AccountSessionDto;
 import com.ccstudy.qna.dto.Question.QuestionDetailResDto;
 import com.ccstudy.qna.dto.Question.QuestionReqDto;
 import com.ccstudy.qna.dto.Question.QuestionResDto;
@@ -28,8 +29,8 @@ public class QuestionController {
     }
 
     @PostMapping("/questions")
-    public String createQuestion(QuestionReqDto questionReqDto, Long id) {
-        questionService.createQuestion(questionReqDto, id);
+    public String createQuestion(QuestionReqDto questionReqDto, AccountSessionDto sessionReqDto) {
+        questionService.createQuestion(questionReqDto, sessionReqDto.getId());
         return "redirect:/";
     }
 

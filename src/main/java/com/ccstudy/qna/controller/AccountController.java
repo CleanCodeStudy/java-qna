@@ -1,9 +1,6 @@
 package com.ccstudy.qna.controller;
 
-import com.ccstudy.qna.dto.Account.AccountLoginReqDto;
-import com.ccstudy.qna.dto.Account.AccountResDto;
-import com.ccstudy.qna.dto.Account.AccountSaveReqDto;
-import com.ccstudy.qna.dto.Account.AccountUpdateReqDto;
+import com.ccstudy.qna.dto.Account.*;
 import com.ccstudy.qna.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequiredArgsConstructor
@@ -48,9 +45,13 @@ public class AccountController {
         return "redirect:/users";
     }
 
+    //session이 파라미터로 있는데 이거 인터셉터 같은거를 써서 처리해야할거 같은느낌
     @PostMapping("/login")
-    public String loginAccount(AccountLoginReqDto reqDto) {
-        Long id = accountService.login(reqDto);
+    public String loginAccount(AccountLoginReqDto reqDto, HttpSession session) {
+        log.info(reqDto.getUserId());
+        log.info(reqDto.getPassword());
+        AccountSessionDto accountSessionDto = accountService.login(reqDto);
+        session.setAttribute("accountId", accountSessionDto);
         return "redirect:/";
     }
 
