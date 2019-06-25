@@ -1,4 +1,4 @@
-package com.ccstudy.qna.dto.account;
+package com.ccstudy.qna.auth;
 
 
 import java.lang.annotation.ElementType;

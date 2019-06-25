@@ -1,7 +1,7 @@
 package com.ccstudy.qna.controller.question;
 
 
-import com.ccstudy.qna.dto.account.Auth;
+import com.ccstudy.qna.auth.Auth;
 import com.ccstudy.qna.dto.account.LoginAccount;
 import com.ccstudy.qna.dto.question.QuestionSaveRequestDto;
 import com.ccstudy.qna.dto.question.QuestionUpdateRequestDto;
@@ -29,15 +29,15 @@ public class QuestionController {
     }
 
     @GetMapping("/questions/form")
-    public String writeForm(Model model, HttpSession httpSession) {
-        model.addAttribute("account", httpSession.getAttribute("LOGIN_ACCOUNT"));
+    public String writeForm(@Auth LoginAccount loginAccount,  Model model) {
+        model.addAttribute("account", loginAccount);
         return "question/form_create";
     }
 
 
     @PostMapping("/questions")
-    public String saveQuestion(@Auth LoginAccount loginAccount, QuestionSaveRequestDto dto, HttpSession httpSession) {
-        questionService.save(dto, httpSession);
+    public String saveQuestion(@Auth LoginAccount loginAccount, QuestionSaveRequestDto dto) {
+        questionService.save(dto, loginAccount);
         return "redirect:/";
     }
 
@@ -54,13 +54,13 @@ public class QuestionController {
     }
 
     @PutMapping("/questions/{id}")
-    public String update(QuestionUpdateRequestDto dto, HttpSession httpSession) {
-        Long updateId = questionService.updateQuestion(dto, httpSession);
+    public String update(@Auth LoginAccount loginAccount, QuestionUpdateRequestDto dto) {
+        Long updateId = questionService.updateQuestion(dto, loginAccount);
         return "redirect:/questions/"+updateId;
     }
     @DeleteMapping("/questions/{id}")
-    public String delete(@PathVariable("id") Long id, HttpSession httpSession) {
-        questionService.delete(id, httpSession);
+    public String delete(@PathVariable("id") Long id, @Auth LoginAccount loginAccount) {
+        questionService.delete(id, loginAccount);
         return "redirect:/";
     }
 

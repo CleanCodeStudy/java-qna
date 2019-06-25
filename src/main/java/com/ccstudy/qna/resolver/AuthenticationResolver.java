@@ -4,6 +4,7 @@ import com.ccstudy.qna.auth.Authentication;
 import com.ccstudy.qna.auth.AuthenticationImpl;
 import com.ccstudy.qna.dto.account.LoginAccount;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.support.WebDataBinderFactory;

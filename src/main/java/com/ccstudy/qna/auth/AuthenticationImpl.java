@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.context.request.WebRequest;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.NoSuchElementException;
 
@@ -16,6 +17,14 @@ public class AuthenticationImpl implements Authentication {
         if(loginAccount == null){
             throw new NoSuchElementException("로그인이 안되어있음");
         }
+        return loginAccount;
+    }
+
+    @Override
+    public LoginAccount getLoginUser(HttpServletRequest httpServletRequest){
+        HttpSession session = httpServletRequest.getSession();
+        LoginAccount loginAccount = (LoginAccount) session.getAttribute("LOGIN_ACCOUNT");
+        session.setMaxInactiveInterval(30*60);
         return loginAccount;
     }
 }

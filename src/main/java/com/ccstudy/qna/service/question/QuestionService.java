@@ -29,9 +29,8 @@ public class QuestionService {
 
     //등록하기
     @Transactional
-    public Long save(QuestionSaveRequestDto dto, HttpSession httpSession) {
-        LoginAccount accountSessionDto = LoginAccount.getInstance(httpSession);
-        Account findAccount = accountRepository.findAccountByEmail(accountSessionDto.getEmail()).
+    public Long save(QuestionSaveRequestDto dto, LoginAccount loginAccount) {
+        Account findAccount = accountRepository.findAccountByEmail(loginAccount.getEmail()).
                 orElseThrow(NoSuchElementException::new);
         return questionRepository.save(dto.toEntity(findAccount)).getId();
     }
@@ -55,11 +54,10 @@ public class QuestionService {
 
     //게시글 수정
     @Transactional
-    public Long updateQuestion(QuestionUpdateRequestDto dto, HttpSession httpSession) {
-        LoginAccount accountSessionDto = LoginAccount.getInstance(httpSession);
+    public Long updateQuestion(QuestionUpdateRequestDto dto, LoginAccount loginAccount) {
         Question findQuestion = questionRepository.findById(dto.getId())
                 .orElseThrow(IllegalAccessError::new);
-        if (findQuestion.isCorrectEmail(accountSessionDto.getEmail())) {
+        if (findQuestion.isCorrectEmail(loginAccount.getEmail())) {
             findQuestion.setTitle(dto.getTitle());
             findQuestion.setContents(dto.getContents());
             return findQuestion.getId();
@@ -69,11 +67,10 @@ public class QuestionService {
 
     //게시글 삭제
     @Transactional
-    public Long delete(Long id, HttpSession httpSession) {
-        LoginAccount accountSessionDto = LoginAccount.getInstance(httpSession);
+    public Long delete(Long id, LoginAccount loginAccount) {
         Question findQuestion = questionRepository.findById(id)
                 .orElseThrow(NoSuchElementException::new);
-        if (findQuestion.isCorrectEmail(accountSessionDto.getEmail())) {
+        if (findQuestion.isCorrectEmail(loginAccount.getEmail())) {
             questionRepository.deleteById(id);
             return id;
         }
