@@ -1,12 +1,10 @@
 package com.ccstudy.qna.controller;
 
-import com.ccstudy.qna.domain.Question;
 import com.ccstudy.qna.dto.Question.QuestionDetailResDto;
 import com.ccstudy.qna.dto.Question.QuestionReqDto;
 import com.ccstudy.qna.dto.Question.QuestionResDto;
 import com.ccstudy.qna.dto.Question.QuestionUpdateReqDto;
 import com.ccstudy.qna.service.QuestionService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,14 +35,12 @@ public class QuestionControllerTest {
     @MockBean
     private QuestionService questionService;
 
-    private ObjectMapper mapper;
     private QuestionResDto questionResDto1;
     private QuestionResDto questionResDto2;
     private QuestionDetailResDto questionDetailResDto;
 
     @Before
     public void setUp() throws Exception {
-        mapper = new ObjectMapper();
 
         questionResDto1 = QuestionResDto.testBuilder()
                 .id(1L)
@@ -127,7 +123,6 @@ public class QuestionControllerTest {
         Long id = 1L;
 
 
-
         //given
         Mockito.when(questionService.getQuestionDetail(id))
                 .thenReturn(questionDetailResDto);
@@ -186,7 +181,7 @@ public class QuestionControllerTest {
         Mockito.doNothing().when(questionService).updateQuestion(questionUpdateReqDto, id);
 
         //when
-        mvc.perform(put("/questions/{id}", id))
+        mvc.perform(put("/questions/edit/{id}", id))
                 .andExpect(MockMvcResultMatchers.redirectedUrl("/questions/" + id))
                 .andExpect(status().is3xxRedirection());
     }
@@ -194,7 +189,7 @@ public class QuestionControllerTest {
     @Test
     public void deleteQuestion_질문삭제후_redirection() throws Exception {
         Long id = 1L;
-        mvc.perform(delete("/questions/{id}", id))
+        mvc.perform(delete("/questions/delete/{id}", id))
                 .andExpect(MockMvcResultMatchers.redirectedUrl("/"))
                 .andExpect(status().is3xxRedirection());
         Mockito.verify(questionService).deleteQuestion(id);

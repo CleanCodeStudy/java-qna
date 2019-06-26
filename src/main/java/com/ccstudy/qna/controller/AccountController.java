@@ -48,8 +48,6 @@ public class AccountController {
     //session이 파라미터로 있는데 이거 인터셉터 같은거를 써서 처리해야할거 같은느낌
     @PostMapping("/login")
     public String loginAccount(AccountLoginReqDto reqDto, HttpSession session) {
-        log.info(reqDto.getUserId());
-        log.info(reqDto.getPassword());
         AccountSessionDto accountSessionDto = accountService.login(reqDto);
         session.setAttribute("accountId", accountSessionDto);
         return "redirect:/";

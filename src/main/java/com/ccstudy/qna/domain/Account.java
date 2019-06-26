@@ -1,7 +1,7 @@
 package com.ccstudy.qna.domain;
 
-import com.ccstudy.qna.exception.ChangePasswordException;
-import com.ccstudy.qna.exception.CheckPasswordException;
+import com.ccstudy.qna.exception.password.ChangePasswordException;
+import com.ccstudy.qna.exception.password.CheckPasswordException;
 import lombok.*;
 
 import javax.persistence.*;

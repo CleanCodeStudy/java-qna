@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AccountSessionDto {
+    public static String ATTRIBUTE_NAME = "accountId";
 
     private Long id;
 

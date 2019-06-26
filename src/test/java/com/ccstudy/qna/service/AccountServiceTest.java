@@ -5,7 +5,7 @@ import com.ccstudy.qna.dto.Account.AccountLoginReqDto;
 import com.ccstudy.qna.dto.Account.AccountResDto;
 import com.ccstudy.qna.dto.Account.AccountSaveReqDto;
 import com.ccstudy.qna.dto.Account.AccountUpdateReqDto;
-import com.ccstudy.qna.exception.CheckPasswordException;
+import com.ccstudy.qna.exception.password.CheckPasswordException;
 import com.ccstudy.qna.repository.AccountRepository;
 import org.junit.Before;
 import org.junit.Test;

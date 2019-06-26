@@ -4,7 +4,6 @@ import com.ccstudy.qna.dto.Account.AccountResDto;
 import com.ccstudy.qna.dto.Account.AccountSaveReqDto;
 import com.ccstudy.qna.dto.Account.AccountUpdateReqDto;
 import com.ccstudy.qna.service.AccountService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,10 +34,8 @@ public class AccountControllerTest {
     @MockBean
     private AccountService accountService;
 
-    private ObjectMapper mapper;
     private AccountResDto accountResDto1;
     private AccountResDto accountResDto2;
-
 
     @Before
     public void setUp() throws Exception {
@@ -55,7 +52,6 @@ public class AccountControllerTest {
                 .name("testsUserName222")
                 .userId("testUserId222")
                 .build();
-        mapper = new ObjectMapper();
     }
 
     @Test

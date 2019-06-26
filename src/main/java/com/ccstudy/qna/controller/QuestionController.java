@@ -48,7 +48,7 @@ public class QuestionController {
         return "/pages/questionUpdateForm";
     }
 
-    @PutMapping("/questions/{id}")
+    @PutMapping("/questions/edit/{id}")
     public String updateQuestion(QuestionUpdateReqDto questionUpdateReqDto, @PathVariable("id") Long id) {
         questionService.updateQuestion(questionUpdateReqDto, id);
         log.info("update question- id : " + id);
