@@ -1,7 +1,10 @@
 package com.ccstudy.qna.controller;
 
 import com.ccstudy.qna.dto.Account.AccountResDto;
+import com.ccstudy.qna.dto.Account.AccountSaveReqDto;
+import com.ccstudy.qna.dto.Account.AccountUpdateReqDto;
 import com.ccstudy.qna.service.AccountService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,12 +15,13 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import static org.hamcrest.Matchers.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(AccountController.class)
@@ -31,8 +35,10 @@ public class AccountControllerTest {
     @MockBean
     private AccountService accountService;
 
+    private ObjectMapper mapper;
     private AccountResDto accountResDto1;
     private AccountResDto accountResDto2;
+
 
     @Before
     public void setUp() throws Exception {
@@ -49,6 +55,7 @@ public class AccountControllerTest {
                 .name("testsUserName222")
                 .userId("testUserId222")
                 .build();
+        mapper = new ObjectMapper();
     }
 
     @Test
@@ -81,18 +88,74 @@ public class AccountControllerTest {
     }
 
     @Test
-    public void getEditFormOfAccount() {
+    public void getEditFormOfAccount() throws Exception {
+
+        //given
+        Mockito.when(accountService.findAccountById(1L))
+                .thenReturn(accountResDto1);
+
+        //when
+        mvc.perform(get("/users/{id}", 1L))
+                .andExpect(status().isOk())
+                .andExpect(view().name("pages/userUpdateForm"))
+                .andExpect(forwardedUrl("pages/userUpdateForm"))
+                .andExpect(model().attribute("account",
+                        allOf(
+                                hasProperty("id", is(1L)),
+                                hasProperty("userId", is("testUserId")),
+                                hasProperty("name", is("testsUserName")),
+                                hasProperty("email", is("testEmail@naver.com"))
+                        )
+                ));
+
     }
 
     @Test
-    public void saveAccount() {
+    public void saveAccount() throws Exception {
+        //given
+        AccountSaveReqDto accountSaveReqDto = AccountSaveReqDto.builder()
+                .email("testEmail@naver.com")
+                .name("testsUserName")
+                .password("1234")
+                .userId("testUserId")
+                .build();
+
+        Mockito.when(accountService.saveAccount(accountSaveReqDto))
+                .thenReturn(1L);
+
+        //when
+        mvc.perform(post("/users"))
+                .andExpect(MockMvcResultMatchers.redirectedUrl("/users"))
+                .andExpect(status().is3xxRedirection());
+
+
     }
 
     @Test
-    public void updateAccount() {
+    public void updateAccount() throws Exception {
+        //given
+        AccountUpdateReqDto accountUpdateReqDto = AccountUpdateReqDto.builder()
+                .email("testEmail@naver.com")
+                .name("testsUserName")
+                .changePassword("12345")
+                .currentPassword("1234")
+                .build();
+
+
+        String accountContent = mapper.writeValueAsString(accountUpdateReqDto);
+
+//        Mockito.when(accountService.updateAccount(accountUpdateReqDto, 1L));
+
+        //when
+        mvc.perform(put("/users/1"))
+                .andExpect(status().is3xxRedirection())
+//                .andExpect(MockMvcResultMatchers.content().json(accountContent))
+                .andExpect(MockMvcResultMatchers.redirectedUrl("/users"));
+
     }
 
     @Test
     public void loginAccount() {
+
     }
 }

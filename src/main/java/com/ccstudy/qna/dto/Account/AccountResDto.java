@@ -2,7 +2,6 @@ package com.ccstudy.qna.dto.Account;
 
 
 import com.ccstudy.qna.domain.Account;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
