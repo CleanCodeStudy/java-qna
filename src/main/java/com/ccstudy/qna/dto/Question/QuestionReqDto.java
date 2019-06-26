@@ -3,6 +3,7 @@ package com.ccstudy.qna.dto.Question;
 import com.ccstudy.qna.domain.Account;
 import com.ccstudy.qna.domain.Question;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
@@ -10,6 +11,7 @@ import javax.validation.constraints.NotNull;
 
 @Getter
 @AllArgsConstructor
+@Builder
 public class QuestionReqDto {
 
     @NotNull

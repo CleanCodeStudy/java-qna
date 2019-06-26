@@ -88,7 +88,7 @@ public class AccountControllerTest {
     }
 
     @Test
-    public void getEditFormOfAccount() throws Exception {
+    public void 계정_수정하는_페이지_리턴() throws Exception {
 
         //given
         Mockito.when(accountService.findAccountById(1L))
@@ -111,7 +111,7 @@ public class AccountControllerTest {
     }
 
     @Test
-    public void saveAccount() throws Exception {
+    public void 회원가입하기_이후에_redirection() throws Exception {
         //given
         AccountSaveReqDto accountSaveReqDto = AccountSaveReqDto.builder()
                 .email("testEmail@naver.com")
@@ -127,12 +127,10 @@ public class AccountControllerTest {
         mvc.perform(post("/users"))
                 .andExpect(MockMvcResultMatchers.redirectedUrl("/users"))
                 .andExpect(status().is3xxRedirection());
-
-
     }
 
     @Test
-    public void updateAccount() throws Exception {
+    public void 계정_수정하기_후_redirection() throws Exception {
         //given
         AccountUpdateReqDto accountUpdateReqDto = AccountUpdateReqDto.builder()
                 .email("testEmail@naver.com")
@@ -141,17 +139,10 @@ public class AccountControllerTest {
                 .currentPassword("1234")
                 .build();
 
-
-        String accountContent = mapper.writeValueAsString(accountUpdateReqDto);
-
-//        Mockito.when(accountService.updateAccount(accountUpdateReqDto, 1L));
-
         //when
         mvc.perform(put("/users/1"))
                 .andExpect(status().is3xxRedirection())
-//                .andExpect(MockMvcResultMatchers.content().json(accountContent))
                 .andExpect(MockMvcResultMatchers.redirectedUrl("/users"));
-
     }
 
     @Test
