@@ -55,7 +55,7 @@ public class QuestionController {
         return "redirect:/questions/" + id;
     }
 
-    @DeleteMapping("/questions/{id}")
+    @DeleteMapping("/questions/delete/{id}")
     public String deleteQuestion(@PathVariable("id") Long id) {
         questionService.deleteQuestion(id);
         log.info("delete question- id : " + id);

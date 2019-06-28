@@ -1,5 +1,6 @@
 package com.ccstudy.qna.controller;
 
+import com.ccstudy.qna.advice.common.BaseExceptionModelAndView;
 import com.ccstudy.qna.dto.Question.QuestionDetailResDto;
 import com.ccstudy.qna.dto.Question.QuestionReqDto;
 import com.ccstudy.qna.dto.Question.QuestionResDto;
@@ -12,6 +13,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -27,6 +29,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(QuestionController.class)
 @RunWith(SpringRunner.class)
 @ActiveProfiles("dev")
+@ComponentScan(basePackageClasses = BaseExceptionModelAndView.class)
+@ComponentScan("com.ccstudy.qna.interceptor")
 public class QuestionControllerTest {
 
     @Autowired

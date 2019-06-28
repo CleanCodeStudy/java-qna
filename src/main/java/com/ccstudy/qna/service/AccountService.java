@@ -2,6 +2,7 @@ package com.ccstudy.qna.service;
 
 import com.ccstudy.qna.domain.Account;
 import com.ccstudy.qna.dto.Account.*;
+import com.ccstudy.qna.exception.account.DuplicateAccountException;
 import com.ccstudy.qna.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,10 +20,6 @@ public class AccountService {
 
     private final AccountRepository accountRepository;
 
-    private static void alreadyExistedAccount(Account x) {
-        throw new RuntimeException("Already Existed User Id" + x.getUserId());
-    }
-
     public List<AccountResDto> getAllAccounts() {
         return accountRepository.findAll().stream()
                 .map(AccountResDto::new)
@@ -31,7 +28,7 @@ public class AccountService {
 
     public Long saveAccount(AccountSaveReqDto saveReqDto) {
         accountRepository.findByUserId(saveReqDto.getUserId())
-                .ifPresent(AccountService::alreadyExistedAccount);
+                .ifPresent(account -> new DuplicateAccountException(account.getUserId()));
         Account account = saveReqDto.toEntity();
         account = accountRepository.save(account);
         return account.getId();

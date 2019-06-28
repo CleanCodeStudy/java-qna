@@ -3,6 +3,7 @@ package com.ccstudy.qna.config;
 import com.ccstudy.qna.config.resolver.AccountHandlerMethodArgumentResolver;
 import com.ccstudy.qna.interceptor.LoginSessionCheckInterceptor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -18,7 +19,6 @@ public class MvcConfig implements WebMvcConfigurer {
 
     private final AccountHandlerMethodArgumentResolver accountHandlerMethodArgumentResolver;
 
-    //이게 있으면 에러가 뜬다;;;;;;;;;;;;
     private final LoginSessionCheckInterceptor loginSessionCheckInterceptor;
 
     @Override
@@ -32,7 +32,7 @@ public class MvcConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loginSessionCheckInterceptor)
-                .addPathPatterns("/users/{id}")
+                .addPathPatterns("/users/**")
                 .addPathPatterns("/questions/edit/**")
                 .addPathPatterns("/questions/delete/**")
                 .excludePathPatterns("/users/login");

@@ -1,7 +1,7 @@
 package com.ccstudy.qna.config.resolver;
 
 import com.ccstudy.qna.dto.Account.AccountSessionDto;
-import com.ccstudy.qna.exception.NotLoginUserException;
+import com.ccstudy.qna.exception.id.NotLoginUserException;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;

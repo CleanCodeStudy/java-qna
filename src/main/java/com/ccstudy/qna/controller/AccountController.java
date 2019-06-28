@@ -45,11 +45,18 @@ public class AccountController {
         return "redirect:/users";
     }
 
-    //session이 파라미터로 있는데 이거 인터셉터 같은거를 써서 처리해야할거 같은느낌
+    //다른방식의 세션값 할당이 필요하다!
     @PostMapping("/login")
     public String loginAccount(AccountLoginReqDto reqDto, HttpSession session) {
         AccountSessionDto accountSessionDto = accountService.login(reqDto);
-        session.setAttribute("accountId", accountSessionDto);
+        session.setAttribute(AccountSessionDto.ATTRIBUTE_NAME, accountSessionDto);
+        return "redirect:/";
+    }
+
+    @DeleteMapping("/logout")
+    public String logoutAccount(AccountSessionDto sessionDto, HttpSession session) {
+        session.removeAttribute(AccountSessionDto.ATTRIBUTE_NAME);
+        log.info("logout id : {}", sessionDto.getId());
         return "redirect:/";
     }
 

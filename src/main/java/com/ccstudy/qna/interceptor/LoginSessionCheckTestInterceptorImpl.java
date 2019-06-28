@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 @Profile("dev")
 @Component
 @Slf4j
-public class LoginSessionCheckTestInterceptor implements LoginSessionCheckInterceptor {
+public class LoginSessionCheckTestInterceptorImpl implements LoginSessionCheckInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {

@@ -1,4 +1,4 @@
-package com.ccstudy.qna.exception;
+package com.ccstudy.qna.exception.id;
 
 public class SessionMismatchException extends IdMismatchException {
     public SessionMismatchException() {

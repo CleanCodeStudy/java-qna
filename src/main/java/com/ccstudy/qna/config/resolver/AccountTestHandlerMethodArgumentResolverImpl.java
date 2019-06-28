@@ -13,7 +13,7 @@ import java.lang.reflect.Constructor;
 
 @Profile("dev")
 @Component
-public class AccountTestHandlerMethodArgumentResolver implements AccountHandlerMethodArgumentResolver {
+public class AccountTestHandlerMethodArgumentResolverImpl implements AccountHandlerMethodArgumentResolver {
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {

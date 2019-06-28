@@ -1,7 +1,7 @@
-package com.ccstudy.qna.exception;
+package com.ccstudy.qna.exception.id;
 
 public abstract class IdMismatchException extends RuntimeException {
-    public IdMismatchException(String message) {
+    IdMismatchException(String message) {
         super(message);
     }
 }
