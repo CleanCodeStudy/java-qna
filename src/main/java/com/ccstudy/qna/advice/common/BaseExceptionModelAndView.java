@@ -11,10 +11,10 @@ public class BaseExceptionModelAndView {
     private static final String ERROR_MESSAGE = "errorMessage";
     private static final String ERROR_CODE = "errorCode";
 
-    public ModelAndView getExceptionModelAndView(String filed, String message, HttpStatus code) {
+    public ModelAndView getExceptionModelAndView(String message, HttpStatus code) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName(ERROR_VIEW_NAME);
-        modelAndView.addObject(ERROR_MESSAGE, filed + message);
+        modelAndView.addObject(ERROR_MESSAGE, message);
         modelAndView.addObject(ERROR_CODE, code);
         return modelAndView;
     }

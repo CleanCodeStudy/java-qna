@@ -20,13 +20,13 @@ public class AccountExceptionControllerAdvice {
     private final BaseExceptionModelAndView baseExceptionModelAndView;
 
     @ExceptionHandler(PasswordException.class)
-    public ModelAndView getErrorPage(PasswordException e) {
-        return baseExceptionModelAndView.getExceptionModelAndView(FIELD, e.getMessage(), HttpStatus.BAD_REQUEST);
+    public ModelAndView getErrorOfPasswordException(PasswordException e) {
+        return baseExceptionModelAndView.getExceptionModelAndView(FIELD  + e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(DuplicateAccountException.class)
-    public ModelAndView duplicateIdException(DuplicateAccountException e) {
-        return baseExceptionModelAndView.getExceptionModelAndView(FIELD, e.getMessage(), HttpStatus.BAD_REQUEST);
+    public ModelAndView getErrorOfDuplicateIdException(DuplicateAccountException e) {
+        return baseExceptionModelAndView.getExceptionModelAndView(FIELD  + e.getMessage(), HttpStatus.BAD_REQUEST);
 
     }
 
