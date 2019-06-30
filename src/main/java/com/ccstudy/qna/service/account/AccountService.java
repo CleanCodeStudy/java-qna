@@ -3,6 +3,8 @@ package com.ccstudy.qna.service.account;
 import com.ccstudy.qna.domain.account.Account;
 import com.ccstudy.qna.domain.account.AccountRepository;
 import com.ccstudy.qna.dto.account.*;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,6 +37,9 @@ public class AccountService {
 
     @Transactional
     public Long saveAccount(AccountSaveRequestDto accountSaveRequestDto){
+        if(accountRepository.findAccountByEmail(accountSaveRequestDto.getEmail()).isPresent()){
+            throw new IllegalArgumentException("이미 존재하는 이메일입니다!");
+        }
         return accountRepository.save(accountSaveRequestDto.toEntity()).getId();
     }
 

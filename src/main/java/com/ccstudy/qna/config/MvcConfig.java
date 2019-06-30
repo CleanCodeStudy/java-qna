@@ -3,8 +3,10 @@ package com.ccstudy.qna.config;
 import com.ccstudy.qna.interceptor.QuestionInterceptor;
 import com.ccstudy.qna.resolver.AuthenticationResolver;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
@@ -42,4 +44,5 @@ public class MvcConfig implements WebMvcConfigurer {
         resolvers.add(authenticationResolver);
         WebMvcConfigurer.super.addArgumentResolvers(resolvers);
     }
+
 }
