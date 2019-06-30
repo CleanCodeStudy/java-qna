@@ -5,10 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Getter
 @Entity
@@ -20,16 +17,26 @@ public class Question extends BaseTimeEntity {
     private Long id;
 
     private String title;
+
     private String contents;
 
-//    @JoinColumn
-//    @ManyToOne
-//    private User user;
+    @JoinColumn(name = "user_id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private User user;
 
     @Builder(builderMethodName = "createBuilder")
-    public Question(String title, String contents) {
+    private Question(String title, String contents) {
         this.title = title;
         this.contents = contents;
+    }
+
+    public Question setUser(User user) {
+        this.user = user;
+        return this;
+    }
+
+    public String getWriterName() {
+        return user.getUserName();
     }
 }
 

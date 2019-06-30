@@ -21,7 +21,7 @@ public class UserSimpleInfo {
     public UserSimpleInfo(User user) {
         this.id = user.getId();
         this.email = user.getEmail();
-        this.name = user.getFirstName() + user.getLastName();
+        this.name = user.getUserName();
         this.createDate = user.getCreatedDateTime();
         this.modifyDate = user.getModifiedDateTime();
     }

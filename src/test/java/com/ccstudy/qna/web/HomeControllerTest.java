@@ -1,8 +1,6 @@
 package com.ccstudy.qna.web;
 
-import com.ccstudy.qna.domain.entity.Question;
 import com.ccstudy.qna.domain.entity.User;
-import com.ccstudy.qna.domain.repository.QuestionRepository;
 import com.ccstudy.qna.domain.repository.UserRepository;
 import org.junit.After;
 import org.junit.Test;
@@ -15,7 +13,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -24,92 +21,63 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
-public class QuestionControllerTest {
-
+public class HomeControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
     @Autowired
-    private QuestionRepository questionRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
+    private UserRepository repository;
 
     @After
     public void tearDown() throws Exception {
-        questionRepository.deleteAllFetch();
-        userRepository.deleteAll();
+        repository.deleteAll();
     }
 
     @Test
-    public void 질문_생성_성공() throws Exception {
-
+    public void 로그인_테스트() throws Exception {
         //given
         saveUser();
-        //then
         //when
-        this.mockMvc.perform(post("/questions")
-                .param("title", "aaa")
-                .param("contents", "aaaa")
+        //then
+        this.mockMvc.perform(post("/login")
+                .param("email", "chldbtjd7530@naver.com")
+                .param("password", "qweqwe")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .characterEncoding("utf-8")
         )
                 .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andReturn();
-        Question question = questionRepository.findAllJoinFetch().get(0);
-
-        assertThat(question.getTitle()).isEqualTo("aaa");
-        assertThat(question.getContents()).isEqualTo("aaaa");
     }
 
     @Test
-    public void 질문_제목이_없을시_실패() throws Exception {
-
+    public void 로그인_실패() throws Exception {
         //given
         saveUser();
-        //then
         //when
-        this.mockMvc.perform(post("/questions")
-                .param("title", "aaa")
+        //then
+        this.mockMvc.perform(post("/login")
+                .param("email", "cys@naver.com")
+                .param("password", "qweqwe")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .characterEncoding("utf-8")
         )
                 .andDo(print())
-                .andExpect(status().isBadRequest())
+                .andExpect(status().isOk())
                 .andReturn();
-
-    }
-
-    @Test
-    public void 질문_내용이_없을시_실패() throws Exception {
-
-        //given
-        saveUser();
-        //then
-        //when
-        this.mockMvc.perform(post("/questions")
-                .param("contents", "aaaa")
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .characterEncoding("utf-8")
-        )
-                .andDo(print())
-                .andExpect(status().isBadRequest())
-                .andReturn();
-
     }
 
     private void saveUser() {
-        userRepository.save(createUser());
+        repository.save(createUser());
     }
 
     private User createUser() {
         return User.createBuilder()
                 .firstName("c")
                 .lastName("ys")
-                .email("chldbtjd2272@naver.com")
-                .password("qwe")
+                .email("chldbtjd7530@naver.com")
+                .password("qweqwe")
                 .build();
     }
+
 }

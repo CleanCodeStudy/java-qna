@@ -14,11 +14,13 @@ public class QuestionResponseDto {
     private String title;
     private String createDate;
     private String modifyDate;
+    private String name;
 
     public QuestionResponseDto(Question question) {
         this.id = question.getId();
         this.title = question.getTitle();
         this.createDate = LocalDateTimeConverter.convertLocalDate(question.getCreatedDateTime());
         this.modifyDate = LocalDateTimeConverter.convertLocalDate(question.getModifiedDateTime());
+        this.name = question.getWriterName();
     }
 }

@@ -1,11 +1,10 @@
 package com.ccstudy.qna.domain.entity;
 
+import com.ccstudy.qna.exception.UnAuthorizedException;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+
 
 @Entity
 @Getter
@@ -23,19 +22,23 @@ public class User extends BaseTimeEntity {
     private String password;
 
     @Setter
-    private String firstName;
-
-    @Setter
-    private String lastName;
-
-//    @OneToMany(mappedBy = "user")
-//    private List<Question> question;
+    @Embedded
+    private UserName name;
 
     @Builder(builderMethodName = "createBuilder")
-    public User(String email, String password, String firstName, String lastName) {
+    private User(String email, String password, String firstName, String lastName) {
         this.email = email;
         this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.name = new UserName(firstName, lastName);
+    }
+
+    public void matchPassword(String password) {
+        if (!this.password.equals(password)) {
+            throw new UnAuthorizedException();
+        }
+    }
+
+    public String getUserName() {
+        return name.toString();
     }
 }

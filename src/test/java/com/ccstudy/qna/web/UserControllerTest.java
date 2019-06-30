@@ -61,8 +61,7 @@ public class UserControllerTest {
 
         assertThat(user.getEmail()).isEqualTo("chldbtjd7530@naver.com");
         assertThat(user.getPassword()).isEqualTo("qweqwe");
-        assertThat(user.getFirstName()).isEqualTo("chl");
-        assertThat(user.getLastName()).isEqualTo("ys");
+        assertThat(user.getUserName()).isEqualTo("chlys");
 
         assertThat(LocalDateTimeConverter.convertLocalDate(user.getCreatedDateTime()))
                 .isEqualTo(LocalDateTimeConverter.convertLocalDate(LocalDateTime.now()));
@@ -99,8 +98,7 @@ public class UserControllerTest {
 
         assertThat(user.getEmail()).isEqualTo("chldbtjd7530@naver.com");
         assertThat(user.getPassword()).isEqualTo("qweqwe");
-        assertThat(user.getFirstName()).isEqualTo("chl");
-        assertThat(user.getLastName()).isEqualTo("ys");
+        assertThat(user.getUserName()).isEqualTo("chlys");
 
         assertThat(LocalDateTimeConverter.convertLocalDate(user.getCreatedDateTime()))
                 .isEqualTo(LocalDateTimeConverter.convertLocalDate(LocalDateTime.now()));
