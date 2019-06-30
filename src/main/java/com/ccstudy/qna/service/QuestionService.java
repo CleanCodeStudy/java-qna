@@ -6,8 +6,8 @@ import com.ccstudy.qna.dto.Question.QuestionDetailResDto;
 import com.ccstudy.qna.dto.Question.QuestionReqDto;
 import com.ccstudy.qna.dto.Question.QuestionResDto;
 import com.ccstudy.qna.dto.Question.QuestionUpdateReqDto;
-import com.ccstudy.qna.repository.AccountRepository;
-import com.ccstudy.qna.repository.QuestionRepository;
+import com.ccstudy.qna.domain.repository.AccountRepository;
+import com.ccstudy.qna.domain.repository.QuestionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,7 +31,7 @@ public class QuestionService {
     }
 
     public List<QuestionResDto> getQuestionBoard() {
-        return questionRepository.findAll().stream()
+        return questionRepository.findAllJoinFetch().stream()
                 .map(QuestionResDto::new)
                 .collect(Collectors.toList());
     }

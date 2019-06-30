@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 @Controller
 @RequiredArgsConstructor
@@ -32,29 +33,28 @@ public class AccountController {
     }
 
     @PostMapping
-    public String saveAccount(AccountSaveReqDto saveReqDto) {
+    public String saveAccount(@Valid AccountSaveReqDto saveReqDto) {
         Long id = accountService.saveAccount(saveReqDto);
         log.info("save new user - id : " + id);
         return "redirect:/users";
     }
 
     @PutMapping("/{id}")
-    public String updateAccount(@PathVariable("id") Long id, AccountUpdateReqDto updateReqDto) {
+    public String updateAccount(@PathVariable("id") Long id,@Valid AccountUpdateReqDto updateReqDto) {
         accountService.updateAccount(updateReqDto, id);
         log.info("update user - id : " + id);
         return "redirect:/users";
     }
 
-    //다른방식의 세션값 할당이 필요하다!
     @PostMapping("/login")
-    public String loginAccount(AccountLoginReqDto reqDto, HttpSession session) {
+    public String loginAccount(@Valid AccountLoginReqDto reqDto, HttpSession session) {
         AccountSessionDto accountSessionDto = accountService.login(reqDto);
         session.setAttribute(AccountSessionDto.ATTRIBUTE_NAME, accountSessionDto);
         return "redirect:/";
     }
 
     @DeleteMapping("/logout")
-    public String logoutAccount(AccountSessionDto sessionDto, HttpSession session) {
+    public String logoutAccount(@Valid AccountSessionDto sessionDto, HttpSession session) {
         session.removeAttribute(AccountSessionDto.ATTRIBUTE_NAME);
         log.info("logout id : {}", sessionDto.getId());
         return "redirect:/";

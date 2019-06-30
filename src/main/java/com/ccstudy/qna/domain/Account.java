@@ -1,7 +1,6 @@
 package com.ccstudy.qna.domain;
 
-import com.ccstudy.qna.exception.password.ChangePasswordException;
-import com.ccstudy.qna.exception.password.CheckPasswordException;
+import com.ccstudy.qna.exception.account.PasswordException;
 import lombok.*;
 
 import javax.persistence.*;
@@ -50,13 +49,13 @@ public class Account {
 
     public void validateCurrentPassword(String checkPassword) {
         if (!checkPassword.equals(password)) {
-            throw new CheckPasswordException("입력한 패스워드 값이 현재 패스워드 값과 같지 않습니다.");
+            throw new PasswordException("입력한 패스워드 값이 현재 패스워드 값과 같지 않습니다.");
         }
     }
 
     private void validateDifferentPassword(String changePassword) {
         if (changePassword.equals(password)) {
-            throw new ChangePasswordException("현재 패스워드와 바꾸려는 패스워드 값이 같습니다");
+            throw new PasswordException("현재 패스워드와 바꾸려는 패스워드 값이 같습니다");
         }
     }
 }

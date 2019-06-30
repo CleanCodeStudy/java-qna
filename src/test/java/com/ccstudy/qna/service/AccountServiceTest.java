@@ -5,8 +5,8 @@ import com.ccstudy.qna.dto.Account.AccountLoginReqDto;
 import com.ccstudy.qna.dto.Account.AccountResDto;
 import com.ccstudy.qna.dto.Account.AccountSaveReqDto;
 import com.ccstudy.qna.dto.Account.AccountUpdateReqDto;
-import com.ccstudy.qna.exception.password.CheckPasswordException;
-import com.ccstudy.qna.repository.AccountRepository;
+import com.ccstudy.qna.exception.account.PasswordException;
+import com.ccstudy.qna.domain.repository.AccountRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -184,7 +184,7 @@ public class AccountServiceTest {
         accountService.login(accountLoginReqDto);
     }
 
-    @Test(expected = CheckPasswordException.class)
+    @Test(expected = PasswordException.class)
     public void login_로그인실패_비밀번호_틀림() {
         //given
         AccountLoginReqDto accountLoginReqDto = AccountLoginReqDto.builder()

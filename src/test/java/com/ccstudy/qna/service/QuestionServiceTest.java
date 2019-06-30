@@ -4,7 +4,7 @@ import com.ccstudy.qna.domain.Account;
 import com.ccstudy.qna.domain.Question;
 import com.ccstudy.qna.dto.Question.QuestionDetailResDto;
 import com.ccstudy.qna.dto.Question.QuestionUpdateReqDto;
-import com.ccstudy.qna.repository.QuestionRepository;
+import com.ccstudy.qna.domain.repository.QuestionRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

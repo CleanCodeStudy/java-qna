@@ -1,4 +1,4 @@
-package com.ccstudy.qna.repository;
+package com.ccstudy.qna.domain.repository;
 
 import com.ccstudy.qna.domain.Account;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -3,7 +3,7 @@ package com.ccstudy.qna.service;
 import com.ccstudy.qna.domain.Account;
 import com.ccstudy.qna.dto.Account.*;
 import com.ccstudy.qna.exception.account.DuplicateAccountException;
-import com.ccstudy.qna.repository.AccountRepository;
+import com.ccstudy.qna.domain.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

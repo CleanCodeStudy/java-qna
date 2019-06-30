@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -29,7 +30,7 @@ public class QuestionController {
     }
 
     @PostMapping("/questions")
-    public String createQuestion(QuestionReqDto questionReqDto, AccountSessionDto sessionReqDto) {
+    public String createQuestion(@Valid QuestionReqDto questionReqDto, AccountSessionDto sessionReqDto) {
         questionService.createQuestion(questionReqDto, sessionReqDto.getId());
         return "redirect:/";
     }
@@ -49,7 +50,7 @@ public class QuestionController {
     }
 
     @PutMapping("/questions/edit/{id}")
-    public String updateQuestion(QuestionUpdateReqDto questionUpdateReqDto, @PathVariable("id") Long id) {
+    public String updateQuestion(@Valid QuestionUpdateReqDto questionUpdateReqDto, @PathVariable("id") Long id) {
         questionService.updateQuestion(questionUpdateReqDto, id);
         log.info("update question- id : " + id);
         return "redirect:/questions/" + id;
@@ -61,6 +62,5 @@ public class QuestionController {
         log.info("delete question- id : " + id);
         return "redirect:/";
     }
-
 
 }

@@ -1,7 +1,6 @@
 package com.ccstudy.qna.domain;
 
-import com.ccstudy.qna.exception.password.ChangePasswordException;
-import com.ccstudy.qna.exception.password.CheckPasswordException;
+import com.ccstudy.qna.exception.account.PasswordException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -23,7 +22,7 @@ public class AccountTest {
                 .build();
     }
 
-    @Test(expected = CheckPasswordException.class)
+    @Test(expected = PasswordException.class)
     public void 입력한_패스워드_값이_현재_패스워드_값과_같지_않습니다() {
         //given
         //when
@@ -34,7 +33,7 @@ public class AccountTest {
         account.validatePassword(checkPassword, changePassword);
     }
 
-    @Test(expected = ChangePasswordException.class)
+    @Test(expected = PasswordException.class)
     public void 현재_패스워드와_바꾸려는_패스워드_값이_같습니다() {
         //given
         //when

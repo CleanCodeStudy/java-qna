@@ -1,7 +1,7 @@
 package com.ccstudy.qna.config.resolver;
 
 import com.ccstudy.qna.dto.Account.AccountSessionDto;
-import com.ccstudy.qna.exception.id.NotLoginUserException;
+import com.ccstudy.qna.exception.account.AuthException;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
@@ -27,7 +27,7 @@ public class AccountHandlerMethodArgumentResolverImpl implements AccountHandlerM
         HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
         AccountSessionDto accountSessionDto = (AccountSessionDto) request.getSession().getAttribute(ACCOUNT_ID);
         if (accountSessionDto == null) {
-            throw new NotLoginUserException("로그인 안한 유저입니다");
+            throw new AuthException("로그인 안한 유저입니다");
         }
         return accountSessionDto;
     }

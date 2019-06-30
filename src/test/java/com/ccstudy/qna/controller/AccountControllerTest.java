@@ -29,7 +29,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @ActiveProfiles("dev")
 @ComponentScan(basePackageClasses = BaseExceptionModelAndView.class)
-@ComponentScan("com.ccstudy.qna.interceptor")
 public class AccountControllerTest {
 
     @Autowired
