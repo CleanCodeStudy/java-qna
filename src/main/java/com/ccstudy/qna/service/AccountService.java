@@ -28,7 +28,7 @@ public class AccountService {
 
     public Long saveAccount(AccountSaveReqDto saveReqDto) {
         accountRepository.findByUserId(saveReqDto.getUserId())
-                .ifPresent(account -> new DuplicateAccountException(account.getUserId()));
+                .ifPresent(account -> {throw new DuplicateAccountException(account.getUserId());});
         Account account = saveReqDto.toEntity();
         account = accountRepository.save(account);
         return account.getId();

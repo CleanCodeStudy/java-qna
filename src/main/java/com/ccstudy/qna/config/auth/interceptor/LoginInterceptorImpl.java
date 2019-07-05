@@ -20,21 +20,11 @@ public class LoginInterceptorImpl implements LoginInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        ModelMap modelMap = modelAndView.getModelMap();
-        AccountAuthDto authDto= (AccountAuthDto)modelAndView.getModel()
+        AccountAuthDto accountAuthDto = (AccountAuthDto) modelAndView.getModel()
                 .get(AccountAuthDto.ATTRIBUTE_NAME);
-
-        if(authDto==null){
-            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        }
-
-        if (modelMap.isEmpty()) {
-            System.out.println("@@@@@@@@@@@@@@@@@@@@@@@");
-        }
-//        AccountAuthDto accountAuthDto = (AccountAuthDto) modelAndView.getModel()
-//                .get(AccountAuthDto.ATTRIBUTE_NAME);
-//        authentication.setAccountAuthDto(request, accountAuthDto);
-//        modelAndView.addObject("id",accountAuthDto.getId());
+        authentication.setAccountAuthDto(request, accountAuthDto);
+        modelAndView.addObject("authId",accountAuthDto.getId());
+        response.sendRedirect("/");
     }
 
 }

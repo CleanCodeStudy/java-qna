@@ -2,12 +2,14 @@ package com.ccstudy.qna.service;
 
 import com.ccstudy.qna.domain.Account;
 import com.ccstudy.qna.domain.Question;
+import com.ccstudy.qna.domain.repository.AccountRepository;
+import com.ccstudy.qna.domain.repository.QuestionRepository;
+import com.ccstudy.qna.dto.Account.AccountAuthDto;
 import com.ccstudy.qna.dto.Question.QuestionDetailResDto;
 import com.ccstudy.qna.dto.Question.QuestionReqDto;
 import com.ccstudy.qna.dto.Question.QuestionResDto;
 import com.ccstudy.qna.dto.Question.QuestionUpdateReqDto;
-import com.ccstudy.qna.domain.repository.AccountRepository;
-import com.ccstudy.qna.domain.repository.QuestionRepository;
+import com.ccstudy.qna.exception.account.AuthException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -60,4 +62,12 @@ public class QuestionService {
                 .orElseThrow(NoSuchElementException::new);
         questionRepository.delete(question);
     }
+
+
+    public void validateAuthorization(Long id, AccountAuthDto accountAuthDto) {
+        if (!id.equals(accountAuthDto.getId())) {
+            throw new AuthException("권한이 없습니다.");
+        }
+    }
+
 }

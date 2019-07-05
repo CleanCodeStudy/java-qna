@@ -48,6 +48,13 @@
             <span>Forget Password</span></a>
     </li>
 
+    <li class="nav-item">
+        <form action="/users/logout" method="post" class="bg-primary">
+            <input type="hidden" name="_method" value="delete"/>
+            <button type="submit" class="nav-link">logout</button>
+        </form>
+    </li>
+
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
 

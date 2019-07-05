@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Controller
@@ -47,17 +46,13 @@ public class AccountController {
     }
 
     @PostMapping("/login")
-    public String loginAccount(@Valid AccountLoginReqDto reqDto, Model model) {
+    public void loginAccount(@Valid AccountLoginReqDto reqDto, Model model) {
         AccountAuthDto accountAuthDto = accountService.login(reqDto);
         model.addAttribute(AccountAuthDto.ATTRIBUTE_NAME, accountAuthDto);
-
-        return "redirect:/";
     }
 
     @DeleteMapping("/logout")
-    public String logoutAccount(@Valid AccountAuthDto sessionDto, HttpSession session) {
-        session.removeAttribute(AccountAuthDto.ATTRIBUTE_NAME);
-        log.info("logout id : {}", sessionDto.getId());
+    public String logoutAccount() {
         return "redirect:/";
     }
 

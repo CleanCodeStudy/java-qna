@@ -30,8 +30,8 @@ public class QuestionController {
     }
 
     @PostMapping("/questions")
-    public String createQuestion(@Valid QuestionReqDto questionReqDto, AccountAuthDto sessionReqDto) {
-        questionService.createQuestion(questionReqDto, sessionReqDto.getId());
+    public String createQuestion(@Valid QuestionReqDto questionReqDto, AccountAuthDto accountAuthDto) {
+        questionService.createQuestion(questionReqDto, accountAuthDto.getId());
         return "redirect:/";
     }
 
@@ -43,21 +43,25 @@ public class QuestionController {
     }
 
     @GetMapping("/questions/edit/{id}")
-    public String getEditFormOfQuestion(@PathVariable("id") Long id, Model model) {
+    public String getEditFormOfQuestion(@PathVariable("id") Long id, Model model, AccountAuthDto accountAuthDto) {
+        questionService.validateAuthorization(id, accountAuthDto);
         QuestionDetailResDto resDto = questionService.getQuestionDetail(id);
         model.addAttribute("question", resDto);
         return "/pages/questionUpdateForm";
     }
 
     @PutMapping("/questions/edit/{id}")
-    public String updateQuestion(@Valid QuestionUpdateReqDto questionUpdateReqDto, @PathVariable("id") Long id) {
+    public String updateQuestion(@Valid QuestionUpdateReqDto questionUpdateReqDto,
+                                 @PathVariable("id") Long id, AccountAuthDto accountAuthDto) {
+        questionService.validateAuthorization(id, accountAuthDto);
         questionService.updateQuestion(questionUpdateReqDto, id);
         log.info("update question- id : " + id);
         return "redirect:/questions/" + id;
     }
 
     @DeleteMapping("/questions/delete/{id}")
-    public String deleteQuestion(@PathVariable("id") Long id) {
+    public String deleteQuestion(@PathVariable("id") Long id, AccountAuthDto accountAuthDto) {
+        questionService.validateAuthorization(id, accountAuthDto);
         questionService.deleteQuestion(id);
         log.info("delete question- id : " + id);
         return "redirect:/";

@@ -6,6 +6,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.NativeWebRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.swing.text.html.Option;
+import java.util.Optional;
 
 @Component
 public class AuthenticationImpl implements Authentication {
@@ -13,9 +15,15 @@ public class AuthenticationImpl implements Authentication {
     private static final int ONE_HOUR = 3600;
 
     @Override
-    public AccountAuthDto getAccountAuthDto(NativeWebRequest request) {
+    public Optional<AccountAuthDto> getAccountAuthDto(NativeWebRequest request) {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request.getNativeRequest();
-        return (AccountAuthDto) httpServletRequest.getSession()
+        return (Optional<AccountAuthDto>) httpServletRequest.getSession()
+                .getAttribute(AccountAuthDto.ATTRIBUTE_NAME);
+    }
+
+    @Override
+    public Optional<AccountAuthDto> getAccountAuthDto(HttpServletRequest request) {
+        return (Optional<AccountAuthDto>) request.getSession()
                 .getAttribute(AccountAuthDto.ATTRIBUTE_NAME);
     }
 
