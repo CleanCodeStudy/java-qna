@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.NativeWebRequest;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.swing.text.html.Option;
 import java.util.Optional;
 
 @Component
@@ -17,14 +16,16 @@ public class AuthenticationImpl implements Authentication {
     @Override
     public Optional<AccountAuthDto> getAccountAuthDto(NativeWebRequest request) {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request.getNativeRequest();
-        return (Optional<AccountAuthDto>) httpServletRequest.getSession()
+        AccountAuthDto authDto = (AccountAuthDto) httpServletRequest.getSession()
                 .getAttribute(AccountAuthDto.ATTRIBUTE_NAME);
+        return Optional.ofNullable(authDto);
     }
 
     @Override
     public Optional<AccountAuthDto> getAccountAuthDto(HttpServletRequest request) {
-        return (Optional<AccountAuthDto>) request.getSession()
+        AccountAuthDto authDto = (AccountAuthDto) request.getSession()
                 .getAttribute(AccountAuthDto.ATTRIBUTE_NAME);
+        return Optional.ofNullable(authDto);
     }
 
     @Override
