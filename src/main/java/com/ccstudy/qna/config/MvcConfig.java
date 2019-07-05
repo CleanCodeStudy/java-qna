@@ -1,10 +1,13 @@
 package com.ccstudy.qna.config;
 
+import com.ccstudy.qna.config.auth.interceptor.LoginInterceptor;
+import com.ccstudy.qna.config.auth.interceptor.LogoutInterceptor;
 import com.ccstudy.qna.config.resolver.AccountHandlerMethodArgumentResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -15,6 +18,8 @@ import java.util.List;
 public class MvcConfig implements WebMvcConfigurer {
 
     private final AccountHandlerMethodArgumentResolver accountHandlerMethodArgumentResolver;
+    private final LoginInterceptor loginInterceptor;
+    private final LogoutInterceptor logoutInterceptor;
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
@@ -27,5 +32,14 @@ public class MvcConfig implements WebMvcConfigurer {
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
         resolvers.add(accountHandlerMethodArgumentResolver);
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(loginInterceptor)
+                .addPathPatterns("/users/login");
+
+        registry.addInterceptor(logoutInterceptor)
+                .addPathPatterns("/users/logout");
     }
 }

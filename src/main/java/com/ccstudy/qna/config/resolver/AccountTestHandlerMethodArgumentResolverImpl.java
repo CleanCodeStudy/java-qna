@@ -1,7 +1,7 @@
 package com.ccstudy.qna.config.resolver;
 
 import com.ccstudy.qna.domain.Account;
-import com.ccstudy.qna.dto.Account.AccountSessionDto;
+import com.ccstudy.qna.dto.Account.AccountAuthDto;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
@@ -17,7 +17,7 @@ public class AccountTestHandlerMethodArgumentResolverImpl implements AccountHand
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return AccountSessionDto.class.isAssignableFrom(parameter.getParameterType());
+        return AccountAuthDto.class.isAssignableFrom(parameter.getParameterType());
     }
 
     @Override
@@ -27,7 +27,7 @@ public class AccountTestHandlerMethodArgumentResolverImpl implements AccountHand
         Constructor<Account> testConstructor = Account.class.getDeclaredConstructor(Long.class, Account.class);
         testConstructor.setAccessible(true);
         account = testConstructor.newInstance(1L, account);
-        return AccountSessionDto.createBuilder()
+        return AccountAuthDto.createBuilder()
                 .account(account)
                 .build();
     }

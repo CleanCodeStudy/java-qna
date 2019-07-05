@@ -1,9 +1,9 @@
 package com.ccstudy.qna.service;
 
 import com.ccstudy.qna.domain.Account;
+import com.ccstudy.qna.domain.repository.AccountRepository;
 import com.ccstudy.qna.dto.Account.*;
 import com.ccstudy.qna.exception.account.DuplicateAccountException;
-import com.ccstudy.qna.domain.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -54,14 +54,13 @@ public class AccountService {
         account.setPassword(reqDto.getChangePassword());
     }
 
-    public AccountSessionDto login(AccountLoginReqDto reqDto) {
+    public AccountAuthDto login(AccountLoginReqDto reqDto) {
         Account account = accountRepository.findByUserId(reqDto.getUserId())
                 .orElseThrow(NoSuchElementException::new);
         account.validateCurrentPassword(reqDto.getPassword());
-        AccountSessionDto accountSessionDto = AccountSessionDto.createBuilder()
+        return AccountAuthDto.createBuilder()
                 .account(account)
                 .build();
-        return accountSessionDto;
     }
 
 }

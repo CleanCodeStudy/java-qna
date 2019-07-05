@@ -1,6 +1,6 @@
 package com.ccstudy.qna.controller;
 
-import com.ccstudy.qna.dto.Account.AccountSessionDto;
+import com.ccstudy.qna.dto.Account.AccountAuthDto;
 import com.ccstudy.qna.dto.Question.QuestionDetailResDto;
 import com.ccstudy.qna.dto.Question.QuestionReqDto;
 import com.ccstudy.qna.dto.Question.QuestionResDto;
@@ -30,7 +30,7 @@ public class QuestionController {
     }
 
     @PostMapping("/questions")
-    public String createQuestion(@Valid QuestionReqDto questionReqDto, AccountSessionDto sessionReqDto) {
+    public String createQuestion(@Valid QuestionReqDto questionReqDto, AccountAuthDto sessionReqDto) {
         questionService.createQuestion(questionReqDto, sessionReqDto.getId());
         return "redirect:/";
     }

@@ -40,22 +40,23 @@ public class AccountController {
     }
 
     @PutMapping("/{id}")
-    public String updateAccount(@PathVariable("id") Long id,@Valid AccountUpdateReqDto updateReqDto) {
+    public String updateAccount(@PathVariable("id") Long id, @Valid AccountUpdateReqDto updateReqDto) {
         accountService.updateAccount(updateReqDto, id);
         log.info("update user - id : " + id);
         return "redirect:/users";
     }
 
     @PostMapping("/login")
-    public String loginAccount(@Valid AccountLoginReqDto reqDto, HttpSession session) {
-        AccountSessionDto accountSessionDto = accountService.login(reqDto);
-        session.setAttribute(AccountSessionDto.ATTRIBUTE_NAME, accountSessionDto);
+    public String loginAccount(@Valid AccountLoginReqDto reqDto, Model model) {
+        AccountAuthDto accountAuthDto = accountService.login(reqDto);
+        model.addAttribute(AccountAuthDto.ATTRIBUTE_NAME, accountAuthDto);
+
         return "redirect:/";
     }
 
     @DeleteMapping("/logout")
-    public String logoutAccount(@Valid AccountSessionDto sessionDto, HttpSession session) {
-        session.removeAttribute(AccountSessionDto.ATTRIBUTE_NAME);
+    public String logoutAccount(@Valid AccountAuthDto sessionDto, HttpSession session) {
+        session.removeAttribute(AccountAuthDto.ATTRIBUTE_NAME);
         log.info("logout id : {}", sessionDto.getId());
         return "redirect:/";
     }

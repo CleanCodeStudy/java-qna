@@ -8,13 +8,13 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class AccountSessionDto {
+public class AccountAuthDto {
     public static String ATTRIBUTE_NAME = "accountId";
 
     private Long id;
 
     @Builder(builderMethodName = "createBuilder")
-    private AccountSessionDto(Account account) {
+    private AccountAuthDto(Account account) {
         this.id = account.getId();
     }
 }
