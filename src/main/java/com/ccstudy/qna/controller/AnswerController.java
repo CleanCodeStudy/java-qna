@@ -3,12 +3,13 @@ package com.ccstudy.qna.controller;
 import com.ccstudy.qna.dto.Account.AccountAuthDto;
 import com.ccstudy.qna.dto.Answer.AnswerDetailResDto;
 import com.ccstudy.qna.dto.Answer.AnswerSaveReqDto;
-import com.ccstudy.qna.dto.Question.QuestionDetailResDto;
 import com.ccstudy.qna.service.AnswerService;
+import com.ccstudy.qna.service.ValidateService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +22,7 @@ import javax.validation.Valid;
 public class AnswerController {
 
     private final AnswerService answerService;
+    private final ValidateService validateService;
 
     @GetMapping("/questions/{questionId}/answers")
     public String getSaveFormOfAnswer(@PathVariable("questionId") Long id, Model model,
@@ -43,6 +45,13 @@ public class AnswerController {
         AnswerDetailResDto resDto = answerService.getAnswerDetail(answerId);
         model.addAttribute("answer", resDto);
         return "/pages/showAnswer";
+    }
+
+    @DeleteMapping("/questions/{questionId}/answers/{answerId}")
+    public String deleteAnswer(@PathVariable("questionId") Long questionId,
+                               @PathVariable("answerId") Long answerId, AccountAuthDto authDto) {
+        answerService.removeAnswer(answerId, authDto);
+        return "redirect:/questions/" + questionId;
     }
 
 }

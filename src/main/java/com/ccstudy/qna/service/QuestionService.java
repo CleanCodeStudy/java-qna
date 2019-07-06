@@ -5,8 +5,8 @@ import com.ccstudy.qna.domain.Question;
 import com.ccstudy.qna.domain.repository.AccountRepository;
 import com.ccstudy.qna.domain.repository.QuestionRepository;
 import com.ccstudy.qna.dto.Question.QuestionDetailResDto;
-import com.ccstudy.qna.dto.Question.QuestionSaveReqDto;
 import com.ccstudy.qna.dto.Question.QuestionResDto;
+import com.ccstudy.qna.dto.Question.QuestionSaveReqDto;
 import com.ccstudy.qna.dto.Question.QuestionUpdateReqDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -61,7 +61,9 @@ public class QuestionService {
     public void deleteQuestion(Long id) {
         Question question = questionRepository.findById(id)
                 .orElseThrow(NoSuchElementException::new);
-        questionRepository.delete(question);
+        question.checkAnswerStatus();
+        question.removeQuestion();
     }
+
 
 }

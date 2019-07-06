@@ -28,15 +28,18 @@ public class Answer extends BaseTimeEntity {
 
     private String content;
 
-    private boolean status;
+    private boolean status = true;
 
     @Builder(builderMethodName = "createBuilder")
-    public Answer(String content, String title, Account author, Question question, boolean status) {
+    public Answer(String content, String title, Account author, Question question) {
         this.content = content;
         this.title = title;
         this.author = author;
         this.question = question;
-        this.status = status;
+    }
+
+    public void removeAnswer() {
+        this.status = false;
     }
 
 }

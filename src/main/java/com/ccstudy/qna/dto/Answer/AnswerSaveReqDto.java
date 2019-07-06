@@ -24,7 +24,6 @@ public class AnswerSaveReqDto {
                 .title(this.title)
                 .author(account)
                 .question(question)
-                .status(true)
                 .build();
     }
 }

@@ -13,6 +13,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor
+@Where(clause = "status = true")
 public class Question extends BaseTimeEntity {
 
     @Id
@@ -23,12 +24,14 @@ public class Question extends BaseTimeEntity {
     @Setter
     private String content;
 
-    @JoinColumn(foreignKey = @ForeignKey(name="fk_question_account"))
+    @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_account"))
     @ManyToOne(fetch = FetchType.LAZY)
     private Account author;
 
-//    @Where(clause = "status:true")
-    @OneToMany(mappedBy="question")
+    private boolean status = true;
+
+    @Where(clause = "status = true")
+    @OneToMany(mappedBy = "question")
     private List<Answer> answers;
 
     @Builder(builderMethodName = "createBuilder")
@@ -38,12 +41,31 @@ public class Question extends BaseTimeEntity {
         this.author = author;
     }
 
-    private Question(Long id, Question question){
-        super(LocalDateTime.now(),LocalDateTime.now());
+    private Question(Long id, Question question) {
+        super(LocalDateTime.now(), LocalDateTime.now());
         this.id = id;
         this.title = question.getTitle();
         this.author = question.getAuthor();
         this.content = question.getContent();
+    }
+
+    public void removeQuestion() {
+        this.status = false;
+    }
+
+    public void checkAnswerStatus() {
+        boolean cantRemove = this.answers.stream()
+                .filter(this::isNotAuthor)
+                .anyMatch(Answer::isStatus);
+        if (cantRemove) {
+            throw new RuntimeException("지울수 없습니다.");
+        }
+    }
+
+    private boolean isNotAuthor(Answer answer) {
+        return !answer.getAuthor()
+                .getId()
+                .equals(this.author.getId());
     }
 
 }
