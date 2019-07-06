@@ -6,11 +6,14 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
+
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AccountAuthDto {
     public static String ATTRIBUTE_NAME = "accountId";
 
+    @NotNull
     private Long id;
 
     @Builder(builderMethodName = "createBuilder")

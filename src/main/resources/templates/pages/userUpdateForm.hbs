@@ -22,7 +22,7 @@
                             <h1 class="h4 text-gray-900 mb-4">Edit You account!</h1>
                         </div>
                         {{#account}}
-                            <form class="user" method="post" action="/users/{{id}}">
+                            <form class="user" method="post" action="/users/edit/{{id}}">
                                 <input type="hidden" name="_method" value="put"/>
                                 <div class="form-group row">
                                     <div class="col-sm-12 mb-3 mb-sm-0">

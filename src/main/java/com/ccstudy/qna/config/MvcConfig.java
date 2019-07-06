@@ -1,5 +1,6 @@
 package com.ccstudy.qna.config;
 
+import com.ccstudy.qna.config.auth.interceptor.ExpireTimeInterceptor;
 import com.ccstudy.qna.config.auth.interceptor.LoginInterceptor;
 import com.ccstudy.qna.config.auth.interceptor.LogoutInterceptor;
 import com.ccstudy.qna.config.resolver.AccountHandlerMethodArgumentResolver;
@@ -20,6 +21,7 @@ public class MvcConfig implements WebMvcConfigurer {
     private final AccountHandlerMethodArgumentResolver accountHandlerMethodArgumentResolver;
     private final LoginInterceptor loginInterceptor;
     private final LogoutInterceptor logoutInterceptor;
+    private final ExpireTimeInterceptor expireTimeInterceptor;
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
@@ -41,5 +43,8 @@ public class MvcConfig implements WebMvcConfigurer {
 
         registry.addInterceptor(logoutInterceptor)
                 .addPathPatterns("/users/logout");
+
+        registry.addInterceptor(expireTimeInterceptor)
+                .addPathPatterns("/questions/edit/**", "/questions/delete/**", "users/update/**");
     }
 }

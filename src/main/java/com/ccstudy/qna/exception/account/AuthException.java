@@ -5,3 +5,4 @@ public class AuthException extends AccountException {
         super(message);
     }
 }
+

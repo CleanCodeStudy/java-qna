@@ -2,6 +2,7 @@ package com.ccstudy.qna.config.auth;
 
 
 import com.ccstudy.qna.dto.Account.AccountAuthDto;
+import com.ccstudy.qna.exception.account.AuthException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.NativeWebRequest;
 
@@ -40,5 +41,15 @@ public class AuthenticationImpl implements Authentication {
     public void removeAccountAuthDto(HttpServletRequest request) {
         request.getSession()
                 .removeAttribute(AccountAuthDto.ATTRIBUTE_NAME);
+    }
+
+    @Override
+    public void updateAccountExpireTimeAuthDto(HttpServletRequest request) {
+
+        getAccountAuthDto(request)
+                .orElseThrow(() -> new AuthException("로그인 되어있지 않습니다."));
+
+        request.getSession().setMaxInactiveInterval(ONE_HOUR);
+
     }
 }

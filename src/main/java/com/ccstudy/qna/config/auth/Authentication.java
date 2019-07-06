@@ -16,4 +16,6 @@ public interface Authentication {
     void setAccountAuthDto(HttpServletRequest request, AccountAuthDto accountAuthDto);
 
     void removeAccountAuthDto(HttpServletRequest request);
+
+    void updateAccountExpireTimeAuthDto(HttpServletRequest request);
 }
