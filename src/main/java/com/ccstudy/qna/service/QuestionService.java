@@ -42,7 +42,6 @@ public class QuestionService {
     public QuestionDetailResDto getQuestionDetail(Long index) {
         Question question = questionRepository.findById(index)
                 .orElseThrow(NoSuchElementException::new);
-        log.info(question.getAnswers().get(0).getTitle());
         return new QuestionDetailResDto(question);
     }
 

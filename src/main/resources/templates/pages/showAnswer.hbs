@@ -2,11 +2,12 @@
 
     <!-- Begin Page Content -->
     <div class="container-fluid">
-        {{#question}}
+    {{#answer}}
 
             <!-- Page Heading -->
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                <h1 class="h3 mb-0 text-gray-800">Question {{id}}</h1>
+                <h1 class="h3 mb-0 text-gray-800">Answer {{id}}</h1>
+                <h4 class="h3 mb-0 text-gray-800">Question {{questionId}} - {{questionTitle}}</h4>
             </div>
 
             <div class="row">
@@ -45,62 +46,18 @@
             <div class="row">
 
                 <div class="col-1">
-                    <form action="/questions/edit/{{id}}" class="btn btn-primary btn-icon-split">
-                        <input type="submit" value="edit" class="btn btn-primary btn-icon-split">
-                    </form>
-                </div>
-                <div class="col-1">
                     <form action="/questions/delete/{{id}}" method="post" class="btn btn-danger btn-icon-split">
                         <input type="hidden" name="_method" value="delete"/>
                         <button type="submit" class="btn btn-danger btn-icon-split">delete</button>
                     </form>
                 </div>
-                <div class="col-2">
-                    <form action="/questions/{{id}}/answers" class="btn btn-dark btn-icon-split">
-                        <button type="submit" class="btn btn-dark btn-icon-split">apply answer</button>
-                    </form>
-                </div>
+
             </div>
 
 
-    </div>
-
-    <div>
-        <hr>
-
-    </div>
-    <!-- /.container-fluid -->
-    <div class="card shadow mb-4">
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Title</th>
-                        <th>Register date</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-
-                        {{#answerResDtos}}
-                    <tbody>
-                        <tr>
-                            <td>{{id}}</td>
-                            <td>{{title}}</td>
-                            <td>{{registerDate}}</td>
-                            <td><a href="/questions/{{question.id}}/answers/{{id}}" class="btn btn-info btn-circle btn-sm">
-                                <i class="fas fa-info-circle"></i>
-                            </a></td>
-                        </tr>
-                        {{/answerResDtos}}
-                    </tbody>
-        {{/question}}
-                </table>
-            </div>
         </div>
+    {{/answer}}
     </div>
-
 {{/partial}}
 
 {{> application_html/base}}

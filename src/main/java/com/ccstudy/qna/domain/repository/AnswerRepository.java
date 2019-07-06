@@ -10,5 +10,5 @@ import java.util.Optional;
 public interface AnswerRepository extends JpaRepository<Answer, Long> {
 
     //    @Query("SELECT q FROM Question q JOIN FETCH q.author")
-    Optional<Answer> findByQuestionId(Long idx);
+    Optional<Answer> findById(Long id);
 }

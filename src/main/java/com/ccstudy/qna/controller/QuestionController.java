@@ -24,7 +24,7 @@ public class QuestionController {
     private final ValidateService validateService;
     private final QuestionService questionService;
 
-    @PostMapping("/")
+    @PostMapping("")
     public String createQuestion(@Valid QuestionSaveReqDto questionSaveReqDto, AccountAuthDto accountAuthDto) {
         Long questionId = questionService.createQuestion(questionSaveReqDto, accountAuthDto.getId());
         log.info("update question- id : {}", questionId);

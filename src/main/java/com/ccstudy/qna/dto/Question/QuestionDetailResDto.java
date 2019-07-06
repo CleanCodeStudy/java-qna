@@ -1,9 +1,13 @@
 package com.ccstudy.qna.dto.Question;
 
 import com.ccstudy.qna.domain.Question;
+import com.ccstudy.qna.dto.Answer.AnswerResDto;
 import com.ccstudy.qna.util.DateTimeConverter;
 import lombok.Builder;
 import lombok.Getter;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 public class QuestionDetailResDto {
@@ -13,7 +17,7 @@ public class QuestionDetailResDto {
     private String author;
     private String registerDate;
     private String updateDate;
-
+    private List<AnswerResDto> answerResDtos;
 
     public QuestionDetailResDto(Question question) {
         this.id = question.getId();
@@ -22,6 +26,9 @@ public class QuestionDetailResDto {
         this.author = question.getAuthor().getUserId();
         this.registerDate = DateTimeConverter.getConvertedDate(question.getRegisterDate());
         this.updateDate = DateTimeConverter.getConvertedDate(question.getUpdateDate());
+        this.answerResDtos = question.getAnswers().stream()
+                .map(AnswerResDto::new)
+                .collect(Collectors.toList());
     }
 
     @Builder(builderMethodName = "testBuilder")
