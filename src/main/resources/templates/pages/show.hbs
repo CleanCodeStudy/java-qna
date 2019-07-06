@@ -55,14 +55,55 @@
                         <button type="submit" class="btn btn-danger btn-icon-split">delete</button>
                     </form>
                 </div>
-
-
             </div>
 
-        {{/question}}
+
+    </div>
+
+    <div>
 
     </div>
     <!-- /.container-fluid -->
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Title</th>
+                        <th>Register date</th>
+                        <th>update date</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <tr>
+                        <th>No</th>
+                        <th>Title</th>
+                        <th>Register date</th>
+                        <th>update date</th>
+                        <th></th>
+                    </tr>
+                    </tfoot>
+                    <tbody>
+                        <tr>
+                            <td>{{answerResDtos.id}}</td>
+                            <td>{{answerResDtos.title}}</td>
+                            <td>{{answerResDtos.registerDate}}</td>
+                            <td>{{answerResDtos.updateDate}}</td>
+                            <td><a href="/questions/{{id}}" class="btn btn-info btn-circle btn-sm">
+                                <i class="fas fa-info-circle"></i>
+                                <!--todo: question url -->
+                            </a></td>
+                        </tr>
+                    </tbody>
+        {{/question}}
+                </table>
+            </div>
+        </div>
+    </div>
+
 {{/partial}}
 
 {{> application_html/base}}

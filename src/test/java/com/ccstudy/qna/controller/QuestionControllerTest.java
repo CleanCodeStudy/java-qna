@@ -2,7 +2,7 @@ package com.ccstudy.qna.controller;
 
 import com.ccstudy.qna.advice.common.BaseExceptionModelAndView;
 import com.ccstudy.qna.dto.Question.QuestionDetailResDto;
-import com.ccstudy.qna.dto.Question.QuestionReqDto;
+import com.ccstudy.qna.dto.Question.QuestionSaveReqDto;
 import com.ccstudy.qna.dto.Question.QuestionResDto;
 import com.ccstudy.qna.dto.Question.QuestionUpdateReqDto;
 import com.ccstudy.qna.service.QuestionService;
@@ -107,12 +107,12 @@ public class QuestionControllerTest {
     public void createQuestion_질문생성후_redirection() throws Exception {
 
         //given
-        QuestionReqDto questionReqDto = QuestionReqDto.builder()
+        QuestionSaveReqDto questionSaveReqDto = QuestionSaveReqDto.builder()
                 .content("content111")
                 .title("titleTest1")
                 .build();
 
-        Mockito.doNothing().when(questionService).createQuestion(questionReqDto, 1L);
+        Mockito.doNothing().when(questionService).createQuestion(questionSaveReqDto, 1L);
 
         //when
         mvc.perform(post("/questions"))

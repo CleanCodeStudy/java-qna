@@ -12,13 +12,11 @@ import javax.validation.constraints.NotNull;
 @Getter
 @AllArgsConstructor
 @Builder
-public class QuestionReqDto {
+public class QuestionSaveReqDto {
 
-    @NotNull
     @NotBlank
     private String title;
 
-    @NotNull
     @NotBlank
     private String content;
 

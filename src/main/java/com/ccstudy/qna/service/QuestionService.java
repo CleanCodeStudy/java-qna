@@ -4,13 +4,12 @@ import com.ccstudy.qna.domain.Account;
 import com.ccstudy.qna.domain.Question;
 import com.ccstudy.qna.domain.repository.AccountRepository;
 import com.ccstudy.qna.domain.repository.QuestionRepository;
-import com.ccstudy.qna.dto.Account.AccountAuthDto;
 import com.ccstudy.qna.dto.Question.QuestionDetailResDto;
-import com.ccstudy.qna.dto.Question.QuestionReqDto;
+import com.ccstudy.qna.dto.Question.QuestionSaveReqDto;
 import com.ccstudy.qna.dto.Question.QuestionResDto;
 import com.ccstudy.qna.dto.Question.QuestionUpdateReqDto;
-import com.ccstudy.qna.exception.account.AuthException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,17 +18,19 @@ import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class QuestionService {
 
     private final QuestionRepository questionRepository;
     private final AccountRepository accountRepository;
 
-    public void createQuestion(QuestionReqDto questionReqDto, Long accountId) {
+    public Long createQuestion(QuestionSaveReqDto questionSaveReqDto, Long accountId) {
         Account account = accountRepository.findById(accountId)
                 .orElseThrow(NoSuchElementException::new);
-        Question question = questionReqDto.toEntity(account);
-        questionRepository.save(question);
+        Question question = questionSaveReqDto.toEntity(account);
+        question = questionRepository.save(question);
+        return question.getId();
     }
 
     public List<QuestionResDto> getQuestionBoard() {
@@ -41,6 +42,7 @@ public class QuestionService {
     public QuestionDetailResDto getQuestionDetail(Long index) {
         Question question = questionRepository.findById(index)
                 .orElseThrow(NoSuchElementException::new);
+        log.info(question.getAnswers().get(0).getTitle());
         return new QuestionDetailResDto(question);
     }
 

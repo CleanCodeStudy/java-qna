@@ -4,9 +4,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -15,7 +17,7 @@ public class Question extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; //없는게 나을 수도
+    private Long id;
     @Setter
     private String title;
     @Setter
@@ -25,6 +27,9 @@ public class Question extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Account author;
 
+//    @Where(clause = "status:true")
+    @OneToMany(mappedBy="question")
+    private List<Answer> answers;
 
     @Builder(builderMethodName = "createBuilder")
     public Question(String title, String content, Account author) {

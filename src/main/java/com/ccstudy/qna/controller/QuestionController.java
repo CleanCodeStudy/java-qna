@@ -2,8 +2,9 @@ package com.ccstudy.qna.controller;
 
 import com.ccstudy.qna.dto.Account.AccountAuthDto;
 import com.ccstudy.qna.dto.Question.QuestionDetailResDto;
-import com.ccstudy.qna.dto.Question.QuestionReqDto;
+import com.ccstudy.qna.dto.Question.QuestionSaveReqDto;
 import com.ccstudy.qna.dto.Question.QuestionUpdateReqDto;
+import com.ccstudy.qna.service.AnswerService;
 import com.ccstudy.qna.service.QuestionService;
 import com.ccstudy.qna.service.ValidateService;
 import lombok.RequiredArgsConstructor;
@@ -24,8 +25,9 @@ public class QuestionController {
     private final QuestionService questionService;
 
     @PostMapping("/")
-    public String createQuestion(@Valid QuestionReqDto questionReqDto, AccountAuthDto accountAuthDto) {
-        questionService.createQuestion(questionReqDto, accountAuthDto.getId());
+    public String createQuestion(@Valid QuestionSaveReqDto questionSaveReqDto, AccountAuthDto accountAuthDto) {
+        Long questionId = questionService.createQuestion(questionSaveReqDto, accountAuthDto.getId());
+        log.info("update question- id : {}", questionId);
         return "redirect:/";
     }
 

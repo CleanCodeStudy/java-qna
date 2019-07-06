@@ -11,10 +11,10 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @Builder
 public class QuestionUpdateReqDto {
-    @NotNull
+
     @NotBlank
     private String title;
-    @NotNull
+
     @NotBlank
     private String content;
 }
