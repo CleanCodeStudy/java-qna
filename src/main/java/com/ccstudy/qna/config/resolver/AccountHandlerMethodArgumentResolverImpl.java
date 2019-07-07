@@ -27,8 +27,7 @@ public class AccountHandlerMethodArgumentResolverImpl implements AccountHandlerM
 
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
-        AccountAuthDto accountAuthDto = authentication.getAccountAuthDto(webRequest)
-                .orElseThrow(() -> new AuthException("로그인 안한 유저입니다"));
+        AccountAuthDto accountAuthDto = authentication.getAccountAuthDto(webRequest);
 
         log.info("resolver : " + accountAuthDto.getId());
 

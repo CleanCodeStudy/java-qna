@@ -4,7 +4,7 @@ import com.ccstudy.qna.dto.Account.AccountAuthDto;
 import com.ccstudy.qna.dto.Answer.AnswerDetailResDto;
 import com.ccstudy.qna.dto.Answer.AnswerSaveReqDto;
 import com.ccstudy.qna.service.AnswerService;
-import com.ccstudy.qna.service.ValidateService;
+import com.ccstudy.qna.service.Checker;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -22,7 +22,6 @@ import javax.validation.Valid;
 public class AnswerController {
 
     private final AnswerService answerService;
-    private final ValidateService validateService;
 
     @GetMapping("/questions/{questionId}/answers")
     public String getSaveFormOfAnswer(@PathVariable("questionId") Long id, Model model,

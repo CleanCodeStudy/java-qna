@@ -28,8 +28,7 @@ public class Answer extends BaseTimeEntity {
 
     private String content;
 
-    //TODO:변수명 수정
-    private boolean status = true;
+    private boolean deleted = false;
 
     @Builder(builderMethodName = "createBuilder")
     public Answer(String content, String title, Account author, Question question) {
@@ -40,7 +39,11 @@ public class Answer extends BaseTimeEntity {
     }
 
     public void removeAnswer() {
-        this.status = false;
+        this.deleted = true;
+    }
+
+    public boolean isNotDeleted(){
+        return !this.deleted;
     }
 
 }

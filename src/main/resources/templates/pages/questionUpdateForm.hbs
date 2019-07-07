@@ -10,7 +10,7 @@
 
                 {{#question}}
                 <!-- Basic Card Example -->
-                    <form action="/questions/edit/{{id}}" method="post">
+                    <form action="/questions/{{id}}" method="post">
                         <input type="hidden" name="_method" value="put"/>
                     <div class="card h-500 shadow mb-4" style="min-height: 25rem;">
                         <div class="card-header py-3">

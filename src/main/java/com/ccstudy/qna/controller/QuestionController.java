@@ -4,9 +4,8 @@ import com.ccstudy.qna.dto.Account.AccountAuthDto;
 import com.ccstudy.qna.dto.Question.QuestionDetailResDto;
 import com.ccstudy.qna.dto.Question.QuestionSaveReqDto;
 import com.ccstudy.qna.dto.Question.QuestionUpdateReqDto;
-import com.ccstudy.qna.service.AnswerService;
+import com.ccstudy.qna.service.Checker;
 import com.ccstudy.qna.service.QuestionService;
-import com.ccstudy.qna.service.ValidateService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -21,7 +20,6 @@ import javax.validation.Valid;
 @RequestMapping("/questions")
 public class QuestionController {
 
-    private final ValidateService validateService;
     private final QuestionService questionService;
 
     @PostMapping("")
@@ -38,29 +36,28 @@ public class QuestionController {
         return "/pages/show";
     }
 
-    //TODO : uri 수정 edit, delete삭제
-    @GetMapping("/edit/{id}")
+    @GetMapping("/{id}/form")
     public String getEditFormOfQuestion(@PathVariable("id") Long id, Model model, AccountAuthDto accountAuthDto) {
-        validateService.validateAuthorization(id, accountAuthDto);
-        QuestionDetailResDto resDto = questionService.getQuestionDetail(id);
+        Checker.validateAuthorization(id, accountAuthDto);
+        QuestionDetailResDto resDto = questionService.getQuestionDetail(accountAuthDto.getId());
         model.addAttribute("question", resDto);
         return "/pages/questionUpdateForm";
     }
 
-    @PutMapping("/edit/{id}")
+    @PutMapping("/{id}")
     public String updateQuestion(@Valid QuestionUpdateReqDto questionUpdateReqDto,
                                  @PathVariable("id") Long id, AccountAuthDto accountAuthDto) {
-        validateService.validateAuthorization(id, accountAuthDto);
-        questionService.updateQuestion(questionUpdateReqDto, id);
-        log.info("update question- id : " + id);
-        return "redirect:/questions/" + id;
+        Checker.validateAuthorization(id, accountAuthDto);
+        Long updatedId = questionService.updateQuestion(questionUpdateReqDto, id);
+        log.info("update question- id : " + updatedId);
+        return "redirect:/questions/" + updatedId;
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public String deleteQuestion(@PathVariable("id") Long id, AccountAuthDto accountAuthDto) {
-        validateService.validateAuthorization(id, accountAuthDto);
-        questionService.deleteQuestion(id);
-        log.info("delete question- id : " + id);
+        Checker.validateAuthorization(id, accountAuthDto);
+        Long deletedId = questionService.deleteQuestion(id);
+        log.info("delete question- id : " + deletedId);
         return "redirect:/";
     }
 

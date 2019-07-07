@@ -45,12 +45,12 @@
             <div class="row">
 
                 <div class="col-1">
-                    <form action="/questions/edit/{{id}}" class="btn btn-primary btn-icon-split">
+                    <form action="/questions/{{id}}/form" class="btn btn-primary btn-icon-split">
                         <input type="submit" value="edit" class="btn btn-primary btn-icon-split">
                     </form>
                 </div>
                 <div class="col-1">
-                    <form action="/questions/delete/{{id}}" method="post" class="btn btn-danger btn-icon-split">
+                    <form action="/questions/{{id}}" method="post" class="btn btn-danger btn-icon-split">
                         <input type="hidden" name="_method" value="delete"/>
                         <button type="submit" class="btn btn-danger btn-icon-split">delete</button>
                     </form>

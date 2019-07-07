@@ -13,7 +13,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor
-@Where(clause = "status = true")
+@Where(clause = "deleted = true")
 public class Question extends BaseTimeEntity {
 
     @Id
@@ -28,9 +28,9 @@ public class Question extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Account author;
 
-    private boolean status = true;
+    private boolean deleted = true;
 
-    @Where(clause = "status = true")
+    @Where(clause = "deleted = true")
     @OneToMany(mappedBy = "question")
     private List<Answer> answers;
 
@@ -51,17 +51,16 @@ public class Question extends BaseTimeEntity {
     }
 
     public void removeQuestion() {
-        this.status = false;
+        this.deleted = true;
     }
 
-    public void checkAnswerStatus() {
-        boolean cantRemove = this.answers.stream()
+    public boolean checkQuestionDelete() {
+        return this.answers.stream()
                 .filter(this::isNotAuthor)
-                .anyMatch(Answer::isStatus);
-        if (cantRemove) {
-            throw new RuntimeException("지울수 없습니다.");
-        }
+                .anyMatch(Answer::isNotDeleted);
     }
+
+
 
     private boolean isNotAuthor(Answer answer) {
         return !answer.getAuthor()

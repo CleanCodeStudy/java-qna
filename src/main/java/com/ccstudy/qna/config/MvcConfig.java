@@ -12,11 +12,16 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Configuration
 @RequiredArgsConstructor
 public class MvcConfig implements WebMvcConfigurer {
+
+
+    private static final List<String> EXPIRED_ADD_PATTERNS = Arrays.asList("/questions/**", "users/**");
+    private static final List<String> EXPIRED_EXCLUDE_PATTERNS = Arrays.asList("/users/login", "/users/logout");
 
     private final AccountHandlerMethodArgumentResolver accountHandlerMethodArgumentResolver;
     private final LoginInterceptor loginInterceptor;
@@ -45,6 +50,7 @@ public class MvcConfig implements WebMvcConfigurer {
                 .addPathPatterns("/users/logout");
 
         registry.addInterceptor(expireTimeInterceptor)
-                .addPathPatterns("/questions/edit/**", "/questions/delete/**", "users/update/**");
+                .addPathPatterns(EXPIRED_ADD_PATTERNS)
+                .excludePathPatterns(EXPIRED_EXCLUDE_PATTERNS);
     }
 }

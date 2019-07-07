@@ -8,6 +8,7 @@ import com.ccstudy.qna.dto.Question.QuestionDetailResDto;
 import com.ccstudy.qna.dto.Question.QuestionResDto;
 import com.ccstudy.qna.dto.Question.QuestionSaveReqDto;
 import com.ccstudy.qna.dto.Question.QuestionUpdateReqDto;
+import com.ccstudy.qna.exception.account.DeleteException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -39,18 +40,18 @@ public class QuestionService {
                 .collect(Collectors.toList());
     }
 
-    public QuestionDetailResDto getQuestionDetail(Long index) {
-        Question question = questionRepository.findById(index)
+    public QuestionDetailResDto getQuestionDetail(Long id) {
+        Question question = questionRepository.findById(id)
                 .orElseThrow(NoSuchElementException::new);
         return new QuestionDetailResDto(question);
     }
 
-    //TODO: 생성 수정 삭제 반환값을 주는게 뷰단에서 작업하기 수월해짐
     @Transactional
-    public void updateQuestion(QuestionUpdateReqDto questionUpdateReqDto, Long id) {
+    public Long updateQuestion(QuestionUpdateReqDto questionUpdateReqDto, Long id) {
         Question question = questionRepository.findById(id)
                 .orElseThrow(NoSuchElementException::new);
         update(question, questionUpdateReqDto);
+        return question.getId();
     }
 
     private void update(Question question, QuestionUpdateReqDto questionUpdateReqDto) {
@@ -58,13 +59,16 @@ public class QuestionService {
         question.setTitle(questionUpdateReqDto.getTitle());
     }
 
-    //TODO: 리턴값이 있도록 수정할 여지가 있음
     @Transactional
-    public void deleteQuestion(Long id) {
+    public Long deleteQuestion(Long id) {
         Question question = questionRepository.findById(id)
                 .orElseThrow(NoSuchElementException::new);
-        question.checkAnswerStatus();
-        question.removeQuestion();
+        boolean canRemoveQuestion = question.checkQuestionDelete();
+        if(canRemoveQuestion){
+            question.removeQuestion();
+            return question.getId();
+        }
+        throw new DeleteException("다른 사람의 댓글이 남아있어서 지울 수 없는 질문 입니다.");
     }
 
 
