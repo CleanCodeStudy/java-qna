@@ -17,6 +17,7 @@ public class ExpireTimeInterceptorImpl implements ExpireTimeInterceptor {
 
     private final Authentication authentication;
 
+    //TODO : request 에서 method 확인후 동작.
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         authentication.updateAccountExpireTimeAuthDto(request);

@@ -28,6 +28,7 @@ public class Answer extends BaseTimeEntity {
 
     private String content;
 
+    //TODO:변수명 수정
     private boolean status = true;
 
     @Builder(builderMethodName = "createBuilder")

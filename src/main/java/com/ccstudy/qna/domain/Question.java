@@ -41,6 +41,7 @@ public class Question extends BaseTimeEntity {
         this.author = author;
     }
 
+    //TODO: 리플렉션할때 기본생성자로 변경
     private Question(Long id, Question question) {
         super(LocalDateTime.now(), LocalDateTime.now());
         this.id = id;

@@ -45,6 +45,7 @@ public class QuestionService {
         return new QuestionDetailResDto(question);
     }
 
+    //TODO: 생성 수정 삭제 반환값을 주는게 뷰단에서 작업하기 수월해짐
     @Transactional
     public void updateQuestion(QuestionUpdateReqDto questionUpdateReqDto, Long id) {
         Question question = questionRepository.findById(id)
@@ -57,6 +58,7 @@ public class QuestionService {
         question.setTitle(questionUpdateReqDto.getTitle());
     }
 
+    //TODO: 리턴값이 있도록 수정할 여지가 있음
     @Transactional
     public void deleteQuestion(Long id) {
         Question question = questionRepository.findById(id)

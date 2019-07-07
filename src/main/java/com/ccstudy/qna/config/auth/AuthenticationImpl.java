@@ -14,6 +14,7 @@ public class AuthenticationImpl implements Authentication {
 
     private static final int ONE_HOUR = 3600;
 
+    //TODO : 옵셔널로 굳이 감쌀 필요가 없음!
     @Override
     public Optional<AccountAuthDto> getAccountAuthDto(NativeWebRequest request) {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request.getNativeRequest();
@@ -45,7 +46,7 @@ public class AuthenticationImpl implements Authentication {
 
     @Override
     public void updateAccountExpireTimeAuthDto(HttpServletRequest request) {
-
+        //TODO : optional 안티패턴 확인해보기.
         getAccountAuthDto(request)
                 .orElseThrow(() -> new AuthException("로그인 되어있지 않습니다."));
 

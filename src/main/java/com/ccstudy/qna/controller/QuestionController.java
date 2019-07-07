@@ -38,6 +38,7 @@ public class QuestionController {
         return "/pages/show";
     }
 
+    //TODO : uri 수정 edit, delete삭제
     @GetMapping("/edit/{id}")
     public String getEditFormOfQuestion(@PathVariable("id") Long id, Model model, AccountAuthDto accountAuthDto) {
         validateService.validateAuthorization(id, accountAuthDto);
