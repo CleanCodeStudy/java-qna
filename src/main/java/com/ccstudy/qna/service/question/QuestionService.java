@@ -14,7 +14,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -53,6 +52,7 @@ public class QuestionService {
     }
 
     //게시글 수정
+    //TODO: Update의 경우 Dto 를 리턴시키고 View에 적용시키는 것이 좋을 듯
     @Transactional
     public Long updateQuestion(QuestionUpdateRequestDto dto, LoginAccount loginAccount) {
         Question findQuestion = questionRepository.findById(dto.getId())

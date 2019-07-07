@@ -10,7 +10,7 @@ import javax.validation.constraints.NotBlank;
 
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Slf4j
 public class AccountSaveRequestDto {
 
@@ -28,10 +28,11 @@ public class AccountSaveRequestDto {
 
     @Builder(builderMethodName = "createBuilder")
     public AccountSaveRequestDto(String email, String firstName, String lastName, String password, String confirmPassword) {
+        validationCheckPassword(password, confirmPassword);
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.password = validationCheckPassword(password,confirmPassword);
+        this.password = password;
     }
 
     public Account toEntity(){
@@ -45,7 +46,7 @@ public class AccountSaveRequestDto {
 
     public String validationCheckPassword(String password, String confirmPassword){
         if(!StringUtils.equals(password,confirmPassword)){
-            throw new RuntimeException();
+            throw new IllegalArgumentException("비밀번호를 다시 입력해주세요.");
         }
         return password;
     }

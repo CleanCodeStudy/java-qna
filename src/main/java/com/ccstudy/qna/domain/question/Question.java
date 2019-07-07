@@ -2,10 +2,12 @@ package com.ccstudy.qna.domain.question;
 
 import com.ccstudy.qna.domain.BaseTimeEntity;
 import com.ccstudy.qna.domain.account.Account;
+import com.ccstudy.qna.domain.answer.Answer;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.*;
+import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
@@ -20,13 +22,16 @@ public class Question extends BaseTimeEntity {
     @Column(nullable = false)
     private String title;
 
-    @ManyToOne()
+    @ManyToOne() // N+1 문제?
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_question_author"))
     private Account author;
 
     @Setter
     @Column(columnDefinition = "TEXT")
     private String contents;
+
+    @OneToMany(mappedBy = "question")
+    private List<Answer> answers;
 
     @Builder(builderMethodName = "createBuilder")
     public Question(Account author, String title, String contents) {

@@ -32,8 +32,9 @@ public class Account extends BaseTimeEntity {
     private String password;
 
     @Builder(builderMethodName = "createBuilder")
-    private Account(String email, String firstName, String lastName, String password) {
+    private Account(Long id, String email, String firstName, String lastName, String password) {
         Assert.notNull(email,"");
+        this.id = id;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;

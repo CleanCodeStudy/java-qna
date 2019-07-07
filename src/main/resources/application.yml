@@ -21,6 +21,8 @@ spring:
       dialect: org.hibernate.dialect.MySQL5Dialect
       ddl-auto: create
 
+
+
 server:
   port: 8888
 

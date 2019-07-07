@@ -18,7 +18,7 @@
 
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <h1 class="h3 mb-0 text-gray-800">질문</h1>
+                    <h1 class="h3 mb-0 text-gray-800">답변</h1>
                 </div>
 
                 <div class="row">
@@ -30,14 +30,14 @@
                             <div class="card-header py-3">
                                 <div class="row">
                                     <div class="col-6"><h6
-                                            class="m-0 font-weight-bold text-primary">{{question.title}}</h6></div>
+                                            class="m-0 font-weight-bold text-primary">{{answer.title}}</h6></div>
                                     <div class="col-2"><h6 class="m-0 font-weight-bold text-primary">
-                                        | {{question.author}}</h6></div>
+                                        | {{answer.author}}</h6></div>
                                     <div class="col-2"><h6 class="m-0 font-weight-bold text-primary">
-                                        | {{question.registerDate}}</h6>
+                                        | {{answer.registerDate}}</h6>
                                     </div>
                                     <div class="col-2"><h6 class="m-0 font-weight-bold text-primary">
-                                        | {{question.updateDate}}</h6>
+                                        | {{answer.updateDate}}</h6>
                                     </div>
 
                                 </div>
@@ -46,7 +46,7 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col">
-                                        <p>{{question.contents}}</p>
+                                        <p>{{answer.contents}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -56,37 +56,30 @@
 
                 </div>
                 <div class="row">
-
                     <div class="col-1">
-                        <a href="/question/updateForm/{{question.id}}" class="btn btn-primary">수정</a>
-                    </div>
-                    <div class="col-1">
-                        <a href="/questions/{{question.id}}/answers" class="btn btn-primary">답변달기</a>
-                    </div>
-                    <div class="col-1">
-                        <form method="post" action="/questions/{{question.id}}">
+                        <form method="post" action="/answer/{{answer.id}}">
                             <input type="submit" value="삭제" class="btn btn-primary btn-icon-split">
                             <input type="hidden" name="_method" value="DELETE">
                         </form>
                     </div>
-                    {{>partial/answer/list}}
-            </div>
-            <!-- /.container-fluid -->
-        </div>
-        <!-- End of Main Content -->
-        {{> partial/footer}}
-    </div>
-    <!-- End of Content Wrapper -->
-</div>
-<!-- End of Page Wrapper -->
-<!-- Scroll to Top Button-->
-<a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-</a>
-{{> partial/logout_modal}}
+                </div>
+                <!-- /.container-fluid -->
 
-<!-- Custom scripts for all pages-->
-<script src="/js/sb-admin-2.min.js"></script>
+            </div>
+            <!-- End of Main Content -->
+            {{> partial/footer}}
+        </div>
+        <!-- End of Content Wrapper -->
+    </div>
+    <!-- End of Page Wrapper -->
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+    {{> partial/logout_modal}}
+
+    <!-- Custom scripts for all pages-->
+    <script src="/js/sb-admin-2.min.js"></script>
 
 </body>
 

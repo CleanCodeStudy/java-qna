@@ -6,21 +6,14 @@ import com.ccstudy.qna.dto.account.AccountLoginRequestDto;
 import com.ccstudy.qna.dto.account.AccountSaveRequestDto;
 import com.ccstudy.qna.dto.account.AccountUpdateRequestDto;
 import com.ccstudy.qna.dto.account.LoginAccount;
-import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-
-
-import java.util.Optional;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.BDDMockito.given;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -29,48 +22,32 @@ public class AccountServiceTest {
     @Autowired
     AccountService accountService;
 
-    @MockBean(name = "accountRepositoryMock")
+    @Autowired
     AccountRepository accountRepository;
 
-    @After
-    public void cleanUp(){
-        accountRepository.deleteAll();
-    }
-
-
-    /**
-     * 2019.06.29 재연
-     * AccountServiceTest 에서 Repository 를 assert 하는게 맞는건지?
-     * repository 검증 -> service 검증으로 변경
-     */
     @Test
-    public void 회원가입Dto가_account_테이블에_정상저장() {
-
+    public void 회원가입Dto가_account테이블에_저장() {
         //given
         AccountSaveRequestDto dto = AccountSaveRequestDto.createBuilder()
-                .email("abc@google.com")
+                .email("test@google.com")
                 .firstName("홍")
                 .lastName("길동")
                 .password("1111")
                 .confirmPassword("1111")
                 .build();
-
-        given(accountRepository.save(dto.toEntity())).willReturn(dto.toEntity());
-
         //when
         Long savedId = accountService.saveAccount(dto);
 
         //then
-        Account account = accountService.findById(savedId);
-        assertThat(dto.getEmail(), is(account.getEmail()));
-        assertThat(dto.getFirstName(), is(account.getFirstName()));
-        assertThat(dto.getLastName(), is(account.getLastName()));
-        assertThat(dto.getPassword(), is(account.getPassword()));
+        Account account = accountRepository.findById(savedId).get();
+        assertThat(account.getEmail(), is(dto.getEmail()));
+        assertThat(account.getFirstName(), is(dto.getFirstName()));
+        assertThat(account.getLastName(), is(dto.getLastName()));
+        assertThat(account.getPassword(), is(dto.getPassword()));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void 이메일중복시_회원가입_불가() {
-
         //given
         AccountSaveRequestDto dto = AccountSaveRequestDto.createBuilder()
                 .email("aaa@google.com")
@@ -79,10 +56,9 @@ public class AccountServiceTest {
                 .password("1111")
                 .confirmPassword("1111")
                 .build();
-
         //when
-        accountService.saveAccount(dto);
-
+        //then
+        Long savedId = accountService.saveAccount(dto);
     }
 
     @Test
@@ -124,7 +100,7 @@ public class AccountServiceTest {
     @Test(expected = IllegalAccessError.class)
     public void find_by_id_실패() {
         //given
-        Long id = 100L;
+        Long id = 3L;
         //when
         //then
         accountService.findById(id);
@@ -141,7 +117,7 @@ public class AccountServiceTest {
     @Test
     public void 회원수정Dto가_수정되는지() {
         //given
-        Account account = accountService.findById(1L);
+        Account account = accountRepository.findById(1L).get();
         AccountUpdateRequestDto dto = AccountUpdateRequestDto.updateBuilder()
                 .firstName(account.getFirstName())
                 .lastName(account.getLastName())
@@ -149,14 +125,11 @@ public class AccountServiceTest {
                 .confirmAfterPassword("1111")
                 .currentPassword(account.getPassword())
                 .build();
-
-        given(accountRepository.findById(1L)).willReturn(Optional.of(account));
-
         //when
         Long updatedId = accountService.updateAccount(dto, 1L);
 
         //then
-        Account findedaccount=accountService.findById(1L);
+        Account findedaccount = accountRepository.findById(updatedId).get();
         assertThat(findedaccount.getFirstName(),is(dto.getFirstName()));
         assertThat(findedaccount.getLastName(),is(dto.getLastName()));
         assertThat(findedaccount.getPassword(), is("1111"));
