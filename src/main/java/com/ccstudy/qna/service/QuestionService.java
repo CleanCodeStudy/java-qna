@@ -1,9 +1,11 @@
 package com.ccstudy.qna.service;
 
+import com.ccstudy.qna.creator.AnswerCreator;
+import com.ccstudy.qna.domain.entity.Question;
 import com.ccstudy.qna.domain.entity.User;
 import com.ccstudy.qna.domain.repository.QuestionRepository;
-import com.ccstudy.qna.domain.repository.UserRepository;
-import com.ccstudy.qna.domain.support.AccessUserStore;
+import com.ccstudy.qna.domain.service.UserFindService;
+import com.ccstudy.qna.service.dto.answer.AnswerRequestDto;
 import com.ccstudy.qna.service.dto.question.QuestionRequestDto;
 import com.ccstudy.qna.service.dto.question.QuestionResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -18,18 +20,32 @@ public class QuestionService {
 
     private final QuestionRepository questionRepository;
 
-    private final UserRepository userRepository;
+    private final UserFindService userFindService;
 
-    public void save(QuestionRequestDto requestDto){
-        User user = userRepository.findById(AccessUserStore.getUserId())
-                .orElseThrow(RuntimeException::new);
+    private final AnswerCreator answerCreator;
 
-        questionRepository.save(requestDto.toEntity().setUser(user));
+    public void save(Long userId, QuestionRequestDto requestDto) {
+        User user = userFindService.findUser(userId);
+
+        Question question = requestDto.toEntity();
+        question.addWriter(user);
+
+        questionRepository.save(question);
     }
 
-    public List<QuestionResponseDto> findAll(){
+    public void addAnswer(Long userId, Long questionId, AnswerRequestDto requestDto) {
+        User user = userFindService.findUser(userId);
+        Question question = questionRepository.findById(questionId)
+                .orElseThrow(RuntimeException::new);
+
+        answerCreator.addAnswer(user, question, requestDto);
+    }
+
+    public List<QuestionResponseDto> findAll() {
         return questionRepository.findAllJoinFetch().stream()
                 .map(QuestionResponseDto::new)
                 .collect(Collectors.toList());
     }
+
+
 }

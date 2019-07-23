@@ -1,6 +1,5 @@
 package com.ccstudy.qna.config;
 
-import com.ccstudy.qna.domain.entity.Question;
 import com.ccstudy.qna.domain.entity.User;
 import com.ccstudy.qna.domain.repository.QuestionRepository;
 import com.ccstudy.qna.domain.repository.UserRepository;
@@ -32,6 +31,6 @@ public class InitComponent implements ApplicationRunner {
 
         repository.save(user);
 
-        questionRepository.saveAndFlush(Question.createBuilder().title("1").contents("1").build().setUser(user));
+        //questionRepository.saveAndFlush(Question.createBuilder().title("1").contents("1").build().setUser(user));
     }
 }

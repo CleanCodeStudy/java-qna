@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends BaseTimeEntity {
 
     @Id
@@ -24,6 +24,7 @@ public class User extends BaseTimeEntity {
     @Setter
     @Embedded
     private UserName name;
+
 
     @Builder(builderMethodName = "createBuilder")
     private User(String email, String password, String firstName, String lastName) {

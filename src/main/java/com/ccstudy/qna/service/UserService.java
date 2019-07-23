@@ -2,6 +2,7 @@ package com.ccstudy.qna.service;
 
 import com.ccstudy.qna.domain.entity.User;
 import com.ccstudy.qna.domain.repository.UserRepository;
+import com.ccstudy.qna.domain.service.UserFindService;
 import com.ccstudy.qna.domain.support.AccessUser;
 import com.ccstudy.qna.domain.support.AccessUserStore;
 import com.ccstudy.qna.exception.UnAuthorizedException;
@@ -22,26 +23,24 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    private final UserFindService userFindService;
+
     public void save(UserRequestDto requestDto) {
         userRepository.save(requestDto.toEntity());
     }
 
     public UserDetailInfo findById(Long userId) {
-        User user = findUser(userId);
+        User user = userFindService.findUser(userId);
         return new UserDetailInfo(user);
     }
 
     @Transactional
     public void update(UserUpdateDto updateDto) {
-        User user = findUser(AccessUserStore.getUserId());
+        User user = userFindService.findUser((AccessUserStore.getUserId()));
         UserUpdateConverter.update(user, updateDto);
         AccessUserStore.setAccessUser(new AccessUser(user));
     }
 
-    private User findUser(Long userId) {
-        return userRepository.findById(userId)
-                .orElseThrow(RuntimeException::new);
-    }
 
     public List<UserSimpleInfo> findAll() {
         return userRepository.findAll().stream()
@@ -51,13 +50,13 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public void login(LoginDto loginDto) {
-        User user = getUser(loginDto);
+        User user = findByEmail(loginDto);
         user.matchPassword(loginDto.getPassword());
 
         AccessUserStore.setAccessUser(new AccessUser(user));
     }
 
-    private User getUser(LoginDto loginDto) {
+    private User findByEmail(LoginDto loginDto) {
         return userRepository.findByEmail(loginDto.getEmail())
                 .orElseThrow(UnAuthorizedException::new);
     }
