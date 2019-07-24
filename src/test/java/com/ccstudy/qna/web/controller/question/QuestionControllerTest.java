@@ -48,7 +48,7 @@ public class QuestionControllerTest {
     @Before
     public void setUp(){
         mock = MockMvcBuilders.webAppContextSetup(wac).build();
-        //saveAccount();
+
         account = accountRepository.findAccountByEmail("aaa@google.com")
                 .orElseThrow(NoSuchElementException::new);
     }
