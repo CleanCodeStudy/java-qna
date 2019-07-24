@@ -2,6 +2,7 @@ package com.ccstudy.qna.dto.question;
 
 import com.ccstudy.qna.domain.account.Account;
 import com.ccstudy.qna.domain.question.Question;
+import lombok.Builder;
 import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
@@ -15,6 +16,7 @@ public class QuestionSaveRequestDto {
     @NotBlank
     private String contents;
 
+    @Builder(builderMethodName = "createBuilder")
     public QuestionSaveRequestDto(String title, String contents) {
         this.title = title;
         this.contents = contents;
