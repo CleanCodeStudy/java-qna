@@ -30,7 +30,7 @@ public class Question extends BaseTimeEntity {
     @Column(columnDefinition = "TEXT")
     private String contents;
 
-    @OneToMany(mappedBy = "question")
+    @OneToMany(mappedBy = "question", fetch = FetchType.EAGER)
     private List<Answer> answers;
 
     @Builder(builderMethodName = "createBuilder")

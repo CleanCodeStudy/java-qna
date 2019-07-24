@@ -3,6 +3,7 @@ package com.ccstudy.qna.web.controller.question.account;
 import com.ccstudy.qna.domain.account.Account;
 import com.ccstudy.qna.domain.account.AccountRepository;
 import com.ccstudy.qna.dto.account.AccountListResponseDto;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.transaction.BeforeTransaction;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -18,6 +20,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,12 +44,14 @@ public class AccountControllerTest {
     @Autowired
     private AccountRepository accountRepository;
 
-
     @Before
     public void setUp() {
         mock = MockMvcBuilders.webAppContextSetup(wac).build();
     }
-
+    @After
+    public void clean(){
+        accountRepository.deleteAll();
+    }
 
     @Test
     public void 사용자_추가_성공() throws Exception {
@@ -99,6 +104,21 @@ public class AccountControllerTest {
     @Test
     public void 사용자_리스트_출력() throws Exception {
         //given
+        Account account1 = Account.createBuilder()
+                .firstName("user")
+                .lastName("user1")
+                .email("test1@google.com")
+                .password("1234")
+                .build();
+
+        Account account2 = Account.createBuilder()
+                .firstName("user")
+                .lastName("user1")
+                .email("test2@google.com")
+                .password("1234")
+                .build();
+
+        accountRepository.saveAll(Arrays.asList(account1,account2));
         List<Account> accounts = accountRepository.findAll();
         List<AccountListResponseDto> accountListResponseDtoList = accounts.stream()
                 .map(AccountListResponseDto::new).collect(Collectors.toList());
@@ -128,10 +148,17 @@ public class AccountControllerTest {
     @Test
     public void 사용자_한명_조회하기_성공() throws Exception {
         //given
-        Account account = accountRepository.findById(1L).get();
+        Account account = Account.createBuilder()
+                .firstName("user")
+                .lastName("user1")
+                .email("test1@google.com")
+                .password("1234")
+                .build();
+
+        accountRepository.save(account);
 
         //when
-        final ResultActions actions = mock.perform(get("/users/{id}/form", 1))
+        final ResultActions actions = mock.perform(get("/users/{id}/form", account.getId()))
                 .andDo(print());
         //then
         actions

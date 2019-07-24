@@ -6,12 +6,11 @@ import com.ccstudy.qna.dto.answer.AnswerSaveRequestDto;
 import com.ccstudy.qna.service.answer.AnswerService;
 import com.ccstudy.qna.web.auth.Auth;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -40,8 +39,9 @@ public class AnswerController {
     }
 
     @DeleteMapping("/answer/{id}")
-    public String deleteAnswer(@PathVariable("id") Long id, @Auth LoginAccount loginAccount) {
+    @ResponseBody
+    public ResponseEntity<String> deleteAnswer(@PathVariable("id") Long id, @Auth LoginAccount loginAccount) {
         Long questionId = answerService.deleteAnswer(id, loginAccount);
-        return "redirect:/questions/" + questionId;
+        return new ResponseEntity<>("/questions/" + questionId, HttpStatus.OK);
     }
 }
