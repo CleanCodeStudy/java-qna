@@ -1,200 +1,132 @@
 package com.ccstudy.qna.controller;
 
-import com.ccstudy.qna.advice.common.BaseExceptionModelAndView;
-import com.ccstudy.qna.dto.Question.QuestionDetailResDto;
-import com.ccstudy.qna.dto.Question.QuestionSaveReqDto;
-import com.ccstudy.qna.dto.Question.QuestionResDto;
-import com.ccstudy.qna.dto.Question.QuestionUpdateReqDto;
-import com.ccstudy.qna.service.QuestionService;
-import org.junit.Before;
+import com.ccstudy.qna.domain.Account;
+import com.ccstudy.qna.domain.Question;
+import com.ccstudy.qna.domain.repository.AccountRepository;
+import com.ccstudy.qna.domain.repository.QuestionRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import static org.hamcrest.Matchers.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(QuestionController.class)
+@SpringBootTest
 @RunWith(SpringRunner.class)
 @ActiveProfiles("dev")
-@ComponentScan(basePackageClasses = BaseExceptionModelAndView.class)
+@AutoConfigureMockMvc
 public class QuestionControllerTest {
 
     @Autowired
-    private MockMvc mvc;
+    private MockMvc mockMvc;
 
-    @MockBean
-    private QuestionService questionService;
+    @Autowired
+    private AccountRepository accountRepository;
 
-    private QuestionResDto questionResDto1;
-    private QuestionResDto questionResDto2;
-    private QuestionDetailResDto questionDetailResDto;
-
-    @Before
-    public void setUp() throws Exception {
-
-        questionResDto1 = QuestionResDto.testBuilder()
-                .id(1L)
-                .author("testUserId")
-                .title("titleTest1")
-                .registerDate("2019-06-26 17:00")
-                .updateDate("2019-06-26 17:00")
-                .build();
-
-        questionResDto2 = QuestionResDto.testBuilder()
-                .id(2L)
-                .author("testUserId222")
-                .title("titleTest2")
-                .registerDate("2019-06-26 18:00")
-                .updateDate("2019-06-26 18:00")
-                .build();
-
-        questionDetailResDto = QuestionDetailResDto.testBuilder()
-                .id(1L)
-                .author("testUserId")
-                .title("titleTest1")
-                .content("contentTest1")
-                .registerDate("2019-06-26 17:00")
-                .updateDate("2019-06-26 17:00")
-                .build();
-    }
-
+    @Autowired
+    private QuestionRepository questionRepository;
 
     @Test
-    public void getQuestionBoard_모든_질문_조회하는_페이지_리턴하기() throws Exception {
+    @Transactional
+    public void createQuestion_정상저장() throws Exception {
         //given
-        Mockito.when(questionService.getQuestionBoard())
-                .thenReturn(new ArrayList<>(Arrays.asList(questionResDto1, questionResDto2)));
-        //when
-        mvc.perform(get("/"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("/pages/index"))
-                .andExpect(forwardedUrl("/pages/index"))
-                .andExpect(model().attribute("questions", hasSize(2)))
-                .andExpect(model().attribute("questions", hasItem(
-                        allOf(
-                                hasProperty("id", is(1L)),
-                                hasProperty("title", is("titleTest1")),
-                                hasProperty("author", is("testUserId")),
-                                hasProperty("registerDate", is("2019-06-26 17:00")),
-                                hasProperty("updateDate", is("2019-06-26 17:00"))
-                        )
-                )))
-                .andExpect(model().attribute("questions", hasItem(
-                        allOf(
-                                hasProperty("id", is(2L)),
-                                hasProperty("title", is("titleTest2")),
-                                hasProperty("author", is("testUserId222")),
-                                hasProperty("registerDate", is("2019-06-26 18:00")),
-                                hasProperty("updateDate", is("2019-06-26 18:00"))
-                        )
-                )));
-    }
-
-    @Test
-    public void createQuestion_질문생성후_redirection() throws Exception {
-
-        //given
-        QuestionSaveReqDto questionSaveReqDto = QuestionSaveReqDto.builder()
-                .content("content111")
-                .title("titleTest1")
-                .build();
-
-        Mockito.doNothing().when(questionService).createQuestion(questionSaveReqDto, 1L);
+        String title = "sampleTitle";
+        String content = "sampleContent";
 
         //when
-        mvc.perform(post("/questions"))
-                .andExpect(MockMvcResultMatchers.redirectedUrl("/"))
-                .andExpect(status().is3xxRedirection());
+        this.mockMvc.perform(post("/questions")
+                .param("title", title)
+                .param("content", content)
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .characterEncoding("utf-8")
+        )
+                .andDo(print())
+                .andExpect(status().is3xxRedirection())
+                .andReturn();
+
+        //then
+        Long idx = (long) questionRepository.findAll().get(0).getId();
+
+        Question question = questionRepository.findById(idx)
+                .orElseThrow(RuntimeException::new);
+
+        assertThat(question.getTitle()).isEqualTo(title);
+        assertThat(question.getContent()).isEqualTo(content);
     }
 
     @Test
-    public void getQuestionDetails() throws Exception {
-
-        Long id = 1L;
-
-
+    @Transactional
+    public void updateQuestion_정상수정() throws Exception {
         //given
-        Mockito.when(questionService.getQuestionDetail(id))
-                .thenReturn(questionDetailResDto);
+        String title = "changeTitle";
+        String content = "changeContent";
 
-        mvc.perform(get("/questions/1"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("/pages/show"))
-                .andExpect(forwardedUrl("/pages/show"))
-                .andExpect(model().attribute("question",
-                        allOf(
-                                hasProperty("id", is(1L)),
-                                hasProperty("title", is("titleTest1")),
-                                hasProperty("content", is("contentTest1")),
-                                hasProperty("author", is("testUserId")),
-                                hasProperty("registerDate", is("2019-06-26 17:00")),
-                                hasProperty("updateDate", is("2019-06-26 17:00"))
-                        )
-                ));
-    }
-
-    @Test
-    public void getEditFormOfQuestion() throws Exception {
-
-        Long id = 1L;
-
-        //given
-        Mockito.when(questionService.getQuestionDetail(id))
-                .thenReturn(questionDetailResDto);
-
-        mvc.perform(get("/questions/edit/1"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("/pages/questionUpdateForm"))
-                .andExpect(forwardedUrl("/pages/questionUpdateForm"))
-                .andExpect(model().attribute("question",
-                        allOf(
-                                hasProperty("id", is(1L)),
-                                hasProperty("title", is("titleTest1")),
-                                hasProperty("content", is("contentTest1")),
-                                hasProperty("author", is("testUserId")),
-                                hasProperty("registerDate", is("2019-06-26 17:00")),
-                                hasProperty("updateDate", is("2019-06-26 17:00"))
-                        )
-                ));
-    }
-
-    @Test
-    public void updateQuestion_질문수정후_redirection() throws Exception {
-
-        //given
-        QuestionUpdateReqDto questionUpdateReqDto = QuestionUpdateReqDto.builder()
-                .content("content111")
-                .title("titleTest1")
+        Account account = accountRepository.findAll().get(0);
+        Question saveQuestion = Question.createBuilder()
+                .content("testContent")
+                .title("testTitle")
+                .author(account)
                 .build();
+        Question question = questionRepository.save(saveQuestion);
 
-        Long id = 1L;
-        Mockito.doNothing().when(questionService).updateQuestion(questionUpdateReqDto, id);
+        String originalTitle = question.getTitle();
+        String originalContent = question.getContent();
 
         //when
-        mvc.perform(put("/questions/edit/{id}", id))
-                .andExpect(MockMvcResultMatchers.redirectedUrl("/questions/" + id))
-                .andExpect(status().is3xxRedirection());
+        this.mockMvc.perform(put("/questions/{id}", question.getId())
+                .param("title", title)
+                .param("content", content)
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .characterEncoding("utf-8")
+        )
+                .andDo(print())
+                .andExpect(status().is3xxRedirection())
+                .andReturn();
+
+        Question changedQuestion = questionRepository.findById(question.getId())
+                .orElseThrow(RuntimeException::new);
+
+        //then
+        assertThat(changedQuestion.getTitle()).isEqualTo(title);
+        assertThat(changedQuestion.getContent()).isEqualTo(content);
+
+        assertThat(changedQuestion.getContent()).isNotEqualTo(originalContent);
+        assertThat(changedQuestion.getTitle()).isNotEqualTo(originalTitle);
     }
 
     @Test
-    public void deleteQuestion_질문삭제후_redirection() throws Exception {
-        Long id = 1L;
-        mvc.perform(delete("/questions/delete/{id}", id))
-                .andExpect(MockMvcResultMatchers.redirectedUrl("/"))
-                .andExpect(status().is3xxRedirection());
-        Mockito.verify(questionService).deleteQuestion(id);
+    @Transactional
+    public void deleteQuestion() throws Exception {
+        //given
+        Account account = accountRepository.findAll().get(0);
+        Question saveQuestion = Question.createBuilder()
+                .content("testContent")
+                .title("testTitle")
+                .author(account)
+                .build();
+        Question question = questionRepository.save(saveQuestion);
+
+        //when
+        this.mockMvc.perform(delete("/questions/{id}", question.getId())
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .characterEncoding("utf-8")
+        )
+                .andDo(print())
+                .andExpect(status().is3xxRedirection())
+                .andReturn();
+
+        Question deleteQuestion = questionRepository.findById(question.getId())
+                .orElseThrow(RuntimeException::new);
+
+        assertThat(deleteQuestion.isDeleted()).isTrue();
     }
 }

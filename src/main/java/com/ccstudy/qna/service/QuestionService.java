@@ -63,7 +63,7 @@ public class QuestionService {
     public Long deleteQuestion(Long id) {
         Question question = questionRepository.findById(id)
                 .orElseThrow(NoSuchElementException::new);
-        boolean canRemoveQuestion = question.checkQuestionDelete();
+        boolean canRemoveQuestion = question.enableQuestionDelete();
         if(canRemoveQuestion){
             question.removeQuestion();
             return question.getId();

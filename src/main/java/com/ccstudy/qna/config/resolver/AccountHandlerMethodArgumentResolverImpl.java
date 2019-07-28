@@ -2,7 +2,6 @@ package com.ccstudy.qna.config.resolver;
 
 import com.ccstudy.qna.config.auth.Authentication;
 import com.ccstudy.qna.dto.Account.AccountAuthDto;
-import com.ccstudy.qna.exception.account.AuthException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;

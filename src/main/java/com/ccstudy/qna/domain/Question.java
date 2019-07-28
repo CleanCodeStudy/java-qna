@@ -8,6 +8,7 @@ import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -32,7 +33,7 @@ public class Question extends BaseTimeEntity {
 
     @Where(clause = "deleted = true")
     @OneToMany(mappedBy = "question")
-    private List<Answer> answers;
+    private List<Answer> answers = new ArrayList<>();
 
     @Builder(builderMethodName = "createBuilder")
     public Question(String title, String content, Account author) {
@@ -54,15 +55,14 @@ public class Question extends BaseTimeEntity {
         this.deleted = true;
     }
 
-    public boolean checkQuestionDelete() {
+    public boolean enableQuestionDelete() {
         return this.answers.stream()
                 .filter(this::isNotAuthor)
-                .anyMatch(Answer::isNotDeleted);
+                .filter(Answer::isNotDeleted)
+                .count() <= 0;
     }
 
-
-
-    private boolean isNotAuthor(Answer answer) {
+    private boolean isNotAuthor(Answer answer) { //void check
         return !answer.getAuthor()
                 .getId()
                 .equals(this.author.getId());

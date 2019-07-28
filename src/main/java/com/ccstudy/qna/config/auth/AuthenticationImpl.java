@@ -3,12 +3,14 @@ package com.ccstudy.qna.config.auth;
 
 import com.ccstudy.qna.dto.Account.AccountAuthDto;
 import com.ccstudy.qna.exception.account.AuthException;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.NativeWebRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
 @Component
+@Profile("prod")
 public class AuthenticationImpl implements Authentication {
 
     private static final int ONE_HOUR = 3600;
@@ -50,7 +52,7 @@ public class AuthenticationImpl implements Authentication {
 
     private void validateLogin(AccountAuthDto accountAuthDto) {
         if (accountAuthDto == null) {
-            throw new AuthException("로그인 되어있지 않습니다.");
+            throw new AuthException(" 로그인 되어있지 않습니다.");
         }
     }
 }

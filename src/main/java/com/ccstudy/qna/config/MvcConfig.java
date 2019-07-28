@@ -20,7 +20,7 @@ import java.util.List;
 public class MvcConfig implements WebMvcConfigurer {
 
 
-    private static final List<String> EXPIRED_ADD_PATTERNS = Arrays.asList("/questions/**", "users/**");
+    private static final List<String> EXPIRED_ADD_PATTERNS = Arrays.asList("/questions/**", "/users/**");
     private static final List<String> EXPIRED_EXCLUDE_PATTERNS = Arrays.asList("/users/login", "/users/logout");
 
     private final AccountHandlerMethodArgumentResolver accountHandlerMethodArgumentResolver;

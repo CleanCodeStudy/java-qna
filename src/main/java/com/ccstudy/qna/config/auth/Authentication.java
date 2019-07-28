@@ -4,12 +4,13 @@ import com.ccstudy.qna.dto.Account.AccountAuthDto;
 import org.springframework.web.context.request.NativeWebRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.InvocationTargetException;
 
 public interface Authentication {
 
-    AccountAuthDto getAccountAuthDto(NativeWebRequest request);
+    AccountAuthDto getAccountAuthDto(NativeWebRequest request) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException, NoSuchFieldException;
 
-    AccountAuthDto getAccountAuthDto(HttpServletRequest request);
+    AccountAuthDto getAccountAuthDto(HttpServletRequest request) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException, NoSuchFieldException;
 
     void setAccountAuthDto(HttpServletRequest request, AccountAuthDto accountAuthDto);
 

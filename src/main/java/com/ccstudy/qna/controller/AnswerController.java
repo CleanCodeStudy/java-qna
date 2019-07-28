@@ -4,7 +4,6 @@ import com.ccstudy.qna.dto.Account.AccountAuthDto;
 import com.ccstudy.qna.dto.Answer.AnswerDetailResDto;
 import com.ccstudy.qna.dto.Answer.AnswerSaveReqDto;
 import com.ccstudy.qna.service.AnswerService;
-import com.ccstudy.qna.service.Checker;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

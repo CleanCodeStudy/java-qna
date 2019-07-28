@@ -1,151 +1,115 @@
 package com.ccstudy.qna.controller;
 
 import com.ccstudy.qna.advice.common.BaseExceptionModelAndView;
-import com.ccstudy.qna.dto.Account.AccountResDto;
+import com.ccstudy.qna.domain.Account;
+import com.ccstudy.qna.domain.repository.AccountRepository;
 import com.ccstudy.qna.dto.Account.AccountSaveReqDto;
-import com.ccstudy.qna.dto.Account.AccountUpdateReqDto;
-import com.ccstudy.qna.service.AccountService;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import static org.hamcrest.Matchers.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-@WebMvcTest(AccountController.class)
+@SpringBootTest
 @RunWith(SpringRunner.class)
 @ActiveProfiles("dev")
 @ComponentScan(basePackageClasses = BaseExceptionModelAndView.class)
+@AutoConfigureMockMvc
 public class AccountControllerTest {
 
     @Autowired
-    private MockMvc mvc;
+    private MockMvc mockMvc;
 
-    @MockBean
-    private AccountService accountService;
-
-    private AccountResDto accountResDto1;
-    private AccountResDto accountResDto2;
-
-    @Before
-    public void setUp() throws Exception {
-        accountResDto1 = AccountResDto.testBuilder()
-                .id(1L)
-                .email("testEmail@naver.com")
-                .name("testsUserName")
-                .userId("testUserId")
-                .build();
-
-        accountResDto2 = AccountResDto.testBuilder()
-                .id(2L)
-                .email("testEmail222@naver.com")
-                .name("testsUserName222")
-                .userId("testUserId222")
-                .build();
-    }
+    @Autowired
+    private AccountRepository accountRepository;
 
     @Test
-    public void getAllAccounts_모든_계정_조회하는_페이지_리턴하기() throws Exception {
+    @Transactional
+    public void saveAccount_정상저장_확인하기() throws Exception {
         //given
-        Mockito.when(accountService.getAllAccounts())
-                .thenReturn(new ArrayList<>(Arrays.asList(accountResDto1, accountResDto2)));
-        //when
-        mvc.perform(get("/users"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("pages/users"))
-                .andExpect(forwardedUrl("pages/users"))
-                .andExpect(model().attribute("accounts", hasSize(2)))
-                .andExpect(model().attribute("accounts", hasItem(
-                        allOf(
-                                hasProperty("id", is(1L)),
-                                hasProperty("userId", is("testUserId")),
-                                hasProperty("name", is("testsUserName")),
-                                hasProperty("email", is("testEmail@naver.com"))
-                        )
-                )))
-                .andExpect(model().attribute("accounts", hasItem(
-                        allOf(
-                                hasProperty("id", is(2L)),
-                                hasProperty("userId", is("testUserId222")),
-                                hasProperty("name", is("testsUserName222")),
-                                hasProperty("email", is("testEmail222@naver.com"))
-                        )
-                )));
-    }
-
-    @Test
-    public void 계정_수정하는_페이지_리턴() throws Exception {
-
-        //given
-        Mockito.when(accountService.findAccountById(1L))
-                .thenReturn(accountResDto1);
+        String userId = "pci";
+        String password = "1234";
+        String name = "chanin";
+        String email = "example@gmail.com";
 
         //when
-        mvc.perform(get("/users/{id}", 1L))
-                .andExpect(status().isOk())
-                .andExpect(view().name("pages/userUpdateForm"))
-                .andExpect(forwardedUrl("pages/userUpdateForm"))
-                .andExpect(model().attribute("account",
-                        allOf(
-                                hasProperty("id", is(1L)),
-                                hasProperty("userId", is("testUserId")),
-                                hasProperty("name", is("testsUserName")),
-                                hasProperty("email", is("testEmail@naver.com"))
-                        )
-                ));
-
-    }
-
-    @Test
-    public void 회원가입하기_이후에_redirection() throws Exception {
-        //given
-        AccountSaveReqDto accountSaveReqDto = AccountSaveReqDto.builder()
-                .email("testEmail@naver.com")
-                .name("testsUserName")
-                .password("1234")
-                .userId("testUserId")
-                .build();
-
-        Mockito.when(accountService.saveAccount(accountSaveReqDto))
-                .thenReturn(1L);
-
-        //when
-        mvc.perform(post("/users"))
-                .andExpect(MockMvcResultMatchers.redirectedUrl("/users"))
-                .andExpect(status().is3xxRedirection());
-    }
-
-    @Test
-    public void 계정_수정하기_후_redirection() throws Exception {
-        //given
-        AccountUpdateReqDto accountUpdateReqDto = AccountUpdateReqDto.builder()
-                .email("testEmail@naver.com")
-                .name("testsUserName")
-                .changePassword("12345")
-                .currentPassword("1234")
-                .build();
-
-        //when
-        mvc.perform(put("/users/1"))
+        this.mockMvc.perform(post("/users")
+                .param("userId", userId)
+                .param("password", password)
+                .param("name", name)
+                .param("email", email)
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .characterEncoding("utf-8")
+        )
+                .andDo(print())
                 .andExpect(status().is3xxRedirection())
-                .andExpect(MockMvcResultMatchers.redirectedUrl("/users"));
+                .andReturn();
+
+        //then
+        Account account = accountRepository.findByUserId(userId)
+                .orElseThrow(RuntimeException::new);
+
+        assertThat(account.getUserId()).isEqualTo(userId);
+        assertThat(account.getEmail()).isEqualTo(email);
+        assertThat(account.getName()).isEqualTo(name);
+        assertThat(account.getPassword()).isEqualTo(password);
     }
 
     @Test
-    public void loginAccount() {
+    @Transactional
+    public void updateAccount_정상수정_확인하기() throws Exception {
+        //given
+        String userId = "pci";
+        String password = "1234";
+        String name = "chanin";
+        String email = "example@gmail.com";
+        AccountSaveReqDto accountSaveReqDto = AccountSaveReqDto.builder()
+                .email(email)
+                .name(name)
+                .password(password)
+                .userId(userId)
+                .build();
+        Account saveAccount = accountSaveReqDto.toEntity();
+        saveAccount = accountRepository.save(saveAccount);
 
+        Long id = saveAccount.getId();
+
+        String changeName = "chan";
+        String changeEmail = "xample@gmail.com";
+        String changePassword = "123";
+
+        //when
+        this.mockMvc.perform(put("/users/{id}", id)
+                .param("currentPassword", password)
+                .param("changePassword", changePassword)
+                .param("name", changeName)
+                .param("email", changeEmail)
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .characterEncoding("utf-8")
+        )
+                .andDo(print())
+                .andExpect(status().is3xxRedirection())
+                .andReturn();
+
+        //then
+        Account account = accountRepository.findById(id)
+                .orElseThrow(RuntimeException::new);
+
+        assertThat(account.getPassword()).isEqualTo(changePassword);
+        assertThat(account.getName()).isEqualTo(changeName);
+        assertThat(account.getEmail()).isEqualTo(changeEmail);
     }
+
 }

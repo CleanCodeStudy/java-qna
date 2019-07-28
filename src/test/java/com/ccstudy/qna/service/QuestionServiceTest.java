@@ -14,10 +14,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.lang.reflect.Constructor;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -59,10 +56,9 @@ public class QuestionServiceTest {
 
     @Test
     public void getQuestionBoard_Question_리스트_반환() {
-        //given
 
         //when
-        Mockito.when(questionRepository.findAll()).thenReturn(new ArrayList<>(Arrays.asList(question1)));
+        Mockito.when(questionRepository.findAllJoinFetch()).thenReturn(Collections.singletonList(question1));
 
         //then
         assertThat(questionService.getQuestionBoard().size()).isEqualTo(1);

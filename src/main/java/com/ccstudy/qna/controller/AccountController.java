@@ -2,7 +2,6 @@ package com.ccstudy.qna.controller;
 
 import com.ccstudy.qna.dto.Account.*;
 import com.ccstudy.qna.service.AccountService;
-import com.ccstudy.qna.service.Checker;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -28,7 +27,6 @@ public class AccountController {
     @GetMapping("/{id}/form")
     public String getEditFormOfAccount(@PathVariable("id") Long id,
                                        @Valid AccountAuthDto accountAuthDto,Model model) {
-        Checker.validateAuthorization(id, accountAuthDto);
         AccountResDto editAccount = accountService.findAccountById(id);
         model.addAttribute("account", editAccount);
         return "pages/userUpdateForm";
@@ -44,7 +42,6 @@ public class AccountController {
     @PutMapping("/{id}")
     public String updateAccount(@PathVariable("id") Long id,
                                 @Valid AccountUpdateReqDto updateReqDto, @Valid AccountAuthDto accountAuthDto) {
-        Checker.validateAuthorization(id, accountAuthDto);
         accountService.updateAccount(updateReqDto, id);
         log.info("update user - id : " + id);
         return "redirect:/users";

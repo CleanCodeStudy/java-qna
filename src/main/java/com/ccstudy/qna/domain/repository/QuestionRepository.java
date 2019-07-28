@@ -9,7 +9,8 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface QuestionRepository extends JpaRepository<Question,Long> {
+public interface QuestionRepository extends JpaRepository<Question, Long> {
+    // TODO : query로 del 아닌 것만 // query dsl : boolean function
     Optional<Question> findById(Long idx);
 
     @Query("SELECT q FROM Question q JOIN FETCH q.author")
