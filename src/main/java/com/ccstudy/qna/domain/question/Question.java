@@ -5,6 +5,7 @@ import com.ccstudy.qna.domain.account.Account;
 import com.ccstudy.qna.domain.answer.Answer;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.List;
@@ -30,8 +31,11 @@ public class Question extends BaseTimeEntity {
     @Column(columnDefinition = "TEXT")
     private String contents;
 
-    @OneToMany(mappedBy = "question", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "questionId", fetch = FetchType.EAGER)
+    @Where(clause = "display = true")
     private List<Answer> answers;
+
+    private Boolean display = true;
 
     @Builder(builderMethodName = "createBuilder")
     public Question(Account author, String title, String contents) {
@@ -39,6 +43,12 @@ public class Question extends BaseTimeEntity {
         this.title = title;
         this.contents = contents;
     }
+
+    public Long deleteQuestion() {
+        this.display = false;
+        return this.id;
+    }
+
 
     public boolean isCorrectEmail(String sessionEmail) {
         return StringUtils.equals(author.getEmail(), sessionEmail);

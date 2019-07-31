@@ -7,7 +7,7 @@ import lombok.Getter;
 
 
 @Getter
-public class AccountListResponseDto {
+public class AccountsResponseDto {
     private Long id;
     private String email;
     private String firstName;
@@ -16,7 +16,7 @@ public class AccountListResponseDto {
     private String registerDate;
 
     @Builder
-    public AccountListResponseDto(Account entity) {
+    public AccountsResponseDto(Account entity) {
         this.id = entity.getId();
         this.email = entity.getEmail();
         this.firstName = entity.getFirstName();

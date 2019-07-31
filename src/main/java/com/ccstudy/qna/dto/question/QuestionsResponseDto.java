@@ -5,7 +5,7 @@ import com.ccstudy.qna.util.DateTimeConverter;
 import lombok.Getter;
 
 @Getter
-public class QuestionListResponseDto {
+public class QuestionsResponseDto {
 
     private Long id;
     private String title;
@@ -13,7 +13,7 @@ public class QuestionListResponseDto {
     private String registerDate;
     private String updateDate;
 
-    public QuestionListResponseDto(Question entity) {
+    public QuestionsResponseDto(Question entity) {
 
         this.id=entity.getId();
         this.title = entity.getTitle();

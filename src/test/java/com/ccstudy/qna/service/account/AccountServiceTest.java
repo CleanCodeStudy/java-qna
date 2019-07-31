@@ -15,6 +15,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
+/**
+ * 세션도 Mocking
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class AccountServiceTest {
@@ -69,7 +72,7 @@ public class AccountServiceTest {
                 .password("1234")
                 .build();
         //when
-        LoginAccount loginAccount = accountService.loginAccount(dto);
+        LoginAccount loginAccount = accountService.login(dto);
         //then
         assertThat(dto.getEmail(), is(loginAccount.getEmail()));
     }
@@ -82,7 +85,7 @@ public class AccountServiceTest {
                 .password("1234")
                 .build();
         //then
-        LoginAccount emailWrondAccount = accountService.loginAccount(emailWrongDto);
+        LoginAccount emailWrondAccount = accountService.login(emailWrongDto);
     }
 
     @Test(expected = IllegalStateException.class)
@@ -94,7 +97,7 @@ public class AccountServiceTest {
                 .build();
         //when
         //then
-        LoginAccount passwrodWrongAccount = accountService.loginAccount(passwordWrongDto);
+        LoginAccount passwrodWrongAccount = accountService.login(passwordWrongDto);
     }
 
     @Test(expected = IllegalAccessError.class)

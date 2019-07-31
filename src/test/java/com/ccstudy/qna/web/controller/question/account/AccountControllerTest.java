@@ -2,7 +2,7 @@ package com.ccstudy.qna.web.controller.question.account;
 
 import com.ccstudy.qna.domain.account.Account;
 import com.ccstudy.qna.domain.account.AccountRepository;
-import com.ccstudy.qna.dto.account.AccountListResponseDto;
+import com.ccstudy.qna.dto.account.AccountsResponseDto;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -119,8 +119,8 @@ public class AccountControllerTest {
 
         accountRepository.saveAll(Arrays.asList(account1,account2));
         List<Account> accounts = accountRepository.findAll();
-        List<AccountListResponseDto> accountListResponseDtoList = accounts.stream()
-                .map(AccountListResponseDto::new).collect(Collectors.toList());
+        List<AccountsResponseDto> accountListResponseDtoList = accounts.stream()
+                .map(AccountsResponseDto::new).collect(Collectors.toList());
 
 
         //when

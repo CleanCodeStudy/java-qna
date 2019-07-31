@@ -4,8 +4,6 @@ import com.ccstudy.qna.domain.account.Account;
 import com.ccstudy.qna.domain.account.AccountRepository;
 import com.ccstudy.qna.domain.answer.Answer;
 import com.ccstudy.qna.domain.answer.AnswerRepository;
-import com.ccstudy.qna.domain.question.Question;
-import com.ccstudy.qna.domain.question.QuestionRepository;
 import com.ccstudy.qna.dto.account.LoginAccount;
 import com.ccstudy.qna.dto.answer.AnswerDetailResponseDto;
 import com.ccstudy.qna.dto.answer.AnswerSaveRequestDto;
@@ -20,7 +18,6 @@ import java.util.NoSuchElementException;
 @RequiredArgsConstructor
 public class AnswerService {
     private final AnswerRepository answerRepository;
-    private final QuestionRepository questionRepository;
     private final AccountRepository accountRepository;
 
     //답변 등록하기
@@ -29,10 +26,7 @@ public class AnswerService {
         Account author = accountRepository.findAccountByEmail(loginAccount.getEmail())
                 .orElseThrow(NoSuchElementException::new);
 
-        Question question = questionRepository.findById(questionId)
-                .orElseThrow(NoSuchElementException::new);
-
-        return answerRepository.save(dto.toEntity(author, question)).getId();
+        return answerRepository.save(dto.toEntity(author, questionId)).getId();
     }
 
     //답변 조회
@@ -55,6 +49,6 @@ public class AnswerService {
 
         findAnswer.deleteAnswer();
 
-        return findAnswer.getQuestion().getId();
+        return findAnswer.getQuestionId();
     }
 }

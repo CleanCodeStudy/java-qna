@@ -3,8 +3,6 @@ package com.ccstudy.qna.service.account;
 import com.ccstudy.qna.domain.account.Account;
 import com.ccstudy.qna.domain.account.AccountRepository;
 import com.ccstudy.qna.dto.account.*;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,8 +17,7 @@ public class AccountService {
     private final AccountRepository accountRepository;
 
     @Transactional
-    public LoginAccount loginAccount(AccountLoginRequestDto dto){
-        //TODO 예외처리 하는거 다시 생각해보기
+    public LoginAccount login(AccountLoginRequestDto dto){
         Account findAccount = accountRepository.findAccountByEmail(dto.getEmail())
                 .orElseThrow(IllegalStateException::new);
 
@@ -44,9 +41,9 @@ public class AccountService {
     }
 
     @Transactional
-    public List<AccountListResponseDto> findAll(){
+    public List<AccountsResponseDto> findAll(){
         return accountRepository.findAll().stream()
-                .map(AccountListResponseDto::new)
+                .map(AccountsResponseDto::new)
                 .collect(Collectors.toList());
     }
 

@@ -15,10 +15,10 @@ public class AnswerSaveRequestDto {
     private String title;
     private String contents;
 
-    public Answer toEntity(Account author, Question question) {
+    public Answer toEntity(Account author, Long questionId) {
         return Answer.createBuilder()
                 .author(author)
-                .question(question)
+                .questionId(questionId)
                 .title(this.title)
                 .contents(this.contents)
                 .build();

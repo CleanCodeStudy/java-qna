@@ -2,7 +2,6 @@ package com.ccstudy.qna.domain.answer;
 
 import com.ccstudy.qna.domain.BaseTimeEntity;
 import com.ccstudy.qna.domain.account.Account;
-import com.ccstudy.qna.domain.question.Question;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,9 +21,8 @@ public class Answer extends BaseTimeEntity {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_answet_to_account"))
     private Account author;
 
-    @ManyToOne
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_answer_to_question"))
-    private Question question;
+    @Column(nullable = false)
+    private Long questionId;
 
     @Column(nullable = false)
     private String title;
@@ -35,9 +33,9 @@ public class Answer extends BaseTimeEntity {
     private Boolean display = true;
 
     @Builder(builderMethodName = "createBuilder")
-    public Answer(Account author, Question question, String title, String contents) {
+    public Answer(Account author, Long questionId, String title, String contents) {
         this.author = author;
-        this.question = question;
+        this.questionId = questionId;
         this.title = title;
         this.contents = contents;
     }

@@ -17,7 +17,6 @@ public class LoginAccountTestResolverImpl implements LoginAccountResolver {
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        //parameter가 User Type인지 체크
         return parameter.getParameterType().isAssignableFrom(LoginAccount.class)
                 && parameter.hasParameterAnnotation(Auth.class);
     }

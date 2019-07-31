@@ -116,24 +116,24 @@ public class QuestionControllerTest {
     }
 
     //TODO: Web에서 튕겨주는건 어떻게 처리???
-//    @Test
-//    public void 본인_질문이_아니여서_수정_실패() throws Exception {
-//        //given
-//        Account wrongAccount = accountRepository.findAccountByEmail("bbb@google.com")
-//                .orElseThrow(NoSuchElementException::new);
-//        saveQuestion(wrongAccount);
-//        //when
-//        mock.perform(put("/questions/{id}",1)
-//                .param("id","1")
-//                .param("title","title2")
-//                .param("contents","contents2")
-//                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-//                .andDo(print())
-//                .andExpect(status().is3xxRedirection())
-//                .andReturn();
-//        //then
-//    }
-
+   /* @Test(expected = Exception.class)
+    public void 본인_질문이_아니여서_수정_실패() throws Exception {
+        //given
+        Account wrongAccount = accountRepository.findAccountByEmail("bbb@google.com")
+                .orElseThrow(NoSuchElementException::new);
+        saveQuestion(wrongAccount);
+        //when
+        mock.perform(put("/questions/{id}",1)
+                .param("id","1")
+                .param("title","title2")
+                .param("contents","contents2")
+                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .andDo(print())
+                .andExpect(status().is3xxRedirection())
+                .andReturn();
+        //then
+    }
+*/
     //질문 삭제
     @Test
     public void 질문_삭제_성공() throws Exception {

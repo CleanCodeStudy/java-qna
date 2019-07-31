@@ -6,7 +6,7 @@ import com.ccstudy.qna.domain.question.Question;
 import com.ccstudy.qna.domain.question.QuestionRepository;
 import com.ccstudy.qna.dto.account.LoginAccount;
 import com.ccstudy.qna.dto.question.QuestionDetailResponseDto;
-import com.ccstudy.qna.dto.question.QuestionListResponseDto;
+import com.ccstudy.qna.dto.question.QuestionsResponseDto;
 import com.ccstudy.qna.dto.question.QuestionSaveRequestDto;
 import com.ccstudy.qna.dto.question.QuestionUpdateRequestDto;
 import com.ccstudy.qna.error.UnAuthenticationException;
@@ -36,9 +36,9 @@ public class QuestionService {
 
     //조회하기
     @Transactional(readOnly = true)
-    public List<QuestionListResponseDto> showQuestions() {
-        return questionRepository.findAll().stream()
-                .map(QuestionListResponseDto::new)
+    public List<QuestionsResponseDto> showQuestions() {
+        return questionRepository.findByDisplayTrue().stream()
+                .map(QuestionsResponseDto::new)
                 .collect(Collectors.toList());
     }
 
@@ -71,7 +71,7 @@ public class QuestionService {
         Question findQuestion = questionRepository.findById(id)
                 .orElseThrow(NoSuchElementException::new);
         if (findQuestion.isCorrectEmail(loginAccount.getEmail())) {
-            questionRepository.deleteById(id);
+            findQuestion.deleteQuestion();
             return id;
         }
         throw new UnAuthenticationException();

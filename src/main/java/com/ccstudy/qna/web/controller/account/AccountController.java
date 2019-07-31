@@ -49,7 +49,7 @@ public class AccountController {
 
     @PostMapping("/login")
     public String login(@ModelAttribute("loginAccount") AccountLoginRequestDto dto, HttpServletRequest httpServletRequest) {
-        LoginAccount loginAccount = accountService.loginAccount(dto);
+        LoginAccount loginAccount = accountService.login(dto);
         loginAccountSessionManager.saveSession(httpServletRequest, loginAccount);
         return "redirect:/";
     }

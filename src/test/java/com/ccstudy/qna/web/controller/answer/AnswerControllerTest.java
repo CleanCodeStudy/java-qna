@@ -2,6 +2,7 @@ package com.ccstudy.qna.web.controller.answer;
 
 import com.ccstudy.qna.domain.account.Account;
 import com.ccstudy.qna.domain.account.AccountRepository;
+import com.ccstudy.qna.domain.answer.Answer;
 import com.ccstudy.qna.domain.answer.AnswerRepository;
 import com.ccstudy.qna.domain.question.Question;
 import com.ccstudy.qna.domain.question.QuestionRepository;
@@ -55,7 +56,31 @@ public class AnswerControllerTest {
     @Test
     public void 답변_작성_성공() {
         //given
-        //when
+        Account account = Account.createBuilder()
+                .lastName("hello")
+                .firstName("first")
+                .password("1234")
+                .email("aaaaaa@gmail.com")
+                .build();
+
+        accountRepository.save(account);
+
+        Question question = Question.createBuilder()
+                .title("question1")
+                .contents("contents1")
+                .author(account)
+                .build();
+
+        questionRepository.save(question);
+
+        Answer answer = Answer.createBuilder()
+                .author(account)
+                .title("title")
+                .contents("contenst")
+                .question(question)
+                .build();
+
+        //when)
         //then
     }
 
